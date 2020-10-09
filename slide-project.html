@@ -159,7 +159,16 @@
 						str +=     '<p style="font-size: x-large; font-weight: bold;">' + data[i].Headline + '</p>';
 						
 						if ( data[i].Media.search('http') == 0 ) { 	// Media欄位內容若以'http'開頭就是圖檔
-							str += '<img data-src="' + data[i].Media + '" style="width: 100%; border-style: none;">'; }
+							if( data[i].Media.indexOf('file') > 0){  //代表此為雲端圖檔所在位置
+								var words = data[i].Media.split('/');
+								var PicID = words[5];
+								str += '<img data-src="https://drive.google.com/thumbnail?sz=w640&id=' + PicID + '" style="width: 100%; border-style: none;">';
+								//改成瀏覽圖片位址
+							}
+							else{ 
+								str += '<img data-src="' + data[i].Media + '" style="width: 100%; border-style: none;">';
+								}
+						}
 						else {						 // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
 							str += data[i].Media; }	 // https://github.com/hakimel/reveal.js/#lazy-loading
 						
