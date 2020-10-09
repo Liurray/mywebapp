@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 
 		<title>2019臺中舊城數位現地導覽工作坊學員練習 </title>
-
+		<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
 
@@ -183,7 +183,17 @@
 					}
 					gsheetClass.outerHTML=str; // it's simple replacement of whole element with contents of str var
 					Reveal.sync();
-					setTimeout(function(){ Reveal.slide(0,0); }, 100);
+					var config = {
+						apiKey: "AIzaSyAhRRlm6XEX2koUdMRX1mch90PEwBWhMIM",
+						authDomain: "liff-slide.firebaseapp.com",
+						databaseURL: "https://liff-slide.firebaseio.com",
+						storageBucket: "liff-slide.appspot.com",
+						};
+					firebase.initializeApp(config);
+
+					firebase.database().ref('slide').on("value", function(snapshot) {
+							Reveal.slide(snapshot.val().currentslideX,snapshot.val().currentslideY);
+					});
 				}
 			}
 			//////////////////////////////////////////////////////////////////////////////////////////////
