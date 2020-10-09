@@ -35,13 +35,13 @@
               font-family: sans-serif;
               position: absolute;
               pointer-events: none;
-              top: 10px;
+              top: 5px;
               transition: 0.2s ease all; 
         }
         input {
           color: #000000 ;
           font-size: 15px;
-          padding: 30px 10px 10px 0px;
+          padding: 10px 10px 10px 0px;
           display: block;
           outline: none;
           border: none;
@@ -94,7 +94,7 @@
         button {
           color: #7a3232 ;
           font-size: 15px;
-          width: 250px;
+          width: 100px;
         
         }
 
@@ -130,7 +130,8 @@
         <div class="group">
           <input id="picValue" type="text" pattern="[a-z\s]+$" maxlength="100" required>
           <label>我的照片</label>
-          <span class="bar"></span>
+          <input type="file" id="pic">
+          <button onclick="uploadImage()">上傳圖檔</button>
         </div>
         <div class="group">
           <input id="kindValue" type="text" pattern="[a-z\s]+$" maxlength="37" required>
@@ -148,7 +149,7 @@
         
 
         <script>
-      
+    
         function send() {
                   let name = document.querySelector('#nameValue').value;
                   let temp = document.querySelector('#tempValue').value;
@@ -181,6 +182,51 @@
       <!--JavaScript at end of body for optimized loading-->
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase-storage.js"></script>
     </body>
+          <!-- The core Firebase JS SDK is always required and must be listed first -->
+      
+
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+          https://firebase.google.com/docs/web/setup#available-libraries -->
+
+      <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyAPjnzJY2ga9pCzMTBM3qGO-Ycpd78VpIU",
+          authDomain: "project-xbnnlf.firebaseapp.com",
+          databaseURL: "https://project-xbnnlf.firebaseio.com",
+          projectId: "project-xbnnlf",
+          storageBucket: "project-xbnnlf.appspot.com",
+          messagingSenderId: "469417624915",
+          appId: "1:469417624915:web:ee57fd0a01d57c3d268da6"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+
+        function uploadImage(){
+          const ref = firebase.storage().ref()
+
+          const file = document.querySelector("#pic").files[0]
+          const name = new Date()+ '-' + file.name
+          const metdata = {
+            contentType:file.type
+          }
+          const task = ref.child(name).put(file,metdata)
+
+          task
+          .then(snapshot => snapshot.ref.getDownloadURL())
+          .then(url => {
+            alert("上傳成功")
+            document.querySelector('#picValue').value = url ;
+          })
+        }
+
+
+
+
+      </script>
   </html>
         
