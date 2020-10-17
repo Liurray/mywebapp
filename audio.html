@@ -15,10 +15,12 @@
     
     // if you want audio+video conferencing
     connection.session = {
-        audio: true
+        audio: true,
+        video: false
     };
     connection.sdpConstraints.mandatory = {
-        OfferToRecevieAudio:true
+        OfferToRecevieAudio:true,
+        OfferToRecevieVideo:false
     }
     document.getElementById('btn-open-or-join-room').onclick =function(){
         this.disabled = true;
