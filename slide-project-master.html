@@ -199,7 +199,7 @@
 					function updateOnlineStatus(){
 						firebase.database().ref('Lock').on("value", function(snapshot) {
                         	if(snapshot.val().lock === 'true'){
-								retrun ;/////////
+								
                         	}
                         	else{
                             	firebase.database().ref('Lock').set({lock : "true"});
