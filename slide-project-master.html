@@ -190,16 +190,30 @@
 						storageBucket: "liff-slide.appspot.com",
 						};
 						firebase.initializeApp(config);
-
+					function updateOnlineStatus(){
+						firebase.database().ref('Lock').on("value", function(snapshot) {
+                        	if(snapshot.val().lock === 'true'){
+								Reveal.addEventListener( 'slidechanged', function( event ) {  
+								firebase.database().ref('slide').set({
+									currentslideX : Reveal.getState().indexh,
+									currentslideY : Reveal.getState().indexv
+									})
+								});
+                        	}
+                        	else{
+                            	firebase.database().ref('Lock').set({lock : "true"});
+                        	}
+                    		});
+						}
+					function updateOfflineStatus() { /*更新未連線*/
+               			firebase.database().ref('Lock').set({lock : "false"});
+						}
 						// 'slidechanged' event listener to update the firebase JSON whenever there is a change in slide.
 						// This can be further improved to have firebase authentication to restrict slide update only by the presenter.
-					Reveal.addEventListener( 'slidechanged', function( event ) {  
-							firebase.database().ref('slide').set({
-								currentslideX : Reveal.getState().indexh,
-								currentslideY : Reveal.getState().indexv
-							})
-					});
+				
 				}
+				window.addEventListener('online', updateOnlineStatus);
+    			window.addEventListener('offline', updateOfflineStatus); 
 			}
 			//////////////////////////////////////////////////////////////////////////////////////////////
 			
