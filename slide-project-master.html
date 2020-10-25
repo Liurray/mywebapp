@@ -206,9 +206,9 @@
                         	}
                     		});
 						}
-					function updateOfflineStatus() { /*更新未連線
+					function updateOfflineStatus() { /*更新未連線*/
                			firebase.database().ref('Lock').set({lock : "false"});
-						}*/
+						}
 						// 'slidechanged' event listener to update the firebase JSON whenever there is a change in slide.
 						// This can be further improved to have firebase authentication to restrict slide update only by the presenter.
 				
