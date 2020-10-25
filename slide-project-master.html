@@ -196,10 +196,10 @@
 									currentslideY : Reveal.getState().indexv
 									})
 								});
-					/*function updateOnlineStatus(){
+					function updateOnlineStatus(){
 						firebase.database().ref('Lock').on("value", function(snapshot) {
                         	if(snapshot.val().lock === 'true'){
-								/////////
+								retrun ;/////////
                         	}
                         	else{
                             	firebase.database().ref('Lock').set({lock : "true"});
@@ -213,8 +213,8 @@
 						// This can be further improved to have firebase authentication to restrict slide update only by the presenter.
 				
 				}
-				//window.addEventListener('online', updateOnlineStatus);
-    			//window.addEventListener('offline', updateOfflineStatus); 
+				window.addEventListener('online', updateOnlineStatus);
+    			window.addEventListener('offline', updateOfflineStatus); 
 			}
 			//////////////////////////////////////////////////////////////////////////////////////////////
 			
