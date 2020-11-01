@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- including FusionCharts core package JS files --> 
+    
+     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
+  
+   <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional 
+    </script>
+    <script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+        authDomain: "forchartjs.firebaseapp.com",
+        databaseURL: "https://forchartjs.firebaseio.com"
+    };
+  // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    </script>
+
+</head>
+<body> 
+    <script>
+        
+        var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
+        //city分布
+        var city1 =0 , city2 = 0,city3=0,city4=0,city5=0,city6=0; 
+        
+    firebase.database().ref("User/").on("value",function
+    (snapshot){
+         
+          snapshot.forEach(function(item){
+                if(parseFloat(item.val().age) < 18){
+                child=child+1;
+                }
+                else{
+                adult=adult+1; 
+                }
+                switch(item.val().goal) {
+                    case "學習":
+                        goal_stu+=1;
+                        break;
+                    case "休閒觀光":
+                        goal_rel+=1;
+                        break;
+                    default:
+                    break;
+                }
+                switch(item.val().city) {
+                    case "桃園市":
+                        city1+=1;
+                        break;
+                    case "台北市":
+                        city2+=1;
+                        break;
+                    case "台中市":
+                        city3+=1;
+                        break;
+                    case "新竹市":
+                        city4+=1;
+                        break;
+                    case "高雄市":
+                        city5+=1;
+                        break;
+                    case "新北市":
+                        city6+=1;
+                        break;
+                    default:
+                    break;
+                }
+               
+
+          })  
+     
+          
+          var ctx = document.getElementById('Agechart');
+            var Agechart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['成人', '孩童'],
+                datasets: [{
+                    label: '人數',
+                    data: [adult,child],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max:10,
+                            min:0,
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+     
+        var ctx = document.getElementById('Goalchart');
+            var Goalchart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['學習', '休閒觀光'],
+                datasets: [{
+                    label: '人口數',
+                    data: [goal_stu,goal_rel],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max:10,
+                            min:0,
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        document.getElementById('city').innerHTML = city1;
+        var ctx = document.getElementById('Citychart');
+            var Citychart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: ["桃園市","台北市","台中市","新竹市","高雄市","新北市"],
+                datasets: [{
+                    label: '人口數',
+                    data: [city1,city2,city3,city4,city5,city6],
+                    backgroundColor: [
+                        'red',
+                        'yellow',
+                        'blue',
+                        'black',
+                        'green',
+                        'grey'
+                    
+                    ],
+                    borderColor: [
+                        'red',
+                        'yellow',
+                        'blue',
+                        'black',
+                        'green',
+                        'grey'
+                    
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            max:10,
+                            min:0,
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+
+
+      //db close  
+    })
+            
+      
+      
+        
+       
+    </script>
+<div class="chart-container" style="position: relative; height:10vh; width:30vw">
+    <p>年齡分布</p>
+    <canvas id="Agechart"></canvas> 
+    <p>參觀目的</p>
+    <canvas id="Goalchart"></canvas>
+    <p>城市分布</p>
+    <canvas id="Citychart"></canvas>
+    <p id ="city">嗨</p>
+    
+
+    
+    
+</div>
+
+   
+
+</body>
+</html>
+
+
+
+
