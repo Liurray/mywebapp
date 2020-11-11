@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>練習google chart to reveal JS </title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="reveal.js-master/css/reveal.css">
+		<link rel="stylesheet" href="reveal.js-master/css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="reveal.js-master/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+         <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
+		
+		<style>
+		  #navbar {
+		    height: 40px;
+			margin: 0;
+			padding-top: 5px;
+			padding-left: 5px;
+			font-size: 24px;
+			color: white;
+			background-color: #26c6da;
+		  }
+		</style>
+		
+    </head>
+    <body>
+        <div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				
+				<section class="gsheet">
+				</section>			
+
+			</div>
+
+		</div>
+
+
+		<script src="reveal.js-master/lib/js/head.min.js"></script>
+        <script src="reveal.js-master/js/reveal.js"></script>
+
+        <script>
+           
+
+            function init() {
+	        // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+	        var url =
+		        'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/edit#gid=1094323715';
+	        var query = new google.visualization.Query(url);
+	        query.setQuery('select *');
+            query.send(processSheetsData);
+
+            var data = response.getDataTable();
+            var columns = data.getNumberOfColumns(); //Columns總數(num)
+            var rows = data.getNumberOfRows(); //Row總數(num)
+			var str = "";
+			//var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
+            //var array = [ ['Tag', 'Headline', 'Text', 'Media','Media描述','Media Thumbnail' ] ];
+            for (var r=0 ; r<rows ; r++) {
+	    // 取得試算表的欄位資料存入前述陣列中 構成revealJS
+		if( data.getFormattedValue(r,0)==='@')  str+='<section>';
+		str += '<section data-background="' + data.getFormattedValue(r,7) + '">';
+		str +=     '<p style="font-size: x-large; font-weight: bold;">' + data.getFormattedValue(r,1) + '</p>';
+			if ( data.getFormattedValue(r,3).search('http') == 0 ) { 	// Media欄位內容若以'http'開頭就是圖檔
+							str += '<img data-src="' + data.getFormattedValue(r,3) + '" style="width: 100%; border-style: none;">'; }
+						else {						 // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
+							str += data.getFormattedValue(r,3); }	 // https://github.com/hakimel/reveal.js/#lazy-loading
+						
+						if ( data.getFormattedValue(r,2) != null ) {
+							str += '<p style="font-size: large; font-weight: bold;">' + data.getFormattedValue(r,2) + '</p>'; }
+						
+						str += '</section>';
+						
+						// 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
+						if ( data.getFormattedValue(r,0)=='#' ) str+='</section>';
+					gsheetClass.outerHTML=str; // it's simple replacement of whole element with contents of str var
+					Reveal.sync();
+					
+				
+		}
+	}
+        </script>
+        
+
+
+
+
+
+
+
+
+
+
+
+    </body>
+    </html>
