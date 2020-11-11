@@ -55,6 +55,18 @@
 	<script src="reveal.js-master/lib/js/head.min.js"></script>
 	<script src="reveal.js-master/js/reveal.js"></script>
   <script>
+	// 取得網址裡的參數   
+	function GetUrlVar(VarName)   
+			{  
+			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");  
+			var regexS = "[\\?&]" + VarName + "=([^&#]*)";  
+			var regex = new RegExp(regexS);  
+			var results = regex.exec(window.location.href);  
+			if (results == null)  
+			  return "";  
+			else  
+			  return results[1];  
+			}  		  
 	google.charts.load('current', {packages: ['corechart', 'bar']});
 	
   //window.onload = function() { init() };
@@ -83,14 +95,17 @@
 					{ src: 'plugin/notes/notes.js', async: true }
 				]
 			});
+
   google.charts.setOnLoadCallback(init);
+  //url = 'https://docs.google.com/spreadsheets/d/' + GetUrlVar('GSheet') + '/pubhtml';
   var target_gsheet_class_once = 'gsheet';
   
   
 	function init() {
 	  // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
-	  var url =
-		'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/edit#gid=1094323715';
+	  var url = 'https://docs.google.com/spreadsheets/d/' + GetUrlVar('GSheet') + '/pubhtml';
+	  //var url =https://docs.google.com/spreadsheets/d/e/2PACX-1vRrhjR-ECqPURpHmoHYQItpLzLmyXqqWwcY0qoikpoDRbunf-mHFCIE-MJT7xd9Uc7t5zHcjqc1Y5fu/pubhtml
+		//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/edit#gid=1094323715';
 	  var query = new google.visualization.Query(url);
 	  query.setQuery('select *');
 	  query.send(processSheetsData);
