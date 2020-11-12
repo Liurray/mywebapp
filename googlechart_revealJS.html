@@ -55,7 +55,7 @@
 	<script src="reveal.js-master/lib/js/head.min.js"></script>
 	<script src="reveal.js-master/js/reveal.js"></script>
   <script>
-	  
+	  //網址分析 處理網頁傳值
 	google.charts.load('current', {packages: ['corechart', 'bar']});
 		// 取得網址裡的參數   
 		function GetUrlVar(VarName)   
@@ -69,7 +69,7 @@
 			else  
 			  return results[1];  
 			}  		
-			
+			console.log(GetUrlVar("Tour-ID"))
 	
   //window.onload = function() { init() };
   Reveal.initialize({
@@ -98,7 +98,7 @@
 				]
 			});
 
-			var public_url ='https://docs.google.com/spreadsheets/d/' + GetUrlVar('GSheet') + '/pubhtml';
+			var public_url ='https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'+'/gviz/tq?sheet=' + GetUrlVar('Tour-ID') ;
   google.charts.setOnLoadCallback(init);
   var target_gsheet_class_once = 'gsheet';
   
@@ -106,7 +106,7 @@
 	function init() {
 	  // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
 	  //var url =
-		//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/edit#gid=1094323715';
+		//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
 	  var query = new google.visualization.Query(public_url);
 	  query.setQuery('select *');
 	  query.send(processSheetsData);
