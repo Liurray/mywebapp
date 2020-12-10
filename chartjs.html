@@ -4,7 +4,8 @@
      <!-- including FusionCharts core package JS files --> 
     
      
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" 
+    integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-analytics.js"></script>
   
@@ -26,7 +27,10 @@
 </head>
 <body> 
     <script>
-        
+     let tour_url = new URL(location.href);
+     let tourid_params = tour_url.searchParams; 
+     let Tour_ID  = tourid_params.get('tourid');
+     console.log(Tour_ID);
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
         //city分布
         var city1 =0 , city2 = 0,city3=0,city4=0,city5=0,city6=0; 
@@ -35,6 +39,8 @@
     (snapshot){
          
           snapshot.forEach(function(item){
+          if(item.val().Tour_ID === Tour_ID ){
+          	
                 if(parseFloat(item.val().age) < 18){
                 child=child+1;
                 }
@@ -75,10 +81,12 @@
                 }
                
 
-          })  
+          }  
      
           
-          var ctx = document.getElementById('Agechart');
+          
+})
+	var ctx = document.getElementById('Agechart');
             var Agechart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -189,10 +197,9 @@
         });
 
 
-
-
-      //db close  
-    })
+      
+    })//db close  
+   
             
       
       
@@ -206,18 +213,11 @@
     <canvas id="Goalchart"></canvas>
     <p>城市分布</p>
     <canvas id="Citychart"></canvas>
-    <p id ="city">嗨</p>
-    
-
-    
-    
+    <p id ="city">嗨</p>   
 </div>
 
    
 
 </body>
 </html>
-
-
-
 
