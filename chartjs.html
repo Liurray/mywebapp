@@ -35,7 +35,7 @@
         //city分布
         var city1 =0 , city2 = 0,city3=0,city4=0,city5=0,city6=0; 
         
-    firebase.database().ref("User/").on("value",function
+    firebase.database().ref("User/").once("value",function
     (snapshot){
          
           snapshot.forEach(function(item){
