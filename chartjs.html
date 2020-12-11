@@ -25,12 +25,13 @@
     };
   // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+    
     </script>
 
 </head>
 <body> 
     <script>
-    document.getElementById('hi').innerHTML =window.location.href; 
+    
      let tour_url = new URL(location.href);
      let tourid_params = tour_url.searchParams; 
      let Tour_ID  = tourid_params.get('liff.state').substr(8);
@@ -201,7 +202,7 @@
         });
 
 
-      
+        
     })//db close  
    
             
@@ -217,9 +218,12 @@
     <canvas id="Goalchart"></canvas>
     <p>城市分布</p>
     <canvas id="Citychart"></canvas>
-    <p id ="hi">嗨</p>   
+    <p id='divtest'>000></p>
 </div>
-
+<script>
+    document.getElementById('divtest').innerHTML = location.href ;    //目前的網址為
+ 
+</script>
    
 
 </body>
