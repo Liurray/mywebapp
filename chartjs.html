@@ -32,8 +32,8 @@
 <body> 
     <script>
     
-     let tour_url = new URL(location.href);
-     let tourid_params = tour_url.searchParams; 
+     let location_url = new URL(location.href); //https://sideprojectslide.netlify.app/chartjs?liff.state=%3Ftouri......
+     let tourid_params = location_url.searchParams.toString(); // "liff.state=%3Ftourid%3D0"
      let Tour_ID  = tourid_params.get('liff.state').substr(8);
      console.log(Tour_ID);
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
