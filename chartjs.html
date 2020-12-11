@@ -30,6 +30,7 @@
 </head>
 <body> 
     <script>
+    document.getElementById('hi').innerHTML =window.location.href; 
      let tour_url = new URL(location.href);
      let tourid_params = tour_url.searchParams; 
      let Tour_ID  = tourid_params.get('liff.state').substr(8);
@@ -207,7 +208,7 @@
       
       
         
-      document.getElementById('hi').innerHTML =window.location.href;   
+        
     </script>
 <div class="chart-container" style="position: relative">
     <p>年齡分布</p>
@@ -216,7 +217,7 @@
     <canvas id="Goalchart"></canvas>
     <p>城市分布</p>
     <canvas id="Citychart"></canvas>
-    <p id ="hi"">嗨</p>   
+    <p id ="hi">嗨</p>   
 </div>
 
    
