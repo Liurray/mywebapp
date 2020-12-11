@@ -29,7 +29,7 @@
     <script>
      let tour_url = new URL(location.href);
      let tourid_params = tour_url.searchParams; 
-     let Tour_ID  = tourid_params.get('tourid');
+     let Tour_ID  = tourid_params.get('liff.state').substr(8);
      console.log(Tour_ID);
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
         //city分布
