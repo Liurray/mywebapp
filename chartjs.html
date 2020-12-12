@@ -56,20 +56,7 @@
         console.log(tourid_params.toString());
         let Tour_ID  = tourid_params.toString().substr(7);
         console.log(Tour_ID);
-        //***//
-
-
-
-
-
-
-     }).catch(function(error) {
-        console.log(error);
-    });
-     
-     
-     /*let Tour_ID  = tourid_params.get('liff.state').substr(8);
-     console.log(Tour_ID);
+        //**google chartJS處理開始*//
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
         //city分布
         var city1 =0 , city2 = 0,city3=0,city4=0,city5=0,city6=0; 
@@ -238,6 +225,21 @@
 
         
     })//db close  */
+
+
+
+
+
+
+
+
+
+     }).catch(function(error) {
+        console.log(error);
+    });//liff 結尾
+     
+     
+        
    
             
       
@@ -246,14 +248,14 @@
         
     </script>
 <div class="chart-container" style="position: relative">
-    <!--
+    
     <p>年齡分布</p>
     <canvas id="Agechart"></canvas> 
     <p>參觀目的</p>
     <canvas id="Goalchart"></canvas>
     <p>城市分布</p>
     <canvas id="Citychart"></canvas>
-    <p id ="city">嗨</p>-->
+    <p id ="city">嗨</p>
     <p id='divtest'>000></p>
 </div>
 <script>
