@@ -49,13 +49,8 @@
      }).then(function() {
         console.log('LIFF init');
         //這邊開始liff的app程式
-        let location_url = new URL(location.href); //https://sideprojectslide.netlify.app/chartjs?liff.state=%3Ftouri......
-        //驗證
-        console.log(location_url.toString());
-        let tourid_params = location_url.searchParams; 
-        console.log(tourid_params.toString());
-        let Tour_ID  = tourid_params.get('liff.state').substr(8);
-
+        let urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams.substr(6));
 
 
 
