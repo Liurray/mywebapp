@@ -48,6 +48,7 @@
         liffId: liffID
      }).then(function() {
         console.log('LIFF 程式初始化....');
+        
         //這邊開始liff的app程式
         let location_url = new URL(location.href); //https://sideprojectslide.netlify.app/chartjs?liff.state=%3Ftouri......
         //驗證
@@ -56,6 +57,7 @@
         console.log(tourid_params.toString());
         let Tour_ID  = tourid_params.toString().substr(7);
         console.log(Tour_ID);
+        document.title= Tour_ID+'報名人數統計圖表';
         //**google chartJS處理開始*//
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
         //city分布
