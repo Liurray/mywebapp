@@ -39,8 +39,26 @@
     firebase.initializeApp(firebaseConfig);
     
     </script>
+    <script> //呼叫標題函數
+            function gettitle(tourID){
+            var start = new Date().getTime();
+            firebase.database().ref('Guide/G123/Tour/'+tourID).once("value",function
+            (snapshot){
+                document.title= snapshot.val().Tour_Title+'報名人數統計圖表';
+            })
+            var end = new Date().getTime();
+            document.getElementById('title_time').innerHTML = (end - start).toString();
+            
+        }
+    </script>
+
+
+
+
+
 
 </head>
+
 <body> 
     <script>
      var liffID ="1655371574-LJoBZw1o";
@@ -57,6 +75,8 @@
         console.log(tourid_params.toString());
         let Tour_ID  = tourid_params.toString().substr(7);
         console.log(Tour_ID);
+        gettitle(Tour_ID);
+        var start = new Date().getTime();
         firebase.database().ref('Guide/G123/Tour/'+Tour_ID).once("value",function
         (snapshot){
             document.title= snapshot.val().Tour_Title+'報名人數統計圖表';
@@ -254,7 +274,8 @@
         
     </script>
 <div class="chart-container" style="position: relative">
-    
+    <p id = 'title_time'>0</p>
+    <p id = 'chartjs_time'>0</p>
     <p>年齡分布</p>
     <canvas id="Agechart"></canvas> 
     <p>參觀目的</p>
