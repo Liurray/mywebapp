@@ -76,11 +76,8 @@
         let Tour_ID  = tourid_params.toString().substr(7);
         console.log(Tour_ID);
         gettitle(Tour_ID);
-        var start = new Date().getTime();
-        firebase.database().ref('Guide/G123/Tour/'+Tour_ID).once("value",function
-        (snapshot){
-            document.title= snapshot.val().Tour_Title+'報名人數統計圖表';
-        })
+ 
+     
         
         //**google chartJS處理開始*//
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
