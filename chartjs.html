@@ -60,18 +60,18 @@
 
 
 
-        firebase.database().ref('Guide/G123/Tour/'+Tour_ID).once("value",function
+        /*firebase.database().ref('Guide/G123/Tour/'+Tour_ID).once("value",function
         (snapshot){
             console.log('title')
             document.title= snapshot.val().Tour_Title+'報名人數統計圖表';
         })
         
-        //**google chartJS處理開始*//
+        //**google chartJS處理開始*/
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
         //city分布
         var city1 =0 , city2 = 0,city3=0,city4=0,city5=0,city6=0; 
         
-    firebase.database().ref("User/").once("value",function
+    /*firebase.database().ref("User/").once("value",function
     (snapshot){
          
           snapshot.forEach(function(item){
@@ -121,7 +121,7 @@
      
           
           
-})
+})*/
 	var ctx = document.getElementById('Agechart');
             var Agechart = new Chart(ctx, {
             type: 'bar',
@@ -129,7 +129,7 @@
                 labels: ['成人', '孩童'],
                 datasets: [{
                     label: '人數',
-                    data: [adult,child],
+                    data: [7,8],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)'
@@ -163,7 +163,7 @@
                 labels: ['學習', '休閒觀光'],
                 datasets: [{
                     label: '人口數',
-                    data: [goal_stu,goal_rel],
+                    data: [5,9],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)'
@@ -197,7 +197,7 @@
                 labels: ["桃園市","台北市","台中市","新竹市","高雄市","新北市"],
                 datasets: [{
                     label: '人口數',
-                    data: [city1,city2,city3,city4,city5,city6],
+                    data: [1,2,2,4,5,6],
                     backgroundColor: [
                         'red',
                         'yellow',
@@ -234,7 +234,7 @@
 
 
         
-    })//db close  */
+    //})//db close  */
 
 
 
