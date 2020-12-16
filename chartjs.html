@@ -98,7 +98,7 @@
             //--改標題--
             $.ajax(User_setting).done(function (response) {
                 //console.log(response);
-                for (var i = 0; i < response.length; i++) {
+                for (var i in response) {
                     if (response[i].Tour_ID === Tour_ID) {
                         if (parseFloat(response[i].age) < 18) {
                             child = child + 1;
@@ -140,6 +140,9 @@
                         }
                     }
                 }
+                console.log(`已完成圖表統計:` + adult + " " + child + " " + goal_rel + " " + goal_stu +
+                    `城市分布` + city1 + " " + city2 + " " + city3 + " " + city4 + " " + city5 + " " +
+                    city6);
                 var ctx = document.getElementById('Agechart');
                 var Agechart = new Chart(ctx, {
                     type: 'bar',
