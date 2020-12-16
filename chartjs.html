@@ -130,13 +130,8 @@
 
                 }
             }
-         }
-        
-            console.log(`已完成圖表統計:`+adult +" "+ child +" " +goal_rel +" "+goal_stu+`城市分布`+city1+" "+city2 +" "+city3+" "+city4+" "+city5+" "+city6);
-        })
-  
-   
-	var ctx = document.getElementById('Agechart');
+         }  
+         var ctx = document.getElementById('Agechart');
             var Agechart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -246,6 +241,12 @@
             }
         });
 
+        
+            console.log(`已完成圖表統計:`+adult +" "+ child +" " +goal_rel +" "+goal_stu+`城市分布`+city1+" "+city2 +" "+city3+" "+city4+" "+city5+" "+city6);
+        })
+  
+   
+	
 
         
     //})//db close  */
