@@ -58,13 +58,13 @@
         console.log(tourid_params.toString());
         let Tour_ID  = tourid_params.toString().substr(7);
         console.log(Tour_ID);
-        var settings = {
+        var TourID_setting = {
         "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
         "method": "GET",
         "timeout": 0,
         };
         //--改標題--
-        $.ajax(settings).done(function (response) {
+        $.ajax(TourID_setting).done(function (response) {
          //console.log(response);
          document.title= response[Tour_ID].Tour_Title+'報名人數統計圖表';
             console.log(`已完成標題更新:`+response[Tour_ID].Tour_Title);
@@ -73,30 +73,30 @@
     
 
 
-        /*firebase.database().ref('Guide/G123/Tour/'+Tour_ID).once("value",function
-        (snapshot){
-            console.log('title')
-            document.title= snapshot.val().Tour_Title+'報名人數統計圖表';
-        })
+      
         
         //**google chartJS處理開始*/
+
         var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
         //city分布
         var city1 =0 , city2 = 0,city3=0,city4=0,city5=0,city6=0; 
-        
-    /*firebase.database().ref("User/").once("value",function
-    (snapshot){
-         
-          snapshot.forEach(function(item){
-          if(item.val().Tour_ID === Tour_ID ){
-          	
-                if(parseFloat(item.val().age) < 18){
-                child=child+1;
+        var User_setting = {
+        "url": "https://forchartjs.firebaseio.com/User.json",
+        "method": "GET",
+        "timeout": 0,
+        };
+        //--改標題--
+        $.ajax(settings).done(function (response) {
+         //console.log(response);
+         for(var i = 0;i < response.length; i ++){
+            if(response[i].Tour_ID === Tour_ID){
+                if(parseFloat(response[i].age) < 18){
+                    child=child+1;
                 }
                 else{
-                adult=adult+1; 
+                    adult=adult+1; 
                 }
-                switch(item.val().goal) {
+                switch(response[i].goal) {
                     case "學習":
                         goal_stu+=1;
                         break;
@@ -106,7 +106,7 @@
                     default:
                     break;
                 }
-                switch(item.val().city) {
+                switch(response[i].city){
                     case "桃園市":
                         city1+=1;
                         break;
@@ -127,14 +127,15 @@
                         break;
                     default:
                     break;
-                }
-               
 
-          }  
-     
-          
-          
-})*/
+                }
+            }
+         }
+        
+            console.log(`已完成圖表統計:`);
+        })
+  
+   
 	var ctx = document.getElementById('Agechart');
             var Agechart = new Chart(ctx, {
             type: 'bar',
@@ -142,7 +143,7 @@
                 labels: ['成人', '孩童'],
                 datasets: [{
                     label: '人數',
-                    data: [7,8],
+                    data: [adult,child],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)'
@@ -176,7 +177,7 @@
                 labels: ['學習', '休閒觀光'],
                 datasets: [{
                     label: '人口數',
-                    data: [5,9],
+                    data: [goal_stu,goal_rel],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)'
@@ -210,7 +211,7 @@
                 labels: ["桃園市","台北市","台中市","新竹市","高雄市","新北市"],
                 datasets: [{
                     label: '人口數',
-                    data: [1,2,2,4,5,6],
+                    data: [city1,city2,city3,city4,city5,city6],
                     backgroundColor: [
                         'red',
                         'yellow',
