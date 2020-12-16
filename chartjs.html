@@ -1,254 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!--liff console api
-     <!-- including FusionCharts core package JS files --> 
-     <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <!-- including FusionCharts core package JS files -->
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-     <script>
-       var vConsole = new VConsole();
-     </script>
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>報名人數統計</title>
-        <link rel="stylesheet" href="style.css">
+    <script>
+        var vConsole = new VConsole();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>報名人數統計</title>
+    <link rel="stylesheet" href="style.css">
     <!--LIFF SDK引用-->
-    <script charset="utf-8" src="sdk.js"></script>    
- 
+    <script charset="utf-8" src="sdk.js"></script>
 
-    
-    
 
-    <script src="chartjs.js" ></script>
+
+
+
+    <script src="chartjs.js"></script>
     <script src="firebase-app.js"></script>
     <script src="firebase-analytics.js"></script>
-  
-   <script src="firebase-database.js"></script>
+
+    <script src="firebase-database.js"></script>
     <script>
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional 
     </script>
-    
+
     <script>
         //firebase init app
-    var firebaseConfig = {
-        apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
-        authDomain: "forchartjs.firebaseapp.com",
-        databaseURL: "https://forchartjs.firebaseio.com"
-    };
-  // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
     </script>
 
 </head>
-<body> 
+
+<body>
     <script>
-     var liffID ="1655371574-LJoBZw1o";
-     liff.init({
-        liffId: liffID
-     }).then(function() {
-        console.log('LIFF 程式初始化....');
-        
-        //這邊開始liff的app程式
-        let location_url = new URL(location.href); //https://sideprojectslide.netlify.app/chartjs?liff.state=%3Ftouri......
-        //驗證
-        console.log(location_url.toString());
-        let tourid_params = location_url.searchParams; 
-        console.log(tourid_params.toString());
-        let Tour_ID  = tourid_params.toString().substr(7);
-        console.log(Tour_ID);
-        var TourID_setting = {
-        "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
-        "method": "GET",
-        "timeout": 0,
-        };
-        //--改標題--
-        $.ajax(TourID_setting).done(function (response) {
-         //console.log(response);
-         document.title= response[Tour_ID].Tour_Title+'報名人數統計圖表';
-            console.log(`已完成標題更新:`+response[Tour_ID].Tour_Title);
-        })
-  
-    
+        var liffID = "1655371574-LJoBZw1o";
+        liff.init({
+            liffId: liffID
+        }).then(function () {
+            console.log('LIFF 程式初始化....');
+
+            //這邊開始liff的app程式
+            let location_url = new URL(location
+            .href); //https://sideprojectslide.netlify.app/chartjs?liff.state=%3Ftouri......
+            //驗證
+            console.log(location_url.toString());
+            let tourid_params = location_url.searchParams;
+            console.log(tourid_params.toString());
+            let Tour_ID = tourid_params.toString().substr(7);
+            console.log(Tour_ID);
+            var TourID_setting = {
+                "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
+                "method": "GET",
+                "timeout": 0,
+            };
+            //--改標題--
+            $.ajax(TourID_setting).done(function (response) {
+                //console.log(response);
+                document.title = response[Tour_ID].Tour_Title + '報名人數統計圖表';
+                console.log(`已完成標題更新:` + response[Tour_ID].Tour_Title);
+            })
 
 
-      
-        
-        //**google chartJS處理開始*/
 
-        var adult = 0 ,child = 0,goal_stu = 0,goal_rel = 0;
-        //city分布
-        var city1 =0 , city2 = 0,city3=0,city4=0,city5=0,city6=0; 
-        var User_setting = {
-        "url": "https://forchartjs.firebaseio.com/User.json",
-        "method": "GET",
-        "timeout": 0,
-        };
-        //--改標題--
-        $.ajax(User_setting).done(function (response) {
-         //console.log(response);
-         for(var i = 0;i < response.length; i ++){
-            if(response[i].Tour_ID === Tour_ID){
-                if(parseFloat(response[i].age) < 18){
-                    child=child+1;
-                }
-                else{
-                    adult=adult+1; 
-                }
-                switch(response[i].goal) {
-                    case "學習":
-                        goal_stu+=1;
-                        break;
-                    case "休閒觀光":
-                        goal_rel+=1;
-                        break;
-                    default:
-                    break;
-                }
-                switch(response[i].city){
-                    case "桃園市":
-                        city1+=1;
-                        break;
-                    case "台北市":
-                        city2+=1;
-                        break;
-                    case "台中市":
-                        city3+=1;
-                        break;
-                    case "新竹市":
-                        city4+=1;
-                        break;
-                    case "高雄市":
-                        city5+=1;
-                        break;
-                    case "新北市":
-                        city6+=1;
-                        break;
-                    default:
-                    break;
 
-                }
-            }
-         }
-        
-            console.log(`已完成圖表統計:`+adult +" "+ child +" " +goal_rel +" "+goal_stu+`城市分布`+city1+" "+city2 +" "+city3+" "+city4+" "+city5+" "+city6);
-        })
-  
-   
-	var ctx = document.getElementById('Agechart');
-            var Agechart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['成人', '孩童'],
-                datasets: [{
-                    label: '人數',
-                    data: [adult,child],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)'
-                    
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            max:10,
-                            min:0,
-                            beginAtZero: true
+
+
+            //**google chartJS處理開始*/
+
+            var adult = 0,
+                child = 0,
+                goal_stu = 0,
+                goal_rel = 0;
+            //city分布
+            var city1 = 0,
+                city2 = 0,
+                city3 = 0,
+                city4 = 0,
+                city5 = 0,
+                city6 = 0;
+            var User_setting = {
+                "url": "https://forchartjs.firebaseio.com/User.json",
+                "method": "GET",
+                "timeout": 0,
+            };
+            //--改標題--
+            $.ajax(User_setting).done(function (response) {
+                //console.log(response);
+                for (var i = 0; i < response.length; i++) {
+                    if (response[i].Tour_ID === Tour_ID) {
+                        if (parseFloat(response[i].age) < 18) {
+                            child = child + 1;
+                        } else {
+                            adult = adult + 1;
                         }
-                    }]
-                }
-            }
-        });
-     
-        var ctx = document.getElementById('Goalchart');
-            var Goalchart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['學習', '休閒觀光'],
-                datasets: [{
-                    label: '人口數',
-                    data: [goal_stu,goal_rel],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
-                    
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)'
-                    
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            max:10,
-                            min:0,
-                            beginAtZero: true
+                        switch (response[i].goal) {
+                            case "學習":
+                                goal_stu += 1;
+                                break;
+                            case "休閒觀光":
+                                goal_rel += 1;
+                                break;
+                            default:
+                                break;
                         }
-                    }]
-                }
-            }
-        });
-        
-        var ctx = document.getElementById('Citychart');
-            var Citychart = new Chart(ctx, {
-            type: 'horizontalBar',
-            data: {
-                labels: ["桃園市","台北市","台中市","新竹市","高雄市","新北市"],
-                datasets: [{
-                    label: '人口數',
-                    data: [city1,city2,city3,city4,city5,city6],
-                    backgroundColor: [
-                        'red',
-                        'yellow',
-                        'blue',
-                        'black',
-                        'green',
-                        'grey'
-                    
-                    ],
-                    borderColor: [
-                        'red',
-                        'yellow',
-                        'blue',
-                        'black',
-                        'green',
-                        'grey'
-                    
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            max:10,
-                            min:0,
-                            beginAtZero: true
+                        switch (response[i].city) {
+                            case "桃園市":
+                                city1 += 1;
+                                break;
+                            case "台北市":
+                                city2 += 1;
+                                break;
+                            case "台中市":
+                                city3 += 1;
+                                break;
+                            case "新竹市":
+                                city4 += 1;
+                                break;
+                            case "高雄市":
+                                city5 += 1;
+                                break;
+                            case "新北市":
+                                city6 += 1;
+                                break;
+                            default:
+                                break;
+
                         }
-                    }]
+                    }
                 }
-            }
-        });
+                var ctx = document.getElementById('Agechart');
+                var Agechart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['成人', '孩童'],
+                        datasets: [{
+                            label: '人數',
+                            data: [adult, child],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)'
+
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)'
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    max: 10,
+                                    min: 0,
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+                var ctx = document.getElementById('Goalchart');
+                var Goalchart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['學習', '休閒觀光'],
+                        datasets: [{
+                            label: '人口數',
+                            data: [goal_stu, goal_rel],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)'
+
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)'
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    max: 10,
+                                    min: 0,
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+                var ctx = document.getElementById('Citychart');
+                var Citychart = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: ["桃園市", "台北市", "台中市", "新竹市", "高雄市", "新北市"],
+                        datasets: [{
+                            label: '人口數',
+                            data: [city1, city2, city3, city4, city5, city6],
+                            backgroundColor: [
+                                'red',
+                                'yellow',
+                                'blue',
+                                'black',
+                                'green',
+                                'grey'
+
+                            ],
+                            borderColor: [
+                                'red',
+                                'yellow',
+                                'blue',
+                                'black',
+                                'green',
+                                'grey'
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    max: 10,
+                                    min: 0,
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
 
 
-        
-    //})//db close  */
+                console.log(`已完成圖表統計:` + adult + " " + child + " " + goal_rel + " " + goal_stu +
+                    `城市分布` + city1 + " " + city2 + " " + city3 + " " + city4 + " " + city5 + " " +
+                    city6);
+            })
+
+
+
+
+
+            //})//db close  */
 
 
 
@@ -258,36 +270,26 @@
 
 
 
-     }).catch(function(error) {
-        console.log(error);
-    });//liff 結尾
-     
-     
-        
-   
-            
-      
-      
-        
-        
+        }).catch(function (error) {
+            console.log(error);
+        }); //liff 結尾
     </script>
-<div class="chart-container" style="position: relative">
-    
-    <p>年齡分布</p>
-    <canvas id="Agechart"></canvas> 
-    <p>參觀目的</p>
-    <canvas id="Goalchart"></canvas>
-    <p>城市分布</p>
-    <canvas id="Citychart"></canvas>
-    
-    <p id='divtest'>000></p>
-</div>
-<script>
-    document.getElementById('divtest').innerHTML = location.href ;    //目前的網址為
- 
-</script>
-   
+    <div class="chart-container" style="position: relative">
+
+        <p>年齡分布</p>
+        <canvas id="Agechart"></canvas>
+        <p>參觀目的</p>
+        <canvas id="Goalchart"></canvas>
+        <p>城市分布</p>
+        <canvas id="Citychart"></canvas>
+
+        <p id='divtest'>000></p>
+    </div>
+    <script>
+        document.getElementById('divtest').innerHTML = location.href; //目前的網址為
+    </script>
+
 
 </body>
-</html>
 
+</html>
