@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <script>
+        $(document).ready(function () {
+            //slide function btn操作
+            $("#slidefunctions").click(function () {
+                $("#findkey").slideToggle();
+                $("#openslide").slideToggle();
+
+            });
+            //WebRTC function btn操作
+            $("#RTC").click(function () {
+
+                $("#openRTC").slideToggle();
+
+            });
+
+
+
+
+
+
+        });
+    </script>
+    <!-- Dropdown Trigger -->
+    <div class="wrap">
+        <div class="Header" style="text-align:center">
+            <h4>請選擇要進行的操作</h4>
+        </div>
+
+
+        <div class="slide" style="text-align:center">
+            <ul>
+                <button class="waves-effect waves-light btn-large" id="slidefunctions" href='#'
+                    data-activates='dropdown1' style="text-align:centr ; background-color : #005AB5"><i
+                        class="material-icons left">description</i>查看簡報</button>
+
+                <div class="slidekey" style="text-align:center">
+                    <button class="waves-effect waves-light btn" id="findkey" style="display:none; background-color : #46A3FF	"><i
+                            class="material-icons left">lock_open</i>查看簡報金鑰</button>
+
+
+                    <div class="openslide" style="text-align:center">
+                        <button class="waves-effect waves-light btn" id="openslide" style="display:none; background-color : #46A3FF	"><i
+                                class="material-icons left">smartphone</i>進行簡報導覽</button>
+                    </div>
+
+            </ul>
+        </div>
+
+    </div>
+    <!--進入語音廣播/翻譯-->
+    <ul>
+        <div class="WebRTC" style="text-align:center">
+            <button class="waves-effect waves-light btn-large" id="RTC"
+                style="text-align:center; background-color : #AE0000"><i
+                    class="material-icons left">mic_none</i>語音廣播</button>
+            <div class="openwebRTC" style="text-align:center">
+                <div class="openRTC" style="text-align:center">
+                    <button class="waves-effect waves-light btn" id="openRTC" style="display:none; background-color : 	#FF0000"><i class="material-icons left">mic</i>進入語音廣播</button>
+                </div>
+            </div>
+        </div>
+    </ul>
+    <!--完成導覽-->
+    <div class="slide" style="text-align:center">
+        <button class="waves-effect waves-light btn-large" id="lol"
+            style="text-align:center; background-color :#64A600"><i class="material-icons left">check</i>完成導覽</button>
+
+
+    </div>
+
+
+    </div>
+
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+
+</html>
