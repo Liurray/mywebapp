@@ -94,12 +94,16 @@
                 $('#done').click(function () {
                     var keyRandom = confirm("您確定要完成並刷新您的金鑰嗎 ?");
                     if (keyRandom == true) {
-
+                        var new_key = Math.random().toString(36).substr(4,5);
                         //更新db資料
-                        firebase.database().ref('Guide/G123/Tour/'+Tour_ID).update({slide_key:Math.random().toString(36).substr(4,5)}).then(function(){
-                            location.reload();
+                        firebase.database().ref('Guide/G123/Tour/'+Tour_ID).update({slide_key:new_key})
+                        .then(function(){
+                            alert(`您已經更新此團金鑰為 :`+new_key).then(function(){
+                                location.reload();
+                            })
+                           
                         });
-                        //location.reload();
+                       
                         //delete
                     } else {
                         //don't delete
