@@ -9,31 +9,65 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js">
+        //vconsole
+    </script>
+    <script charset="utf-8" src="sdk.js">
+        //LIFF初始化 SDK.JS
+    </script>
+
+    <!--firebase用套件-->
+    <script src="firebase-app.js"></script>
+    <script src="firebase-analytics.js"></script>
+    <script src="firebase-database.js"></script>
+    <script>
+        //firebase init app
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+        var vConsole = new VConsole();
+    </script>
 </head>
 
 <body>
     <script>
-        $(document).ready(function () {
-            //slide function btn操作
-            $("#slidefunctions").click(function () {
-                $("#findkey").slideToggle();
-                $("#openslide").slideToggle();
+        //liff init 
+        var liffID = "1655371574-MzZr1K3Z";
+        liff.init({
+            liffId: liffID
+        }).then(function () {
+            document.title = "正在進行台中之旅的導覽";
+            $(document).ready(function () {
+                //slide function btn操作
+                $("#slidefunctions").click(function () {
+                    $("#findkey").slideToggle();
+                    $("#openslide").slideToggle();
 
+                });
+                //WebRTC function btn操作
+                $("#RTC").click(function () {
+
+                    $("#openRTC").slideToggle();
+
+                });
             });
-            //WebRTC function btn操作
-            $("#RTC").click(function () {
-
-                $("#openRTC").slideToggle();
-
-            });
 
 
 
 
+        }).catch(function (error) {
+            console.log(error);
 
-
-        });
+        }); //liff結尾
     </script>
+
     <!-- Dropdown Trigger -->
     <div class="wrap">
         <div class="Header" style="text-align:center">
@@ -48,12 +82,14 @@
                         class="material-icons left">description</i>查看簡報</button>
 
                 <div class="slidekey" style="text-align:center">
-                    <button class="waves-effect waves-light btn" id="findkey" style="display:none; background-color : #46A3FF	"><i
+                    <button class="waves-effect waves-light btn" id="findkey"
+                        style="display:none; background-color : #46A3FF	"><i
                             class="material-icons left">lock_open</i>查看簡報金鑰</button>
 
 
                     <div class="openslide" style="text-align:center">
-                        <button class="waves-effect waves-light btn" id="openslide" style="display:none; background-color : #46A3FF	"><i
+                        <button class="waves-effect waves-light btn" id="openslide"
+                            style="display:none; background-color : #46A3FF	"><i
                                 class="material-icons left">smartphone</i>進行簡報導覽</button>
                     </div>
 
@@ -69,7 +105,9 @@
                     class="material-icons left">mic_none</i>語音廣播</button>
             <div class="openwebRTC" style="text-align:center">
                 <div class="openRTC" style="text-align:center">
-                    <button class="waves-effect waves-light btn" id="openRTC" style="display:none; background-color : 	#FF0000"><i class="material-icons left">mic</i>進入語音廣播</button>
+                    <button class="waves-effect waves-light btn" id="openRTC"
+                        style="display:none; background-color : 	#FF0000"><i
+                            class="material-icons left">mic</i>進入語音廣播</button>
                 </div>
             </div>
         </div>
