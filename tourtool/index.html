@@ -43,13 +43,33 @@
         liff.init({
             liffId: liffID
         }).then(function () {
+
+
+            //取得參數  哪一團的id
             let location_url = new URL(location.href);
             console.log(location_url.toString());
             let tourid_params = location_url.searchParams;
             console.log(tourid_params.toString());
             let Tour_ID = tourid_params.toString().substr(7);
             console.log(Tour_ID);
-            document.title = "正在進行台中之旅的導覽";
+            var slide_key = 0;
+
+            var TourID_setting = {
+                "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
+                "method": "GET",
+                "timeout": 0,
+            };
+
+
+            //--改標題--
+            $.ajax(TourID_setting).done(function (response) {
+                //console.log(response);
+                document.title = "正在進行" + response[Tour_ID].Tour_Title + "導覽";
+                console.log(`已完成標題更新:` + response[Tour_ID].Tour_Title);
+                slidekey = response[Tour_ID].slide_key;
+                console.log(slidekey);
+            })
+
             $(document).ready(function () {
                 //slide function btn操作
                 $("#slidefunctions").click(function () {
@@ -63,6 +83,28 @@
                     $("#openRTC").slideToggle();
 
                 });
+
+                $('#findkey').click(function () {
+                    firebase.database().ref('Guide/G123/Tour/'+Tour_ID).once("value",function(snapshot){
+                        $('#password').text(snapshot.val().slide_key);
+                    });
+                    
+                })
+
+                $('#done').click(function () {
+                    var keyRandom = confirm("您確定要完成並刷新您的金鑰嗎 ?");
+                    if (keyRandom == true) {
+
+                        //更新db資料
+                        firebase.database().ref('Guide/G123/Tour/'+Tour_ID).update({slide_key:Math.random().toString(36).substr(4,5)}).then(function(){
+                            location.reload();
+                        });
+                        //location.reload();
+                        //delete
+                    } else {
+                        //don't delete
+                    }
+                })
             });
 
 
@@ -120,8 +162,17 @@
     </ul>
     <!--完成導覽-->
     <div class="slide" style="text-align:center">
-        <button class="waves-effect waves-light btn-large" id="lol"
+        <button class="waves-effect waves-light btn-large" id="done"
             style="text-align:center; background-color :#64A600"><i class="material-icons left">check</i>完成導覽</button>
+
+
+    </div>
+
+
+    </div>
+    <div class="key text" style="text-align:center">
+        <h4>此團金鑰為 : </h4>
+        <h2 id="password">0000</h2>
 
 
     </div>
