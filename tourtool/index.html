@@ -43,6 +43,12 @@
         liff.init({
             liffId: liffID
         }).then(function () {
+            let location_url = new URL(location.href);
+            console.log(location_url.toString());
+            let tourid_params = location_url.searchParams;
+            console.log(tourid_params.toString());
+            let Tour_ID = tourid_params.toString().substr(7);
+            console.log(Tour_ID);
             document.title = "正在進行台中之旅的導覽";
             $(document).ready(function () {
                 //slide function btn操作
