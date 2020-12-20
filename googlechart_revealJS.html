@@ -35,7 +35,11 @@
 		  background-color: #26c6da;
 		}
 	  </style>
-    
+	 <script charset="utf-8" src="sdk.js"></script>
+	 <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
+	 <script>
+        var vConsole = new VConsole();
+    </script>
   </head>
 
   <body>
@@ -70,6 +74,7 @@
 			  return results[1];  
 			}  		
 			console.log(GetUrlVar("Tour-ID"))
+			console.log(window.location.href);
 	
   //window.onload = function() { init() };
   Reveal.initialize({
