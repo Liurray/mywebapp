@@ -65,18 +65,11 @@
 	  liff.init({
             liffId: liffID
         }).then(function () {
-			
-		}).catch(function (error) {
-            console.log(error);
-
-        }); //liff結尾
-
-
-
-	  //網址分析 處理網頁傳值
+			console.log(window.location.href)
+			 //網址分析 處理網頁傳值
 	google.charts.load('current', {packages: ['corechart', 'bar']});
 		// 取得網址裡的參數   
-		function GetUrlVar(VarName)   
+		/*function GetUrlVar(VarName)   
 			{  
 			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");  
 			var regexS = "[\\?&]" + VarName + "=([^&#]*)";  
@@ -87,8 +80,8 @@
 			else  
 			  return results[1];  
 			}  		
-			console.log(GetUrlVar("Tour-ID"))
-			console.log(window.location.href);
+			console.log(GetUrlVar("Tour-ID"))*/
+		
 	
   //window.onload = function() { init() };
   Reveal.initialize({
@@ -117,7 +110,7 @@
 				]
 			});
 
-			var public_url ='https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'+'/gviz/tq?sheet=' + GetUrlVar('Tour-ID') ;
+			var public_url ='https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'+'/gviz/tq?sheet='; //+ GetUrlVar('Tour-ID') ;
   google.charts.setOnLoadCallback(init);
   var target_gsheet_class_once = 'gsheet';
   
@@ -167,6 +160,14 @@
      }
 	 }
 	
+		}).catch(function (error) {
+            console.log(error);
+
+        }); //liff結尾
+
+
+
+	 
 	</script>
 
   </body>
