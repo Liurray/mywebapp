@@ -67,7 +67,9 @@
 		liff.init({
 			liffId: liffID
 		}).then(function () {
+
 			console.log(window.location.href)
+			document.title ="正在進行" + GetUrlVar("tourid") +"的簡報導覽";
 			//網址分析 處理網頁傳值
 			google.charts.load('current', {
 				packages: ['corechart', 'bar']
