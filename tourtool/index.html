@@ -53,7 +53,10 @@
             let Tour_ID = tourid_params.toString().substr(7);
             console.log(Tour_ID);
             var slide_key = 0;
-
+            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
+                function (snapshot) {
+                    $('#update_time').text(snapshot.val().update_time);
+                });
             var TourID_setting = {
                 "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
                 "method": "GET",
@@ -93,9 +96,21 @@
                                 slide_key: new_key
                             })
                             .then(function () {
-                                alert(`您已經更新此團金鑰為 :` + new_key).then(function () {
-                                    location.reload();
-                                })
+                                var update_time = new Date().getFullYear() + "年" +
+                                    new Date().getMonth() + "月" + new Date().getDate() +
+                                    "日" + new Date().getHours() + "時" + new Date()
+                                    .getMinutes() + "分"
+                                firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
+                                    .update({
+                                        update_time: update_time
+                                    }).then(function () {
+                                        alert(`您已經更新此團金鑰為 :` + new_key).then(
+                                            function () {
+                                                
+                                                location.reload();
+                                            })
+                                    })
+
 
                             });
 
@@ -112,7 +127,7 @@
                         });
 
                 })
-                
+
                 $('#openslide').click(function () {
                     liff.openWindow({
                         url: "https://liff.line.me/1655371574-EAeo3lne?tourid=" +
@@ -194,6 +209,8 @@
     <div class="key text" style="text-align:center">
         <h4>此團金鑰為 : </h4>
         <h2 id="password">0000</h2>
+        <p>上次更新日期為</p>
+        <h4 id="update_time">0000</h4>
 
 
     </div>
