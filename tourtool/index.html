@@ -92,7 +92,11 @@
                     if (keyRandom == true) {
                         var new_key = Math.random().toString(36).substr(4, 5);
                         //更新db資料
-                        firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+                        if(Tour_ID ===""){
+                            alert(`您並沒有權限哦`);
+
+                        }else{
+                            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
                                 slide_key: new_key
                             })
                             .then(function () {
@@ -114,6 +118,8 @@
 
                             });
 
+                        }
+                        
                         //delete
                     } else {
                         //don't delete
@@ -129,11 +135,7 @@
                 })
 
                 $('#openslide').click(function () {
-                    liff.openWindow({
-                        url: "https://liff.line.me/1655371574-EAeo3lne?tourid=" +
-                            Tour_ID,
-                        external: false
-                    })
+                    window.location.href("https://liff.line.me/1655371574-EAeo3lne?tourid=" + Tour_ID)
                     console.log("開簡報")
 
                 })
