@@ -57,6 +57,10 @@
                 function (snapshot) {
                     $('#update_time').text(snapshot.val().update_time);
                 });
+            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
+                function (snapshot) {
+                    $('#password').text(snapshot.val().slide_key);
+                });
             var TourID_setting = {
                 "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
                 "method": "GET",
@@ -74,79 +78,75 @@
             })
 
             $(document).ready(function () {
-                //slide function btn操作
-                $("#slidefunctions").click(function () {
-                    $("#findkey").slideToggle();
-                    $("#openslide").slideToggle();
+                if (Tour_ID === "") {
+                    alert(`您並沒有權限哦`);
 
-                });
-                //WebRTC function btn操作
-                $("#RTC").click(function () {
+                } else {
 
-                    $("#openRTC").slideToggle();
 
-                });
+                    //slide function btn操作
+                    $("#slidefunctions").click(function () {
 
-                $('#done').click(function () {
-                    var keyRandom = confirm("您確定要完成並刷新您的金鑰嗎 ?");
-                    if (keyRandom == true) {
-                        var new_key = Math.random().toString(36).substr(4, 5);
-                        //更新db資料
-                        if(Tour_ID ===""){
-                            alert(`您並沒有權限哦`);
+                        $("#openslide").slideToggle();
 
-                        }else{
+                    });
+                    //WebRTC function btn操作
+                    $("#openRTC").click(function () {
+
+                        console.log("進入語音導覽")
+
+                    });
+
+                    $('#done').click(function () {
+                        var keyRandom = confirm("您確定要完成並刷新您的金鑰嗎 ?");
+                        if (keyRandom == true) {
+                            var new_key = Math.random().toString(36).substr(4, 5);
+                            //更新db資料
+
                             firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
-                                slide_key: new_key
-                            })
-                            .then(function () {
-                                var update_time = new Date().getFullYear() + "年" +
-                                    new Date().getMonth() + "月" + new Date().getDate() +
-                                    "日" + new Date().getHours() + "時" + new Date()
-                                    .getMinutes() + "分"
-                                firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
-                                    .update({
-                                        update_time: update_time
-                                    }).then(function () {
-                                        alert(`您已經更新此團金鑰為 :` + new_key).then(
-                                            function () {
-                                                
-                                                location.reload();
-                                            })
-                                    })
+                                    slide_key: new_key
+                                })
+                                .then(function () {
+                                    var update_time = new Date().getFullYear() + "年" +
+                                        new Date().getMonth() + "月" + new Date().getDate() +
+                                        "日" + new Date().getHours() + "時" + new Date()
+                                        .getMinutes() + "分"
+                                    firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
+                                        .update({
+                                            update_time: update_time
+                                        }).then(function () {
+                                            alert(`您已經更新此團金鑰為 :` + new_key).then(
+                                                function () {
+
+                                                    location.reload();
+                                                })
+                                        })
 
 
-                            });
+                                });
 
+
+
+                            //delete
+                        } else {
+                            //don't delete
                         }
-                        
-                        //delete
-                    } else {
-                        //don't delete
-                    }
-                })
-                //--小功能按鈕呼叫
-                $('#findkey').click(function () {
-                    firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
-                        function (snapshot) {
-                            $('#password').text(snapshot.val().slide_key);
-                        });
-
-                })
-
-                $('#openslide').click(function () {
-                    liff.openWindow({
-                        url: "https://liff.line.me/1655371574-EAeo3lne?tourid=" +
-                            Tour_ID,
-                        external: false
                     })
-                    console.log("開簡報")
+                    //--小功能按鈕呼叫
 
-                })
+                    $('#openslide').click(function () {
+                        liff.openWindow({
+                            url: "https://liff.line.me/1655371574-EAeo3lne?tourid=" +
+                                Tour_ID,
+                            external: false
+                        })
+                        console.log("開簡報")
+
+                    })
 
 
 
-
+                }
             });
 
 
@@ -166,40 +166,23 @@
 
 
         <div class="slide" style="text-align:center">
-            <ul>
-                <button class="waves-effect waves-light btn-large" id="slidefunctions" href='#'
-                    data-activates='dropdown1' style="text-align:centr ; background-color : #005AB5"><i
-                        class="material-icons left">description</i>查看簡報</button>
 
-                <div class="slidekey" style="text-align:center">
-                    <button class="waves-effect waves-light btn" id="findkey"
-                        style="display:none; background-color : #46A3FF	"><i
-                            class="material-icons left">lock_open</i>查看簡報金鑰</button>
+            <button class="waves-effect waves-light btn-large" id="openslide" href='#' data-activates='dropdown1'
+                style="text-align:centr ; background-color : #005AB5"><i
+                    class="material-icons left">description</i>查看簡報</button>
 
 
-                    <div class="openslide" style="text-align:center">
-                        <button class="waves-effect waves-light btn" id="openslide"
-                            style="display:none; background-color : #46A3FF	"><i
-                                class="material-icons left">smartphone</i>進行簡報導覽</button>
-                    </div>
 
-            </ul>
+
         </div>
 
     </div>
     <!--進入語音廣播/翻譯-->
     <ul>
         <div class="WebRTC" style="text-align:center">
-            <button class="waves-effect waves-light btn-large" id="RTC"
+            <button class="waves-effect waves-light btn-large" id="openRTC"
                 style="text-align:center; background-color : #AE0000"><i
                     class="material-icons left">mic_none</i>語音廣播</button>
-            <div class="openwebRTC" style="text-align:center">
-                <div class="openRTC" style="text-align:center">
-                    <button class="waves-effect waves-light btn" id="openRTC"
-                        style="display:none; background-color : 	#FF0000"><i
-                            class="material-icons left">mic</i>進入語音廣播</button>
-                </div>
-            </div>
         </div>
     </ul>
     <!--完成導覽-->
@@ -214,9 +197,9 @@
     </div>
     <div class="key text" style="text-align:center">
         <h4>此團金鑰為 : </h4>
-        <h2 id="password">0000</h2>
+        <h2 id="password"></h2>
         <p>上次更新日期為</p>
-        <h4 id="update_time">0000</h4>
+        <h4 id="update_time"></h4>
 
 
     </div>
