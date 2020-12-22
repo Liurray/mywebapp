@@ -67,12 +67,7 @@
 		liff.init({
 			liffId: liffID
 		}).then(function () {
-			if (!liff.isLoggedIn()) {
-				liff.login({
-					redirectUri: "https://liff.line.me/1655371574-EAeo3lne?tourid=0"
-				});
-				//Verify that the domain name and path (https://example.com/path) match the endpoint URL.
-			}
+			
 			console.log(window.location.href)
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
 			//網址分析 處理網頁傳值
