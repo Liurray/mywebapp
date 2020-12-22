@@ -92,34 +92,34 @@
                     if (keyRandom == true) {
                         var new_key = Math.random().toString(36).substr(4, 5);
                         //更新db資料
-                        if(Tour_ID ===""){
+                        if (Tour_ID === "") {
                             alert(`您並沒有權限哦`);
 
-                        }else{
+                        } else {
                             firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
-                                slide_key: new_key
-                            })
-                            .then(function () {
-                                var update_time = new Date().getFullYear() + "年" +
-                                    new Date().getMonth() + "月" + new Date().getDate() +
-                                    "日" + new Date().getHours() + "時" + new Date()
-                                    .getMinutes() + "分"
-                                firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
-                                    .update({
-                                        update_time: update_time
-                                    }).then(function () {
-                                        alert(`您已經更新此團金鑰為 :` + new_key).then(
-                                            function () {
-                                                
-                                                location.reload();
-                                            })
-                                    })
+                                    slide_key: new_key
+                                })
+                                .then(function () {
+                                    var update_time = new Date().getFullYear() + "年" +
+                                        new Date().getMonth() + "月" + new Date().getDate() +
+                                        "日" + new Date().getHours() + "時" + new Date()
+                                        .getMinutes() + "分"
+                                    firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
+                                        .update({
+                                            update_time: update_time
+                                        }).then(function () {
+                                            alert(`您已經更新此團金鑰為 :` + new_key).then(
+                                                function () {
+
+                                                    location.reload();
+                                                })
+                                        })
 
 
-                            });
+                                });
 
                         }
-                        
+
                         //delete
                     } else {
                         //don't delete
@@ -137,7 +137,13 @@
                 $('#openslide').click(function () {
                     let url = "https://liff.line.me/1655371574-EAeo3lne?tourid=" + Tour_ID;
                     console.log(url);
-                    location.href = url;
+                    if (!liff.isLoggedIn()) {
+                        liff.login({
+                            redirectUri: url
+                        });
+                        //Verify that the domain name and path (https://example.com/path) match the endpoint URL.
+                    }
+
                     console.log("開簡報")
 
                 })
