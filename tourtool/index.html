@@ -135,7 +135,9 @@
                 })
 
                 $('#openslide').click(function () {
-                    window.location.href("https://liff.line.me/1655371574-EAeo3lne?tourid=" + Tour_ID)
+                    let url = "https://liff.line.me/1655371574-EAeo3lne?tourid=" + Tour_ID;
+                    console.log(url);
+                    location.href = url;
                     console.log("開簡報")
 
                 })
