@@ -67,15 +67,6 @@
 		liff.init({
 			liffId: liffID
 		}).then(function () {
-			if (new URL(window.location).searchParams.get('liff.state')) return
-			const liffLoginRedirect = sessionStorage.getItem('liffLoginRedirect')
-			if (_.isString(liffLoginRedirect)) {
-				sessionStorage.removeItem('liffLoginRedirect')
-				location.href = liffLoginRedirect
-			}
-		}).then(function (){
-
-		
 
 			console.log(window.location.href)
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
