@@ -135,9 +135,11 @@
                 })
 
                 $('#openslide').click(function () {
-                    let url = "https://liff.line.me/1655371574-EAeo3lne?tourid=" + Tour_ID;
-                    console.log(url);
-                    location.href = url;
+                    liff.openWindow({
+                        url: "https://liff.line.me/1655371574-EAeo3lne?tourid=" +
+                            Tour_ID,
+                        external: false
+                    })
                     console.log("開簡報")
 
                 })
