@@ -67,7 +67,7 @@
 		liff.init({
 			liffId: liffID
 		}).then(function () {
-			var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
+			
 			console.log(window.location.href)
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
 			//網址分析 處理網頁傳值
@@ -86,7 +86,9 @@
 					return results[1];
 			}
 			console.log(GetUrlVar("tourid"))
-			console.log(window.location.href);
+			console.log(window.location.href).then(function(){
+				var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
+			});
 
 			//window.onload = function() { init() };
 			Reveal.initialize({
