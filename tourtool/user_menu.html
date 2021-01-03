@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js">
+        //vconsole
+    </script>
+    <script charset="utf-8" src="sdk.js">
+        //LIFF初始化 SDK.JS
+    </script>
+
+    <!--firebase用套件-->
+    <script src="firebase-app.js"></script>
+    <script src="firebase-analytics.js"></script>
+    <script src="firebase-database.js"></script>
+    <script>
+        //firebase init app
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+        var vConsole = new VConsole();
+    </script>
+</head>
+
+<body>
+    <script>
+        //liff init 
+        var liffID = "1655371574-MzZr1K3Z";
+        liff.init({
+            liffId: liffID
+        }).then(function () {
+
+
+            //取得參數  哪一團的id
+            let location_url = new URL(location.href);
+            console.log(location_url.toString());
+            let tourid_params = location_url.searchParams;
+            console.log(tourid_params.toString());
+            let Tour_ID = tourid_params.toString().substr(7);
+            console.log(Tour_ID);
+            var slide_key = 0;
+            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
+                function (snapshot) {
+                    $('#update_time').text(snapshot.val().update_time);
+                });
+            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
+                function (snapshot) {
+                    $('#password').text(snapshot.val().slide_key);
+                });
+            var TourID_setting = {
+                "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
+                "method": "GET",
+                "timeout": 0,
+            };
+
+
+            //--改標題--
+            $.ajax(TourID_setting).done(function (response) {
+                //console.log(response);
+                document.title = "正在進行" + response[Tour_ID].Tour_Title + "導覽";
+                console.log(`已完成標題更新:` + response[Tour_ID].Tour_Title);
+                slidekey = response[Tour_ID].slide_key;
+                console.log(slidekey);
+            })
+
+            $(document).ready(function () {
+                if (Tour_ID === "") {
+                    alert(`您並沒有權限哦`);
+
+                } else {
+
+
+                    //slide function btn操作
+              
+                    //WebRTC function btn操作
+                    $("#openRTC").click(function () {
+
+                        console.log("進入語音導覽")
+
+                    });
+
+                    $('#done').click(function () {
+                   
+                    })
+                    //--小功能按鈕呼叫
+
+                    $('#openslide').click(function () {
+                        liff.openWindow({
+                            url: "https://liff.line.me/1655371574-EAeo3lne?tourid=" +
+                                Tour_ID,
+                            external: false
+                        })
+                        console.log("開簡報")
+
+                    })
+
+
+
+                }
+            });
+
+
+
+
+        }).catch(function (error) {
+            console.log(error);
+
+        }); //liff結尾
+    </script>
+
+    <!-- Dropdown Trigger -->
+    <div class="wrap">
+        <div class="Header" style="text-align:center">
+            <h4>請選擇要進行的操作</h4>
+        </div>
+
+
+        <div class="slide" style="text-align:center">
+
+            <button class="waves-effect waves-light btn-large" id="openslide" href='#' data-activates='dropdown1'
+                style="text-align:centr ; background-color : #005AB5"><i
+                    class="material-icons left">description</i>查看簡報</button>
+
+
+
+
+        </div>
+
+    </div>
+    <!--進入語音廣播/翻譯-->
+    <ul>
+        <div class="WebRTC" style="text-align:center">
+            <button class="waves-effect waves-light btn-large" id="openRTC"
+                style="text-align:center; background-color : #AE0000"><i
+                    class="material-icons left">mic_none</i>語音廣播</button>
+        </div>
+    </ul>
+    <!--完成導覽-->
+    <div class="slide" style="text-align:center">
+        <button class="waves-effect waves-light btn-large" id="done"
+            style="text-align:center; background-color :#64A600"><i class="material-icons left">check</i>完成導覽</button>
+
+
+    </div>
+
+
+    </div>
+  
+
+      
+
+
+    </div>
+
+
+    </div>
+
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+</body>
+
+</html>
