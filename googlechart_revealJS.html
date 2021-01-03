@@ -14,6 +14,20 @@
 
 	<link rel="stylesheet" href="reveal.js-master/css/reveal.css">
 	<link rel="stylesheet" href="reveal.js-master/css/theme/white.css" id="theme">
+	 <!--firebase用套件-->
+	 <script src="firebase-app.js"></script>
+	 <script src="firebase-analytics.js"></script>
+	 <script src="firebase-database.js"></script>
+	 <script>
+		 //firebase init app
+		 var firebaseConfig = {
+			 apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+			 authDomain: "forchartjs.firebaseapp.com",
+			 databaseURL: "https://forchartjs.firebaseio.com"
+		 };
+		 // Initialize Firebase
+		 firebase.initializeApp(firebaseConfig);
+	 </script>
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="reveal.js-master/lib/css/zenburn.css">
@@ -68,17 +82,20 @@
 			liffId: liffID
 		}).then(function () {
 			var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
-			firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
+			let location_url = new URL(location.href);
+            console.log(location_url.toString());
+            let tourid_params = location_url.searchParams;
+            console.log(tourid_params.toString());
+            let Tour_ID = tourid_params.toString().substr(7);
+            console.log(Tour_ID);
+			firebase.database().ref('Guide/G123/Tour/'+Tour_ID ).on("value",
                 function (snapshot) {
-                   if(key !== snapshot.val().slide_key){
-					   alert("密碼錯誤")
-				   }
-				   
-                });
-			console.log(window.location.href)
-			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
-			//網址分析 處理網頁傳值
-			google.charts.load('current', {
+                  
+					 if(key !== snapshot.val().slide_key){
+						 alert("密碼錯誤 進入演示版簡報.......")
+					 }
+					 else{
+						google.charts.load('current', {
 				packages: ['corechart', 'bar']
 			});
 			// 取得網址裡的參數   
@@ -203,6 +220,14 @@
 					Reveal.sync();
 				}
 			}
+					 }
+				   
+				   
+                });
+			
+			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
+			//網址分析 處理網頁傳值
+			
 		}).catch(function (error) {
 			console.log(error);
 
