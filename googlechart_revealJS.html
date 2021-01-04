@@ -109,7 +109,7 @@
 							else
 								return results[1];
 						}
-						console.log("嗨"+GetUrlVar("tourid"))
+						console.log(GetUrlVar("tourid"))
 						console.log(window.location.href)
 
 						//window.onload = function() { init() };
@@ -167,7 +167,7 @@
 
 						var public_url =
 							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
-							'/gviz/tq?sheet=' + GetUrlVar('tourid');
+							'/gviz/tq?sheet=' +'complete';
 						google.charts.setOnLoadCallback(init);
 						var target_gsheet_class_once = 'gsheet';
 
