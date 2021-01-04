@@ -351,14 +351,15 @@
 									if (data.getFormattedValue(r, 0) === '#') str += '</section>';
 									// it's simple replacement of whole element with contents of str var
 									// 最後加個button 完成導覽
-									str += `<section id="grand-finale">
-										 <h2> 導覽結束 </h2> 
-										 <button type="button">完成導覽!</button></section>` ;
+									
 
 
 
 
 								}
+								str += `<section id="grand-finale">
+										 <h2> 導覽結束 </h2> 
+										 <button type="button">完成導覽!</button></section>` ;
 								console.log(str);
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
