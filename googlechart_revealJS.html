@@ -359,10 +359,10 @@
 								}
 								str += `<section id="grand-finale">
 										 <h2> 導覽結束 </h2> 
-										 <button  onclick="updatekey()">完成導覽!</button></section>` ;
-								function updatekey(){
-									alert('妳點的是reveal內的btn');
-								}		 
+										 <button  onclick="alert('妳點的是reveal內的btn')">完成導覽!</button></section>` ;
+								/*function updatekey(){
+									
+								}		 */
 								console.log(str);
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
