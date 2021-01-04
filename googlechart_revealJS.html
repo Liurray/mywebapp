@@ -359,10 +359,8 @@
 								}
 								str += `<section id="grand-finale">
 										 <h2> 導覽結束 </h2> 
-										 <button  onclick="alert('妳點的是reveal內的btn')">完成導覽!</button></section>` ;
-								/*function updatekey(){
-									
-								}		 */
+										 <button  onclick="updatekey()">完成導覽!</button></section>` ;
+								
 								console.log(str);
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
@@ -375,12 +373,18 @@
 								})
 
 							}
+
+							function updatekey(){
+									alert('妳點的是reveal內的btn')
+								}		 
+
+
 						}
 					}
-
+					
 
 				});
-
+				
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
 			//網址分析 處理網頁傳值
 
