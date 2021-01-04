@@ -93,6 +93,7 @@
 
 					if (key !== snapshot.val().slide_key) {
 						alert("密碼錯誤 進入演示版簡報.......")
+
 					} else {
 						google.charts.load('current', {
 							packages: ['corechart', 'bar']
@@ -108,7 +109,7 @@
 							else
 								return results[1];
 						}
-						console.log(GetUrlVar("tourid"))
+						console.log("嗨"+GetUrlVar("tourid"))
 						console.log(window.location.href)
 
 						//window.onload = function() { init() };
