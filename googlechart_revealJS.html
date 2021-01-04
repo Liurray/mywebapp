@@ -91,7 +91,7 @@
 			console.log(Tour_ID);
 			firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
 				function (snapshot) {
-
+					console.log(snapshot.val().slide_key)
 					if (key !== snapshot.val().slide_key) {
 						alert("密碼錯誤 即將進入演示版簡報.......")
 						google.charts.load('current', {
@@ -222,7 +222,7 @@
 						}
 
 					} else {
-						firebase.database().ref('Guide/G123/Tour/' + Tour_ID).set({
+						firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
                                         currentslideX: "Reveal.getState().indexh",
                                         currentslideY: "Reveal.getState().indexv"
 									})
