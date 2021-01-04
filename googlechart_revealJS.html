@@ -109,8 +109,8 @@
 						}
 						console.log(GetUrlVar("tourid"))
 						console.log(window.location.href)
-							//window.onload = function() { init() };
-							Reveal.initialize({
+						//window.onload = function() { init() };
+						Reveal.initialize({
 							width: "100%", // our own scaling 
 							height: "100%", // our own scaling 
 							margin: 0, // our own scaling 
@@ -163,9 +163,10 @@
 						});
 						var public_url =
 							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
-							'/gviz/tq?sheet=' +'demo';
+							'/gviz/tq?sheet=' + 'demo';
 						google.charts.setOnLoadCallback(init);
 						var target_gsheet_class_once = 'gsheet';
+
 						function init() {
 							// 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
 							//var url =
@@ -174,6 +175,7 @@
 							query.setQuery('select *');
 							query.send(processSheetsData);
 						}
+
 						function processSheetsData(response) {
 							var data = response.getDataTable();
 							var columns = data.getNumberOfColumns();
@@ -290,10 +292,10 @@
 								}
 							]
 						});
-						
+
 						var public_url =
 							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
-							'/gviz/tq?sheet=' +'complete';
+							'/gviz/tq?sheet=' + 'complete';
 						google.charts.setOnLoadCallback(init);
 						var target_gsheet_class_once = 'gsheet';
 
@@ -348,6 +350,20 @@
 								console.log(str);
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
+								    /**master控制*/
+									var config = {
+                                    apiKey: "AIzaSyAhRRlm6XEX2koUdMRX1mch90PEwBWhMIM",
+                                    authDomain: "liff-slide.firebaseapp.com",
+                                    databaseURL: "https://liff-slide.firebaseio.com",
+                                    storageBucket: "liff-slide.appspot.com",
+                                };
+                                firebase.initializeApp(config);
+                                Reveal.addEventListener('slidechanged', function (event) {
+                                    firebase.database().ref('slide').set({
+                                        currentslideX: Reveal.getState().indexh,
+                                        currentslideY: Reveal.getState().indexv
+                                    })
+                                });
 							}
 						}
 					}
