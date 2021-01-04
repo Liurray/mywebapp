@@ -92,12 +92,137 @@
 				function (snapshot) {
 
 					if (key !== snapshot.val().slide_key) {
-						alert("密碼錯誤 進入演示版簡報.......")
+						alert("密碼錯誤 即將進入演示版簡報.......")
+						google.charts.load('current', {
+							packages: ['corechart', 'bar']
+						});
+						/*演示版**---*/
+						function GetUrlVar(VarName) {
+							name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+							var regexS = "[\\?&]" + VarName + "=([^&#]*)";
+							var regex = new RegExp(regexS);
+							var results = regex.exec(window.location.href);
+							if (results == null)
+								return "";
+							else
+								return results[1];
+						}
+						console.log(GetUrlVar("tourid"))
+						console.log(window.location.href)
+							//window.onload = function() { init() };
+							Reveal.initialize({
+							width: "100%", // our own scaling 
+							height: "100%", // our own scaling 
+							margin: 0, // our own scaling 
+							minScale: 1, // our own scaling 
+							maxScale: 1, // our own scaling 
+							controls: true,
+							progress: true,
+							history: false, // 團體導覽要退回APP時，按一下退回鍵就好(所以瀏覽slide不存history)
+							hideAddressBar: false,
+							autoPlayMedia: true,
+							previewLinks: true,
+
+							transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+							// More info https://github.com/hakimel/reveal.js#dependencies
+							dependencies: [{
+									src: 'lib/js/classList.js',
+									condition: function () {
+										return !document.body.classList;
+									}
+								},
+								{
+									src: 'plugin/markdown/marked.js',
+									condition: function () {
+										return !!document.querySelector('[data-markdown]');
+									}
+								},
+								{
+									src: 'plugin/markdown/markdown.js',
+									condition: function () {
+										return !!document.querySelector('[data-markdown]');
+									}
+								},
+								{
+									src: 'plugin/highlight/highlight.js',
+									async: true,
+									callback: function () {
+										hljs.initHighlightingOnLoad();
+									}
+								},
+								{
+									src: 'plugin/zoom-js/zoom.js',
+									async: true
+								},
+								{
+									src: 'plugin/notes/notes.js',
+									async: true
+								}
+							]
+						});
+						var public_url =
+							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
+							'/gviz/tq?sheet=' +'demo';
+						google.charts.setOnLoadCallback(init);
+						var target_gsheet_class_once = 'gsheet';
+						function init() {
+							// 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+							//var url =
+							//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
+							var query = new google.visualization.Query(public_url);
+							query.setQuery('select *');
+							query.send(processSheetsData);
+						}
+						function processSheetsData(response) {
+							var data = response.getDataTable();
+							var columns = data.getNumberOfColumns();
+							var rows = data.getNumberOfRows();
+							var str = "";
+							var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
+							// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
+							if (gsheetClass.outerHTML) {
+								for (var r = 1; r < rows; r++) {
+									if (data.getFormattedValue(r, 0) === '@') str += '<section>';
+									str += '<section data-background="' + data.getFormattedValue(r, 6) + '">';
+									str += '<p style="font-size: x-large; font-weight: bold;">' + data
+										.getFormattedValue(r, 1) +
+										'</p>';
+									if (data.getFormattedValue(r, 3).search('http') ==
+										0) { // Media欄位內容若以'http'開頭就是圖檔
+										str += '<img data-src="' + data.getFormattedValue(r, 3) +
+											'" style="width: 100%; border-style: none;">';
+									} else { // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
+										str += data.getFormattedValue(r, 3);
+									} // https://github.com/hakimel/reveal.js/#lazy-loading
+
+									if (data.getFormattedValue(r, 2) != null) {
+										str += '<p style="font-size: large; font-weight: bold;">' + data
+											.getFormattedValue(r, 2) +
+											'</p>';
+									}
+
+									str += '</section>';
+
+									// 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
+									if (data.getFormattedValue(r, 0) === '#') str += '</section>';
+									// it's simple replacement of whole element with contents of str var
+
+
+
+
+								}
+								console.log(str);
+								gsheetClass.outerHTML = str;
+								Reveal.sync();
+							}
+						}
 
 					} else {
 						google.charts.load('current', {
 							packages: ['corechart', 'bar']
 						});
+						//****正式版***
 						// 取得網址裡的參數   
 						function GetUrlVar(VarName) {
 							name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -109,6 +234,7 @@
 							else
 								return results[1];
 						}
+
 						console.log(GetUrlVar("tourid"))
 						console.log(window.location.href)
 
@@ -164,7 +290,7 @@
 								}
 							]
 						});
-
+						
 						var public_url =
 							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
 							'/gviz/tq?sheet=' +'complete';
