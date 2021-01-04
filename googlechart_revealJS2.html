@@ -90,7 +90,7 @@
             console.log(tourid_params.toString());
             let Tour_ID = tourid_params.toString().substr(7);
             console.log(Tour_ID);
-            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
+            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
                 function (snapshot) {
 
                     if (key !== snapshot.val().slide_key) {
@@ -356,15 +356,7 @@
                                 Reveal.sync();
 
                                 /**listener控制簡報**/
-                                var config = {
-                                    apiKey: "AIzaSyAhRRlm6XEX2koUdMRX1mch90PEwBWhMIM",
-                                    authDomain: "liff-slide.firebaseapp.com",
-                                    databaseURL: "https://liff-slide.firebaseio.com",
-                                    storageBucket: "liff-slide.appspot.com",
-                                };
-                                firebase.initializeApp(config);
-
-                                firebase.database().ref('slide').on("value", function (snapshot) {
+                                firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value", function (snapshot) {
                                     Reveal.slide(snapshot.val().currentslideX, snapshot.val()
                                         .currentslideY);
                                 });
