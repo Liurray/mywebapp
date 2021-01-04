@@ -73,7 +73,7 @@
 
 	</div>
 
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.js"></script>
 	<script src="reveal.js-master/lib/js/head.min.js"></script>
 	<script src="reveal.js-master/js/reveal.js"></script>
 	<script>
@@ -222,10 +222,7 @@
 						}
 
 					} else {
-						firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
-                                        currentslideX: "Reveal.getState().indexh",
-                                        currentslideY: "Reveal.getState().indexv"
-									})
+
 						google.charts.load('current', {
 							packages: ['corechart', 'bar']
 						});
@@ -356,8 +353,14 @@
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
 								console.log("初始完成!!")
-							
-									/*
+								Reveal.on('slidechanged', event => {
+									firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+										currentslideX: "Reveal.getState().indexh",
+										currentslideY: "Reveal.getState().indexv"
+									})
+									// event.previousSlide, event.currentSlide, event.indexh, event.indexv
+								});
+								/*
                                 Reveal.addEventListener('slidechanged', function (event) {
 									console.log("成功監聽!!")
 									console.log(Reveal.getState().indexh.toString())
@@ -373,7 +376,7 @@
 
 
 				});
-				
+
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
 			//網址分析 處理網頁傳值
 
