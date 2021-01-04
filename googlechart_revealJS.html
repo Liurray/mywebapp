@@ -354,22 +354,15 @@
 								Reveal.sync();
 								console.log("初始完成!!")
 								Reveal.on('slidechanged', event => {
+									console.log("動囉")/*
+									
 									firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
 										currentslideX: "Reveal.getState().indexh",
 										currentslideY: "Reveal.getState().indexv"
-									})
+									})*/
 									// event.previousSlide, event.currentSlide, event.indexh, event.indexv
 								});
-								/*
-                                Reveal.addEventListener('slidechanged', function (event) {
-									console.log("成功監聽!!")
-									console.log(Reveal.getState().indexh.toString())
-									console.log(Reveal.getState().indexv.toString())
-                                    /*firebase.database().ref('slide').set({
-                                        currentslideX: Reveal.getState().indexh,
-                                        currentslideY: Reveal.getState().indexv
-                                    })
-                                });*/
+								
 							}
 						}
 					}
