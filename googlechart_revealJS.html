@@ -351,7 +351,7 @@
 									if (data.getFormattedValue(r, 0) === '#') str += '</section>';
 									// it's simple replacement of whole element with contents of str var
 									// 最後加個button 完成導覽
-									
+
 
 
 
@@ -359,7 +359,29 @@
 								}
 								str += `<section id="grand-finale">
 										 <h2> 導覽結束 </h2> 
-										 <button type="button">完成導覽!</button></section>` ;
+										 <button  onclick={() => 
+											var keyRandom = confirm("您確定要完成並刷新您的金鑰嗎 ?");
+											if (keyRandom == true){
+												var new_key = Math.random().toString(36).substr(4, 5);
+												firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+                                    			slide_key: new_key
+												}).then(function () {
+                                    			var update_time = new Date().getFullYear() + "年" +
+                                        			new Date().getMonth() + "月" + new Date().getDate() +
+                                        			"日" + new Date().getHours() + "時" + new Date()
+                                        			.getMinutes() + "分"
+                                    			firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
+                                        			.update({
+                                            				update_time: update_time
+                                        			}).then(function () {
+                                            		alert('您已經更新此團金鑰為 :' + new_key)
+                                        		})
+                                });
+                            //delete
+                        } else {
+                            //don't delete
+                        }							
+			}>完成導覽!</button></section>`;
 								console.log(str);
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
