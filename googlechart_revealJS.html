@@ -360,10 +360,12 @@
                                 };
                                 firebase.initializeApp(config);
                                 Reveal.addEventListener('slidechanged', function (event) {
-                                    firebase.database().ref('slide').set({
+									console.log(Reveal.getState().indexh.toString())
+									console.log(Reveal.getState().indexv.toString())
+                                    /*firebase.database().ref('slide').set({
                                         currentslideX: Reveal.getState().indexh,
                                         currentslideY: Reveal.getState().indexv
-                                    })
+                                    })*/
                                 });
 							}
 						}
