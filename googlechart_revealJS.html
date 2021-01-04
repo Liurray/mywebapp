@@ -352,6 +352,10 @@
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
 								console.log("初始完成!!")
+								firebase.database().ref('Guide/G123/Tour/' + Tour_ID).set({
+                                        currentslideX: "Reveal.getState().indexh",
+                                        currentslideY: "Reveal.getState().indexv"
+                                    })
                                 Reveal.addEventListener('slidechanged', function (event) {
 									console.log("成功監聽!!")
 									console.log(Reveal.getState().indexh.toString())
