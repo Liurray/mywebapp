@@ -360,6 +360,7 @@
                                 };
                                 firebase.initializeApp(config);
                                 Reveal.addEventListener('slidechanged', function (event) {
+									console.log("成功監聽!!")
 									console.log(Reveal.getState().indexh.toString())
 									console.log(Reveal.getState().indexv.toString())
                                     /*firebase.database().ref('slide').set({
