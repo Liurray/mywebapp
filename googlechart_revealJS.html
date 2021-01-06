@@ -363,11 +363,11 @@
 								str += `<section id="grand-finale">
 										 <h2> 導覽結束 </h2> 
 										 <button onclick="refresh();">完成導覽!</button></section>`;
-
+									//*注意function 命名優先順序
 									refresh=function () {
 									var new_key = Math.random().toString(36).substr(4, 5);
-									alert("哈囉");
-									/*firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+									//alert("哈囉");
+									firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
 										slide_key: new_key
 									}).then(function () {
 										var update_time = new Date().getFullYear() + "年" +
@@ -378,10 +378,9 @@
 											.update({
 												update_time: update_time
 											}).then(function () {
-												alert(`您已經更新此團金鑰為 :` + new_key).then(
-													function () {})
+												alert(`您已經更新此團金鑰為 :` + new_key)
 											})
-									})*/
+									})
 								}
 
 								console.log(str);
