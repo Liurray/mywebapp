@@ -111,7 +111,7 @@
 						console.log(GetUrlVar("tourid"))
 						console.log(window.location.href)
 
-					
+
 						//window.onload = function() { init() };
 						Reveal.initialize({
 							width: "100%", // our own scaling 
@@ -233,24 +233,7 @@
 							packages: ['corechart', 'bar']
 						});
 						//****正式版***
-						function refresh() {
-							var new_key = Math.random().toString(36).substr(4, 5);
-							firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
-								slide_key: new_key
-							}).then(function () {
-								var update_time = new Date().getFullYear() + "年" +
-									new Date().getMonth() + "月" + new Date().getDate() +
-									"日" + new Date().getHours() + "時" + new Date()
-									.getMinutes() + "分"
-								firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
-									.update({
-										update_time: update_time
-									}).then(function () {
-										alert(`您已經更新此團金鑰為 :` + new_key).then(
-											function () {})
-									})
-							})
-						}
+
 						// 取得網址裡的參數   
 						function GetUrlVar(VarName) {
 							name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -380,6 +363,26 @@
 								str += `<section id="grand-finale">
 										 <h2> 導覽結束 </h2> 
 										 <button onclick="refresh();">完成導覽!</button></section>`;
+
+								function refresh() {
+									var new_key = Math.random().toString(36).substr(4, 5);
+									alert("哈囉");
+									/*firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+										slide_key: new_key
+									}).then(function () {
+										var update_time = new Date().getFullYear() + "年" +
+											new Date().getMonth() + "月" + new Date().getDate() +
+											"日" + new Date().getHours() + "時" + new Date()
+											.getMinutes() + "分"
+										firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
+											.update({
+												update_time: update_time
+											}).then(function () {
+												alert(`您已經更新此團金鑰為 :` + new_key).then(
+													function () {})
+											})
+									})*/
+								}
 
 								console.log(str);
 								gsheetClass.outerHTML = str;
