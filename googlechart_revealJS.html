@@ -84,9 +84,7 @@
 		}).then(function () {
 			var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
 			let location_url = new URL(location.href);
-			console.log(location_url.toString()).then(function(){
-                var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
-            });;
+			console.log(location_url.toString());
 			let tourid_params = location_url.searchParams;
 			console.log(tourid_params.toString());
 			let Tour_ID = tourid_params.toString().substr(7);
