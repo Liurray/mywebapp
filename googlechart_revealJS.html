@@ -82,13 +82,14 @@
 		liff.init({
 			liffId: liffID
 		}).then(function () {
+			//**------------驗證機制**-----------
 			var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
 			let location_url = new URL(location.href);
-			console.log(location_url.toString());
+			//console.log(location_url.toString());
 			let tourid_params = location_url.searchParams;
-			console.log(tourid_params.toString());
+			//console.log(tourid_params.toString());
 			let Tour_ID = tourid_params.toString().substr(7);
-			console.log(Tour_ID);
+			//console.log(Tour_ID);
 			firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
 				function (snapshot) {
 					console.log(snapshot.val().slide_key)
@@ -108,11 +109,9 @@
 							else
 								return results[1];
 						}
-						console.log(GetUrlVar("tourid"))
-						console.log(window.location.href)
+						
 
-
-						//window.onload = function() { init() };
+						//reveal js init處理
 						Reveal.initialize({
 							width: "100%", // our own scaling 
 							height: "100%", // our own scaling 
@@ -167,7 +166,7 @@
 						Reveal.configure({
 							autoSlide: 3000
 						});
-
+						//讀取id demo的 sheet
 						var public_url =
 							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
 							'/gviz/tq?sheet=' + 'demo';
@@ -176,7 +175,7 @@
 
 						function init() {
 							// 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
-							//var url =
+							
 							//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
 							var query = new google.visualization.Query(public_url);
 							query.setQuery('select *');
@@ -221,7 +220,7 @@
 
 
 								}
-								console.log(str);
+								//console.log(str);
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
 							}
@@ -232,7 +231,7 @@
 						google.charts.load('current', {
 							packages: ['corechart', 'bar']
 						});
-						//****正式版***
+						//****進入正式版***
 
 						// 取得網址裡的參數   
 						function GetUrlVar(VarName) {
@@ -246,10 +245,9 @@
 								return results[1];
 						}
 
-						console.log(GetUrlVar("tourid"))
-						console.log(window.location.href)
+						
 
-						//window.onload = function() { init() };
+						//reveal js init處理
 						Reveal.initialize({
 							width: "100%", // our own scaling 
 							height: "100%", // our own scaling 
@@ -301,9 +299,7 @@
 								}
 							]
 						});
-						Reveal.configure({
-							autoSlide: 5000
-						});
+						//讀取 id complete的sheet
 						var public_url =
 							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
 							'/gviz/tq?sheet=' + 'complete';
@@ -383,7 +379,7 @@
 									})
 								}
 
-								console.log(str);
+								//console.log(str);
 								gsheetClass.outerHTML = str;
 								Reveal.sync();
 								console.log("初始完成!!")
