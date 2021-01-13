@@ -89,7 +89,7 @@
         liff.init({
             liffId: liffID
         }).then(function () {
-            var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
+           
             let location_url = new URL(location.href);
             console.log(location_url.toString());
             let tourid_params = location_url.searchParams;
@@ -97,7 +97,7 @@
             let Tour_ID = tourid_params.toString().substr(7);
             console.log(Tour_ID);
             inputkey=function(){
-				
+				var key = document.getElementById("key").value ;
                 console.log("金鑰匙"+key)
                 firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
                 function (snapshot) {
