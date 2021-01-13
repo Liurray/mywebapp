@@ -60,6 +60,12 @@
 </head>
 
 <body>
+    <div id="form">
+		<form>
+		<input type=text name=text1  id="key" value="金鑰匙">
+		<input type=button value="確認金鑰" onClick="inputkey();">
+	</form>
+	</div>
 
 
     <div class="reveal">
@@ -90,11 +96,16 @@
             console.log(tourid_params.toString())
             let Tour_ID = tourid_params.toString().substr(7);
             console.log(Tour_ID);
-            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
+            inputkey=function(){
+				var key = document.getElementById("key").value ;
+                console.log("金鑰匙"+key)
+                firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
                 function (snapshot) {
 
                     if (key !== snapshot.val().slide_key) {
                         alert("密碼錯誤 即將進入演示版簡報.......")
+                        document.getElementById("form").style.display = "none";
+						document.getElementById("slide").style.display = "block";  
                         google.charts.load('current', {
                             packages: ['corechart', 'bar']
                         });
@@ -224,11 +235,14 @@
                         }
 
                     } else {
+                        document.getElementById("form").style.display = "none";
+						document.getElementById("slide").style.display = "block";  
                         google.charts.load('current', {
                             packages: ['corechart', 'bar']
                         });
                         //****正式版***
                         // 取得網址裡的參數   
+                        
                         function GetUrlVar(VarName) {
                             name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
                             var regexS = "[\\?&]" + VarName + "=([^&#]*)";
@@ -366,6 +380,8 @@
 
 
                 });
+            }
+            
 
             document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
             //網址分析 處理網頁傳值
