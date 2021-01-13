@@ -104,7 +104,7 @@
 					console.log(snapshot.val().slide_key)
 					if (key !== snapshot.val().slide_key) {
 						alert("密碼錯誤 即將進入演示版簡報.......")
-						document.getElementById("key").style.display = "none";
+						document.getElementById("form").style.display = "none";
 						document.getElementById("slide").style.display = "block";  
 						google.charts.load('current', {
 							packages: ['corechart', 'bar']
