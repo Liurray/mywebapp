@@ -59,9 +59,14 @@
 </head>
 
 <body>
+	<div id="key">
+		<form>
+		<input type=text name=key value="金鑰匙">
+		<input type=button value="確認金鑰" onClick="inputkey();">
+	</form>
+	</div>
 
-
-	<div class="reveal">
+	<div class="reveal" id="slide" style="display:none">
 
 		<!-- Any section element inside of this container is displayed as a slide -->
 		<div class="slides">
@@ -72,7 +77,7 @@
 		</div>
 
 	</div>
-
+	
 
 	<script src="reveal.js-master/lib/js/head.min.js"></script>
 	<script src="reveal.js-master/js/reveal.js"></script>
@@ -83,14 +88,17 @@
 			liffId: liffID
 		}).then(function () {
 			//**------------驗證機制**-----------
-			var key = prompt("請輸入金鑰進入完整版簡報", "金鑰匙");
+			
+			
 			let location_url = new URL(location.href);
 			//console.log(location_url.toString());
 			let tourid_params = location_url.searchParams;
 			//console.log(tourid_params.toString());
 			let Tour_ID = tourid_params.toString().substr(7);
 			//console.log(Tour_ID);
-			firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
+			inputkey=function(){
+				var key = document.getElementById("key").value ;
+				firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
 				function (snapshot) {
 					console.log(snapshot.val().slide_key)
 					if (key !== snapshot.val().slide_key) {
@@ -232,7 +240,8 @@
 							packages: ['corechart', 'bar']
 						});
 						//****進入正式版***
-
+						document.getElementById("key").style.display = "none";
+						document.getElementById("slide").style.display = "block";  
 						// 取得網址裡的參數   
 						function GetUrlVar(VarName) {
 							name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
@@ -400,6 +409,8 @@
 
 
 				});
+			}
+		
 
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
 			//網址分析 處理網頁傳值
