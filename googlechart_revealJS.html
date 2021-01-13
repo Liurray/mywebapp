@@ -61,7 +61,7 @@
 <body>
 	<div id="key">
 		<form>
-		<input type=text name=key  id="key" value="金鑰匙">
+		<input type=text name=text1  id="key" value="金鑰匙">
 		<input type=button value="確認金鑰" onClick="inputkey();">
 	</form>
 	</div>
@@ -98,7 +98,7 @@
 			//console.log(Tour_ID);
 			inputkey=function(){
 				var key = document.getElementById("key").value ;
-				console.log("金鑰匙"+key)
+				console.log("金鑰匙"+key.toString())
 				firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
 				function (snapshot) {
 					console.log(snapshot.val().slide_key)
