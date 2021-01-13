@@ -98,7 +98,7 @@
 			//console.log(Tour_ID);
 			inputkey=function(){
 				var key = document.getElementById("key").value ;
-				console.log("金鑰匙"+key.toString())
+				console.log("金鑰匙"+key)
 				firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
 				function (snapshot) {
 					console.log(snapshot.val().slide_key)
