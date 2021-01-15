@@ -20,9 +20,9 @@
 
   <section class="make-center">
     <input type="text" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
-    <button id="open-room">Open Room</button>
-    <button id="join-room">Join Room</button>
-    <button id="open-or-join-room">Auto Open Or Join Room</button>
+    <button id="btn-open-room">Open Room</button>
+    <button id="btn-join-room">Join Room</button>
+    
 
     <div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
 
@@ -42,12 +42,16 @@ connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 connection.session = {
     audio: true,
-    video: true
+    video: false
+};
+connection.mediaConstraints = {
+    audio: true,
+    video: false
 };
 
 connection.sdpConstraints.mandatory = {
     OfferToReceiveAudio: true,
-    OfferToReceiveVideo: true
+    OfferToReceiveVideo: false
 };
 
 connection.onstream = function(event) {
