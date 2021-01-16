@@ -33,8 +33,11 @@
 <script src="/node_modules/webrtc-adapter/out/adapter.js"></script>
 <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
 <script>
+// ......................................................
+// ..................RTCMultiConnection Code.............
+// ......................................................
     var connection = new RTCMultiConnection();
-
+    connection.socketMessageEvent = 'audio-conference-demo';
 // this line is VERY_important
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
