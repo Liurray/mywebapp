@@ -332,7 +332,9 @@
 							var data = response.getDataTable();
 							var columns = data.getNumberOfColumns();
 							var rows = data.getNumberOfRows();
-							var str = "";
+							var str = `<section id="WebRTC">
+										 <h2> 打開語音導覽 </h2> 
+										 <button onclick="openRTC();">打開語音</button></section>`;
 							var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
 							// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
 							if (gsheetClass.outerHTML) {
@@ -389,6 +391,9 @@
 												alert(`您已經更新此團金鑰為 :` + new_key)
 											})
 									})
+								}
+								openRTC=function(){
+									alert("打開網頁瀏覽")
 								}
 
 								//console.log(str);
