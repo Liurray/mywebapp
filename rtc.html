@@ -33,6 +33,12 @@
 <script src="/node_modules/webrtc-adapter/out/adapter.js"></script>
 <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
 <script>
+  let location_url = new URL(location.href);
+			//console.log(location_url.toString());
+			let roomid_params = location_url.searchParams;
+			//console.log(tourid_params.toString());
+      let key = roomid_params.toString().substr(4);
+      console.log(key)
 // ......................................................
 // ..................RTCMultiConnection Code.............
 // ......................................................
