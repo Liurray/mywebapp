@@ -19,9 +19,9 @@
   </h1>
 
   <section class="make-center">
-    <input type="text" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
-    <button id="btn-open-room">Open Room</button>
-    <button id="btn-join-room">Join Room</button>
+    <!--input type="text" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20-->
+    <button id="btn-open-room">建立語音頻道</button>
+   
     
 
     <div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
@@ -67,17 +67,17 @@ connection.sdpConstraints.mandatory = {
 connection.onstream = function(event) {
     document.body.appendChild( event.mediaElement );
 };
-var predefinedRoomId = 'key';
+var predefinedRoomId = key;
 
 document.getElementById('btn-open-room').onclick = function() {
     this.disabled = true;
     connection.open( predefinedRoomId );
 };
 
-document.getElementById('btn-join-room').onclick = function() {
+/*document.getElementById('btn-join-room').onclick = function() {
     this.disabled = true;
     connection.join( predefinedRoomId );
-};
+};*/
 </script>
 </body>
 </html>
