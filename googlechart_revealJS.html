@@ -64,23 +64,18 @@
 </head>
 
 <body>
-	<div class="form" style="text-align:center">
-		<div id="form">
-			<form class="col s12">
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="請輸入此旅團之金鑰匙" id="key" type="text" name=text1 class="validate">
-						<div class="slide" style="text-align:center">
-							<button class="waves-effect waves-light btn-large" id="inputkey" href='#'
-								data-activates='dropdown1' style="text-align:centr ; background-color : #005AB5"><i
-									class="material-icons left">password</i>確認送出</button>
-						</div>
-						<!--input type=button value="確認金鑰" onClick="inputkey();"-->
-						<label for="first_name">旅團導覽金鑰</label>
-					</div>
+	<div class="form" id="form"style="text-align:center">
+	
+		<form class="col s12">
+			<div class="col center">
+				<div class="input-field col s6" style="text-align:center">
+					<input placeholder="請輸入此旅團之金鑰匙" id="key" type="text" name=text1 class="validate">
+					<input type=button value="確認金鑰" onClick="inputkey();">
+					<label for="first_name" style="color : #005AB5">旅團導覽金鑰</label>
 				</div>
-			</form>
-		</div>
+			</div>
+		</form>
+	
 	</div>
 
 
@@ -114,7 +109,7 @@
 			//console.log(tourid_params.toString());
 			let Tour_ID = tourid_params.toString().substr(7);
 			//console.log(Tour_ID);
-			$('#inputkey').click(function () {
+			inputkey = function () {
 				var key = document.getElementById("key").value;
 				console.log("金鑰匙" + key)
 				firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
@@ -218,15 +213,13 @@
 								var columns = data.getNumberOfColumns();
 								var rows = data.getNumberOfRows();
 								var str = "";
-								var gsheetClass = document.getElementsByClassName(
-									target_gsheet_class_once)[
+								var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[
 									0];
 								// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
 								if (gsheetClass.outerHTML) {
 									for (var r = 1; r < rows; r++) {
 										if (data.getFormattedValue(r, 0) === '@') str += '<section>';
-										str += '<section data-background="' + data.getFormattedValue(r,
-											6) +
+										str += '<section data-background="' + data.getFormattedValue(r, 6) +
 											'">';
 										str += '<p style="font-size: x-large; font-weight: bold;">' + data
 											.getFormattedValue(r, 1) +
@@ -240,8 +233,7 @@
 										} // https://github.com/hakimel/reveal.js/#lazy-loading
 
 										if (data.getFormattedValue(r, 2) != null) {
-											str += '<p style="font-size: large; font-weight: bold;">' +
-												data
+											str += '<p style="font-size: large; font-weight: bold;">' + data
 												.getFormattedValue(r, 2) +
 												'</p>';
 										}
@@ -362,15 +354,13 @@
 								var str = `<section id="WebRTC">
 										 <h2> 使用語音導覽 </h2> 
 										 <button onclick="openRTC();">打開語音</button></section>`;
-								var gsheetClass = document.getElementsByClassName(
-									target_gsheet_class_once)[
+								var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[
 									0];
 								// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
 								if (gsheetClass.outerHTML) {
 									for (var r = 1; r < rows; r++) {
 										if (data.getFormattedValue(r, 0) === '@') str += '<section>';
-										str += '<section data-background="' + data.getFormattedValue(r,
-											6) +
+										str += '<section data-background="' + data.getFormattedValue(r, 6) +
 											'">';
 										str += '<p style="font-size: x-large; font-weight: bold;">' + data
 											.getFormattedValue(r, 1) +
@@ -384,8 +374,7 @@
 										} // https://github.com/hakimel/reveal.js/#lazy-loading
 
 										if (data.getFormattedValue(r, 2) != null) {
-											str += '<p style="font-size: large; font-weight: bold;">' +
-												data
+											str += '<p style="font-size: large; font-weight: bold;">' + data
 												.getFormattedValue(r, 2) +
 												'</p>';
 										}
@@ -417,8 +406,7 @@
 												.getDate() +
 												"日" + new Date().getHours() + "時" + new Date()
 												.getMinutes() + "分"
-											firebase.database().ref('Guide/G123/Tour/' +
-													Tour_ID)
+											firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
 												.update({
 													update_time: update_time
 												}).then(function () {
@@ -440,11 +428,10 @@
 									Reveal.sync();
 									console.log("初始完成!!")
 									Reveal.addEventListener('slidechanged', function (event) {
-										firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
-											.update({
-												currentslideX: Reveal.getState().indexh,
-												currentslideY: Reveal.getState().indexv
-											})
+										firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+											currentslideX: Reveal.getState().indexh,
+											currentslideY: Reveal.getState().indexv
+										})
 									})
 
 								}
@@ -457,13 +444,7 @@
 
 
 					});
-
-
-
-
-
-
-			})
+			}
 
 
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
