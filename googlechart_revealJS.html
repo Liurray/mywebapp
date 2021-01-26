@@ -9,7 +9,12 @@
 
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script src="reveal.js-master/lib/js/head.min.js"></script>
 	<script src="reveal.js-master/js/reveal.js"></script>
@@ -59,12 +64,25 @@
 </head>
 
 <body>
-	<div id="form">
-		<form>
-		<input type=text name=text1  id="key" value="金鑰匙">
-		<input type=button value="確認金鑰" onClick="inputkey();">
-	</form>
+	<div class="form" style="text-align:center">
+		<div id="form">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s6">
+						<input placeholder="請輸入此旅團之金鑰匙" id="key" type="text" name=text1 class="validate">
+						<div class="slide" style="text-align:center">
+							<button class="waves-effect waves-light btn-large" id="inputkey" href='#'
+								data-activates='dropdown1' style="text-align:centr ; background-color : #005AB5"><i
+									class="material-icons left">password</i>確認送出</button>
+						</div>
+						<!--input type=button value="確認金鑰" onClick="inputkey();"-->
+						<label for="first_name">旅團導覽金鑰</label>
+					</div>
+				</div>
+			</form>
+		</div>
 	</div>
+
 
 	<div class="reveal" id="slide" style="display:none">
 
@@ -77,7 +95,7 @@
 		</div>
 
 	</div>
-	
+
 
 	<script src="reveal.js-master/lib/js/head.min.js"></script>
 	<script src="reveal.js-master/js/reveal.js"></script>
@@ -88,341 +106,365 @@
 			liffId: liffID
 		}).then(function () {
 			//**------------驗證機制**-----------
-			
-			
+
+
 			let location_url = new URL(location.href);
 			//console.log(location_url.toString());
 			let tourid_params = location_url.searchParams;
 			//console.log(tourid_params.toString());
 			let Tour_ID = tourid_params.toString().substr(7);
 			//console.log(Tour_ID);
-			inputkey=function(){
-				var key = document.getElementById("key").value ;
-				console.log("金鑰匙"+key)
+			$('#inputkey').click(function () {
+				var key = document.getElementById("key").value;
+				console.log("金鑰匙" + key)
 				firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
-				function (snapshot) {
-					console.log(snapshot.val().slide_key)
-					if (key !== snapshot.val().slide_key) {
-						alert("密碼錯誤 即將進入演示版簡報.......")
-						document.getElementById("form").style.display = "none";
-						document.getElementById("slide").style.display = "block";  
-						google.charts.load('current', {
-							packages: ['corechart', 'bar']
-						});
-						/*演示版**---*/
-						function GetUrlVar(VarName) {
-							name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-							var regexS = "[\\?&]" + VarName + "=([^&#]*)";
-							var regex = new RegExp(regexS);
-							var results = regex.exec(window.location.href);
-							if (results == null)
-								return "";
-							else
-								return results[1];
-						}
-						
-
-						//reveal js init處理
-						Reveal.initialize({
-							width: "100%", // our own scaling 
-							height: "100%", // our own scaling 
-							margin: 0, // our own scaling 
-							minScale: 1, // our own scaling 
-							maxScale: 1, // our own scaling 
-							controls: true,
-							progress: true,
-							history: false, // 團體導覽要退回APP時，按一下退回鍵就好(所以瀏覽slide不存history)
-							hideAddressBar: false,
-							autoPlayMedia: true,
-							previewLinks: true,
-
-							transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-							// More info https://github.com/hakimel/reveal.js#dependencies
-							dependencies: [{
-									src: 'lib/js/classList.js',
-									condition: function () {
-										return !document.body.classList;
-									}
-								},
-								{
-									src: 'plugin/markdown/marked.js',
-									condition: function () {
-										return !!document.querySelector('[data-markdown]');
-									}
-								},
-								{
-									src: 'plugin/markdown/markdown.js',
-									condition: function () {
-										return !!document.querySelector('[data-markdown]');
-									}
-								},
-								{
-									src: 'plugin/highlight/highlight.js',
-									async: true,
-									callback: function () {
-										hljs.initHighlightingOnLoad();
-									}
-								},
-								{
-									src: 'plugin/zoom-js/zoom.js',
-									async: true
-								},
-								{
-									src: 'plugin/notes/notes.js',
-									async: true
-								}
-							]
-						});
-						Reveal.configure({
-							autoSlide: 3000
-						});
-						//讀取id demo的 sheet
-						var public_url =
-							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
-							'/gviz/tq?sheet=' + 'demo';
-						google.charts.setOnLoadCallback(init);
-						var target_gsheet_class_once = 'gsheet';
-
-						function init() {
-							// 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
-							
-							//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
-							var query = new google.visualization.Query(public_url);
-							query.setQuery('select *');
-							query.send(processSheetsData);
-						}
-
-						function processSheetsData(response) {
-							var data = response.getDataTable();
-							var columns = data.getNumberOfColumns();
-							var rows = data.getNumberOfRows();
-							var str = "";
-							var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
-							// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
-							if (gsheetClass.outerHTML) {
-								for (var r = 1; r < rows; r++) {
-									if (data.getFormattedValue(r, 0) === '@') str += '<section>';
-									str += '<section data-background="' + data.getFormattedValue(r, 6) + '">';
-									str += '<p style="font-size: x-large; font-weight: bold;">' + data
-										.getFormattedValue(r, 1) +
-										'</p>';
-									if (data.getFormattedValue(r, 3).search('http') ==
-										0) { // Media欄位內容若以'http'開頭就是圖檔
-										str += '<img data-src="' + data.getFormattedValue(r, 3) +
-											'" style="width: 100%; border-style: none;">';
-									} else { // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
-										str += data.getFormattedValue(r, 3);
-									} // https://github.com/hakimel/reveal.js/#lazy-loading
-
-									if (data.getFormattedValue(r, 2) != null) {
-										str += '<p style="font-size: large; font-weight: bold;">' + data
-											.getFormattedValue(r, 2) +
-											'</p>';
-									}
-
-									str += '</section>';
-
-									// 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
-									if (data.getFormattedValue(r, 0) === '#') str += '</section>';
-									// it's simple replacement of whole element with contents of str var
-
-
-
-
-								}
-								//console.log(str);
-								gsheetClass.outerHTML = str;
-								Reveal.sync();
+					function (snapshot) {
+						console.log(snapshot.val().slide_key)
+						if (key !== snapshot.val().slide_key) {
+							alert("密碼錯誤 即將進入演示版簡報.......")
+							document.getElementById("form").style.display = "none";
+							document.getElementById("slide").style.display = "block";
+							google.charts.load('current', {
+								packages: ['corechart', 'bar']
+							});
+							/*演示版**---*/
+							function GetUrlVar(VarName) {
+								name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+								var regexS = "[\\?&]" + VarName + "=([^&#]*)";
+								var regex = new RegExp(regexS);
+								var results = regex.exec(window.location.href);
+								if (results == null)
+									return "";
+								else
+									return results[1];
 							}
-						}
 
-					} else {
 
-						google.charts.load('current', {
-							packages: ['corechart', 'bar']
-						});
-						//****進入正式版***
-						document.getElementById("form").style.display = "none";
-						document.getElementById("slide").style.display = "block";  
-						// 取得網址裡的參數   
-						function GetUrlVar(VarName) {
-							name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-							var regexS = "[\\?&]" + VarName + "=([^&#]*)";
-							var regex = new RegExp(regexS);
-							var results = regex.exec(window.location.href);
-							if (results == null)
-								return "";
-							else
-								return results[1];
-						}
+							//reveal js init處理
+							Reveal.initialize({
+								width: "100%", // our own scaling 
+								height: "100%", // our own scaling 
+								margin: 0, // our own scaling 
+								minScale: 1, // our own scaling 
+								maxScale: 1, // our own scaling 
+								controls: true,
+								progress: true,
+								history: false, // 團體導覽要退回APP時，按一下退回鍵就好(所以瀏覽slide不存history)
+								hideAddressBar: false,
+								autoPlayMedia: true,
+								previewLinks: true,
 
-						
+								transition: 'slide', // none/fade/slide/convex/concave/zoom
 
-						//reveal js init處理
-						Reveal.initialize({
-							width: "100%", // our own scaling 
-							height: "100%", // our own scaling 
-							margin: 0, // our own scaling 
-							minScale: 1, // our own scaling 
-							maxScale: 1, // our own scaling 
-							controls: true,
-							progress: true,
-							history: false, // 團體導覽要退回APP時，按一下退回鍵就好(所以瀏覽slide不存history)
-							hideAddressBar: false,
-							autoPlayMedia: true,
-							previewLinks: true,
-
-							transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-							// More info https://github.com/hakimel/reveal.js#dependencies
-							dependencies: [{
-									src: 'lib/js/classList.js',
-									condition: function () {
-										return !document.body.classList;
+								// More info https://github.com/hakimel/reveal.js#dependencies
+								dependencies: [{
+										src: 'lib/js/classList.js',
+										condition: function () {
+											return !document.body.classList;
+										}
+									},
+									{
+										src: 'plugin/markdown/marked.js',
+										condition: function () {
+											return !!document.querySelector(
+												'[data-markdown]');
+										}
+									},
+									{
+										src: 'plugin/markdown/markdown.js',
+										condition: function () {
+											return !!document.querySelector(
+												'[data-markdown]');
+										}
+									},
+									{
+										src: 'plugin/highlight/highlight.js',
+										async: true,
+										callback: function () {
+											hljs.initHighlightingOnLoad();
+										}
+									},
+									{
+										src: 'plugin/zoom-js/zoom.js',
+										async: true
+									},
+									{
+										src: 'plugin/notes/notes.js',
+										async: true
 									}
-								},
-								{
-									src: 'plugin/markdown/marked.js',
-									condition: function () {
-										return !!document.querySelector('[data-markdown]');
+								]
+							});
+							Reveal.configure({
+								autoSlide: 3000
+							});
+							//讀取id demo的 sheet
+							var public_url =
+								'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
+								'/gviz/tq?sheet=' + 'demo';
+							google.charts.setOnLoadCallback(init);
+							var target_gsheet_class_once = 'gsheet';
+
+							function init() {
+								// 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+
+								//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
+								var query = new google.visualization.Query(public_url);
+								query.setQuery('select *');
+								query.send(processSheetsData);
+							}
+
+							function processSheetsData(response) {
+								var data = response.getDataTable();
+								var columns = data.getNumberOfColumns();
+								var rows = data.getNumberOfRows();
+								var str = "";
+								var gsheetClass = document.getElementsByClassName(
+									target_gsheet_class_once)[
+									0];
+								// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
+								if (gsheetClass.outerHTML) {
+									for (var r = 1; r < rows; r++) {
+										if (data.getFormattedValue(r, 0) === '@') str += '<section>';
+										str += '<section data-background="' + data.getFormattedValue(r,
+											6) +
+											'">';
+										str += '<p style="font-size: x-large; font-weight: bold;">' + data
+											.getFormattedValue(r, 1) +
+											'</p>';
+										if (data.getFormattedValue(r, 3).search('http') ==
+											0) { // Media欄位內容若以'http'開頭就是圖檔
+											str += '<img data-src="' + data.getFormattedValue(r, 3) +
+												'" style="width: 100%; border-style: none;">';
+										} else { // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
+											str += data.getFormattedValue(r, 3);
+										} // https://github.com/hakimel/reveal.js/#lazy-loading
+
+										if (data.getFormattedValue(r, 2) != null) {
+											str += '<p style="font-size: large; font-weight: bold;">' +
+												data
+												.getFormattedValue(r, 2) +
+												'</p>';
+										}
+
+										str += '</section>';
+
+										// 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
+										if (data.getFormattedValue(r, 0) === '#') str += '</section>';
+										// it's simple replacement of whole element with contents of str var
+
+
+
+
 									}
-								},
-								{
-									src: 'plugin/markdown/markdown.js',
-									condition: function () {
-										return !!document.querySelector('[data-markdown]');
-									}
-								},
-								{
-									src: 'plugin/highlight/highlight.js',
-									async: true,
-									callback: function () {
-										hljs.initHighlightingOnLoad();
-									}
-								},
-								{
-									src: 'plugin/zoom-js/zoom.js',
-									async: true
-								},
-								{
-									src: 'plugin/notes/notes.js',
-									async: true
+									//console.log(str);
+									gsheetClass.outerHTML = str;
+									Reveal.sync();
 								}
-							]
-						});
-						//讀取 id complete的sheet
-						var public_url =
-							'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
-							'/gviz/tq?sheet=' + 'complete';
-						google.charts.setOnLoadCallback(init);
-						var target_gsheet_class_once = 'gsheet';
+							}
+
+						} else {
+
+							google.charts.load('current', {
+								packages: ['corechart', 'bar']
+							});
+							//****進入正式版***
+							document.getElementById("form").style.display = "none";
+							document.getElementById("slide").style.display = "block";
+							// 取得網址裡的參數   
+							function GetUrlVar(VarName) {
+								name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+								var regexS = "[\\?&]" + VarName + "=([^&#]*)";
+								var regex = new RegExp(regexS);
+								var results = regex.exec(window.location.href);
+								if (results == null)
+									return "";
+								else
+									return results[1];
+							}
 
 
-						function init() {
-							// 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
-							//var url =
-							//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
-							var query = new google.visualization.Query(public_url);
-							query.setQuery('select *');
-							query.send(processSheetsData);
-						}
 
-						function processSheetsData(response) {
-							var data = response.getDataTable();
-							var columns = data.getNumberOfColumns();
-							var rows = data.getNumberOfRows();
-							var str = `<section id="WebRTC">
+							//reveal js init處理
+							Reveal.initialize({
+								width: "100%", // our own scaling 
+								height: "100%", // our own scaling 
+								margin: 0, // our own scaling 
+								minScale: 1, // our own scaling 
+								maxScale: 1, // our own scaling 
+								controls: true,
+								progress: true,
+								history: false, // 團體導覽要退回APP時，按一下退回鍵就好(所以瀏覽slide不存history)
+								hideAddressBar: false,
+								autoPlayMedia: true,
+								previewLinks: true,
+
+								transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+								// More info https://github.com/hakimel/reveal.js#dependencies
+								dependencies: [{
+										src: 'lib/js/classList.js',
+										condition: function () {
+											return !document.body.classList;
+										}
+									},
+									{
+										src: 'plugin/markdown/marked.js',
+										condition: function () {
+											return !!document.querySelector(
+												'[data-markdown]');
+										}
+									},
+									{
+										src: 'plugin/markdown/markdown.js',
+										condition: function () {
+											return !!document.querySelector(
+												'[data-markdown]');
+										}
+									},
+									{
+										src: 'plugin/highlight/highlight.js',
+										async: true,
+										callback: function () {
+											hljs.initHighlightingOnLoad();
+										}
+									},
+									{
+										src: 'plugin/zoom-js/zoom.js',
+										async: true
+									},
+									{
+										src: 'plugin/notes/notes.js',
+										async: true
+									}
+								]
+							});
+							//讀取 id complete的sheet
+							var public_url =
+								'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
+								'/gviz/tq?sheet=' + 'complete';
+							google.charts.setOnLoadCallback(init);
+							var target_gsheet_class_once = 'gsheet';
+
+
+							function init() {
+								// 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+								//var url =
+								//'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
+								var query = new google.visualization.Query(public_url);
+								query.setQuery('select *');
+								query.send(processSheetsData);
+							}
+
+							function processSheetsData(response) {
+								var data = response.getDataTable();
+								var columns = data.getNumberOfColumns();
+								var rows = data.getNumberOfRows();
+								var str = `<section id="WebRTC">
 										 <h2> 使用語音導覽 </h2> 
 										 <button onclick="openRTC();">打開語音</button></section>`;
-							var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
-							// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
-							if (gsheetClass.outerHTML) {
-								for (var r = 1; r < rows; r++) {
-									if (data.getFormattedValue(r, 0) === '@') str += '<section>';
-									str += '<section data-background="' + data.getFormattedValue(r, 6) + '">';
-									str += '<p style="font-size: x-large; font-weight: bold;">' + data
-										.getFormattedValue(r, 1) +
-										'</p>';
-									if (data.getFormattedValue(r, 3).search('http') ==
-										0) { // Media欄位內容若以'http'開頭就是圖檔
-										str += '<img data-src="' + data.getFormattedValue(r, 3) +
-											'" style="width: 100%; border-style: none;">';
-									} else { // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
-										str += data.getFormattedValue(r, 3);
-									} // https://github.com/hakimel/reveal.js/#lazy-loading
-
-									if (data.getFormattedValue(r, 2) != null) {
-										str += '<p style="font-size: large; font-weight: bold;">' + data
-											.getFormattedValue(r, 2) +
+								var gsheetClass = document.getElementsByClassName(
+									target_gsheet_class_once)[
+									0];
+								// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
+								if (gsheetClass.outerHTML) {
+									for (var r = 1; r < rows; r++) {
+										if (data.getFormattedValue(r, 0) === '@') str += '<section>';
+										str += '<section data-background="' + data.getFormattedValue(r,
+											6) +
+											'">';
+										str += '<p style="font-size: x-large; font-weight: bold;">' + data
+											.getFormattedValue(r, 1) +
 											'</p>';
+										if (data.getFormattedValue(r, 3).search('http') ==
+											0) { // Media欄位內容若以'http'開頭就是圖檔
+											str += '<img data-src="' + data.getFormattedValue(r, 3) +
+												'" style="width: 100%; border-style: none;">';
+										} else { // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
+											str += data.getFormattedValue(r, 3);
+										} // https://github.com/hakimel/reveal.js/#lazy-loading
+
+										if (data.getFormattedValue(r, 2) != null) {
+											str += '<p style="font-size: large; font-weight: bold;">' +
+												data
+												.getFormattedValue(r, 2) +
+												'</p>';
+										}
+
+										str += '</section>';
+
+										// 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
+										if (data.getFormattedValue(r, 0) === '#') str += '</section>';
+										// it's simple replacement of whole element with contents of str var
+										// 最後加個button 完成導覽
+
+
+
+
+
 									}
-
-									str += '</section>';
-
-									// 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
-									if (data.getFormattedValue(r, 0) === '#') str += '</section>';
-									// it's simple replacement of whole element with contents of str var
-									// 最後加個button 完成導覽
-
-
-
-
-
-								}
-								str += `<section id="grand-finale">
+									str += `<section id="grand-finale">
 										 <h2> 導覽結束 </h2> 
 										 <button onclick="refresh();">完成導覽!</button></section>`;
 									//*注意function 命名優先順序
-									refresh=function () {
-									var new_key = Math.random().toString(36).substr(4, 5);
-									//alert("哈囉");
-									firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
-										slide_key: new_key
-									}).then(function () {
-										var update_time = new Date().getFullYear() + "年" +
-											new Date().getMonth() + "月" + new Date().getDate() +
-											"日" + new Date().getHours() + "時" + new Date()
-											.getMinutes() + "分"
+									refresh = function () {
+										var new_key = Math.random().toString(36).substr(4, 5);
+										//alert("哈囉");
+										firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+											slide_key: new_key
+										}).then(function () {
+											var update_time = new Date().getFullYear() + "年" +
+												new Date().getMonth() + "月" + new Date()
+												.getDate() +
+												"日" + new Date().getHours() + "時" + new Date()
+												.getMinutes() + "分"
+											firebase.database().ref('Guide/G123/Tour/' +
+													Tour_ID)
+												.update({
+													update_time: update_time
+												}).then(function () {
+													alert(`您已經更新此團金鑰為 :` + new_key)
+												})
+										})
+									}
+									openRTC = function () {
+										liff.openWindow({
+											// uri：要開啟的網址
+											url: "https://sideprojectslide.netlify.app/guide_rtc.html?key=" +
+												snapshot.val().slide_key,
+											external: true
+										})
+									}
+
+									//console.log(str);
+									gsheetClass.outerHTML = str;
+									Reveal.sync();
+									console.log("初始完成!!")
+									Reveal.addEventListener('slidechanged', function (event) {
 										firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
 											.update({
-												update_time: update_time
-											}).then(function () {
-												alert(`您已經更新此團金鑰為 :` + new_key)
+												currentslideX: Reveal.getState().indexh,
+												currentslideY: Reveal.getState().indexv
 											})
 									})
-								}
-								openRTC=function(){
-									liff.openWindow({
-                                                // uri：要開啟的網址
-                                                url: "https://sideprojectslide.netlify.app/guide_rtc.html?key="+snapshot.val().slide_key,
-                                                external: true
-                                            })
+
 								}
 
-								//console.log(str);
-								gsheetClass.outerHTML = str;
-								Reveal.sync();
-								console.log("初始完成!!")
-								Reveal.addEventListener('slidechanged', function (event) {
-									firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
-										currentslideX: Reveal.getState().indexh,
-										currentslideY: Reveal.getState().indexv
-									})
-								})
+
+
 
 							}
-
-
-
-
 						}
-					}
 
 
-				});
-			}
-		
+					});
+
+
+
+
+
+
+			})
+
 
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
 			//網址分析 處理網頁傳值
