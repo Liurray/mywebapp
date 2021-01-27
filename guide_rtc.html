@@ -6,22 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="shortcut icon" href="/demos/logo.png">
   <link rel="stylesheet" href="/demos/stylesheet.css">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
   <script src="/demos/menu.js"></script>
 </head>
 <body>
  
 
   <h1>
-    語音廣播系統
     <p class="no-mobile">
       歡迎使用導覽通語音廣播系統
     </p>
   </h1>
 
   <section class="make-center">
-    <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20>
-    <button id="btn-open-room">建立語音頻道</button>
-   
+    <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=30>
+    <button class="waves-effect waves-light btn-small" id="btn-open-room"><i
+      class="material-icons left">password</i>建立語音頻道</button>
+    <!--button class="waves-effect waves-light btn-large" id="openslide" href='#' data-activates='dropdown1'
+    style="text-align:centr ; background-color : #005AB5"><i
+        class="material-icons left">description</i>查看簡報</button-->
     
 
     <div id="room-urls" style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
