@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <!--在 HTML Head 裡面置入 mapbox-gl.js 跟 mapbox-gl.css --> 
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.2/mapbox-gl.css' rel='stylesheet' />
+  </head>
+  
+  <body>
+    <!--放一個有 id 的 container，等等用 script 載入地圖，要記得指定寬跟高 --> 
+    <div id='map' style='width: 400px; height: 300px;'></div>
+    
+    <script>
+      // 在 Mapbox Studio 裡面得到的 Access Token 放在下方
+      mapboxgl.accessToken = 'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
+      var map = new mapboxgl.Map({
+        container: 'map',
+        // 在 Mapbox Studio 裡面製作的 Style 得到的 Style Url
+        style: 'mapbox://styles/chrysophyta/cjbfwi7c60m0w2smz9hwekkxv'
+        });
+    </script>
+  </body>
+</html>
