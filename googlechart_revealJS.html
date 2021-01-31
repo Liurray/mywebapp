@@ -360,7 +360,7 @@
 								var rows = data.getNumberOfRows();
 								var str = `<section id="WebRTC">
 										 <h2> 使用語音導覽 </h2> 
-										 <button onclick="openRTC();">打開語音</button></section>`;
+										 <button class="btn" onclick="openRTC();">打開語音</button></section>`;
 								var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[
 									0];
 								// Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
@@ -400,7 +400,7 @@
 									}
 									str += `<section id="grand-finale">
 										 <h2> 導覽結束 </h2> 
-										 <button onclick="refresh();">完成導覽!</button></section>`;
+										 <button class="btn" onclick="refresh();">完成導覽!</button></section>`;
 									//*注意function 命名優先順序
 									refresh = function () {
 										var new_key = Math.random().toString(36).substr(4, 5);
