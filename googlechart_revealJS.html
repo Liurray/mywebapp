@@ -70,9 +70,13 @@
 
 			<form class="col s12">
 				<div class="col center">
-					<div class="input-field col s6" style="text-align:center">
+					<div class="input-field" style="text-align:center">
+						<i class="material-icons prefix">vpn_key</i>
 						<input placeholder="請輸入此旅團之金鑰匙" id="key" type="text" name=text1 class="validate">
-						<input type=button value="確認金鑰" onClick="inputkey();">
+						<div class="input-field center">
+							<button class="btn" onclick="inputkey();">確認金鑰</button>
+						</div>
+						<!--input type=button value="確認金鑰" onClick="inputkey();" style="height: 80px;"-->
 						<label for="first_name" style="color : #005AB5">旅團導覽金鑰</label>
 					</div>
 				</div>
