@@ -117,7 +117,7 @@
 			//console.log(tourid_params.toString());
 			let Tour_ID = tourid_params.toString().substr(7);
 			//console.log(Tour_ID);
-			inputkey = function () {
+			$(document).on('click', '.btn',function () {
 				var key = document.getElementById("key").value;
 				console.log("金鑰匙" + key)
 				firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
@@ -452,7 +452,7 @@
 
 
 					});
-			}
+			})
 
 
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
