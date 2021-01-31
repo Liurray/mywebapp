@@ -6,7 +6,11 @@
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
     <meta name="author" content="Hakim El Hattab">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -60,12 +64,24 @@
 </head>
 
 <body>
-    <div id="form">
-        <form>
-            <input type=text name=text1 id="key" value="金鑰匙">
-            <input type=button value="確認金鑰" onClick="inputkey();">
-        </form>
-    </div>
+    <div class="container"   valign="center"style="margin-right: auto;margin-left: auto;padding-right: 15px;padding-left: 15px;width: 100%;max-width: 1140px;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+		<div class="center" id="form" style="text-align:center">
+
+			<form class="col s12">
+				<div class="col center">
+					<div class="input-field" style="text-align:center">
+						<i class="material-icons prefix"></i>
+						<input placeholder="請輸入此旅團之金鑰匙" id="key" type="text" name=text1 class="validate">
+						<div class="input-field center">
+						<input type=button value="確認金鑰" onClick="inputkey();"  button class="btn">
+					</div>
+						<label for="first_name" style="color : #005AB5">旅團導覽金鑰</label>
+					</div>
+				</div>
+			</form>
+
+		</div>
+	</div>
 
 
     <div class="reveal" id="slide" style="display:none">
@@ -340,7 +356,7 @@
                                 var rows = data.getNumberOfRows();
                                 var str = `<section id="WebRTC">
 										 <h2> 使用語音導覽 </h2> 
-										 <button onclick="openRTC();">打開語音</button></section>`;
+										 <button class="btn-large" onclick="openRTC();">打開語音</button></section>`;
                                 var gsheetClass = document.getElementsByClassName(
                                     target_gsheet_class_once)[0];
                                 // Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
