@@ -65,18 +65,17 @@
 
 <body>
 	
-	<div class="container"   valign="center">
-		<div class="form" id="form" style="text-align:center">
+	<div class="container"   valign="center"style="margin-right: auto;margin-left: auto;padding-right: 15px;padding-left: 15px;width: 100%;max-width: 1140px;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+		<div class="center" id="form" style="text-align:center">
 
 			<form class="col s12">
 				<div class="col center">
 					<div class="input-field" style="text-align:center">
-						<i class="material-icons prefix">vpn_key</i>
+						<i class="material-icons prefix"></i>
 						<input placeholder="請輸入此旅團之金鑰匙" id="key" type="text" name=text1 class="validate">
 						<div class="input-field center">
-							<button class="btn" onclick="inputkey();">確認金鑰</button>
-						</div>
-						<!--input type=button value="確認金鑰" onClick="inputkey();" style="height: 80px;"-->
+						<input type=button value="確認金鑰" onClick="inputkey();"  button class="btn">
+					</div>
 						<label for="first_name" style="color : #005AB5">旅團導覽金鑰</label>
 					</div>
 				</div>
@@ -117,7 +116,7 @@
 			//console.log(tourid_params.toString());
 			let Tour_ID = tourid_params.toString().substr(7);
 			//console.log(Tour_ID);
-			$(document).on('click', '.btn',function () {
+			inputkey = function () {
 				var key = document.getElementById("key").value;
 				console.log("金鑰匙" + key)
 				firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
@@ -452,7 +451,7 @@
 
 
 					});
-			})
+			}
 
 
 			document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
