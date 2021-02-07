@@ -428,9 +428,8 @@
                                 // ......................................................
                                 // ..................RTCMultiConnection Code.............
                                 // ......................................................            
-                                
-                                /*
-                                var connection = new RTCMultiConnection();
+                                document.getElementById('btn-open-room').onclick = function () {
+                                    var connection = new RTCMultiConnection();
                                 connection.socketMessageEvent = 'audio-conference-demo';
                                 // this line is VERY_important
                                 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
@@ -454,10 +453,12 @@
                                 connection.onstream = function (event) {
                                     document.body.appendChild(event.mediaElement);
                                 };
-                                var predefinedRoomId = 'key';*/
-                                // ......................................................
-                                // ..................RTCMultiConnection Code.............
-                                // ......................................................
+                                var predefinedRoomId = 'key';
+                                    this.disabled = true;
+                                    connection.open(predefinedRoomId);
+                                };
+                                
+                                
                                 refresh = function () {
                                     var new_key = Math.random().toString(36).substr(4, 5);
                                     //alert("哈囉");
@@ -477,10 +478,7 @@
                                             })
                                     })
                                 }
-                                /*document.getElementById('btn-open-room').onclick = function () {
-                                    this.disabled = true;
-                                    connection.open(predefinedRoomId);
-                                };*/
+                             
 
                                 //console.log(str);
                                 gsheetClass.outerHTML = str;
