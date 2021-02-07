@@ -277,7 +277,8 @@
                         document.getElementById("form").style.display = "none";
                         document.getElementById("slide").style.display = "block";
                         // 取得網址裡的參數   
-                        
+                        var roomkey = key;
+                        console.log(roomkey);
                         function GetUrlVar(VarName) {
                             name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
                             var regexS = "[\\?&]" + VarName + "=([^&#]*)";
