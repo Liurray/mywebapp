@@ -428,7 +428,7 @@
                                 // ......................................................
                                 // ..................RTCMultiConnection Code.............
                                 // ......................................................            
-                                document.getElementById('room-id').value = key;
+                                /*document.getElementById('room-id').value = key;
                                 var connection = new RTCMultiConnection();
                                 connection.socketMessageEvent = 'audio-conference-demo';
                                 // this line is VERY_important
@@ -453,7 +453,7 @@
                                 connection.onstream = function (event) {
                                     document.body.appendChild(event.mediaElement);
                                 };
-                                var predefinedRoomId = 'key';
+                                var predefinedRoomId = 'key';*/
                                 // ......................................................
                                 // ..................RTCMultiConnection Code.............
                                 // ......................................................
@@ -476,10 +476,10 @@
                                             })
                                     })
                                 }
-                                document.getElementById('btn-open-room').onclick = function () {
+                                /*document.getElementById('btn-open-room').onclick = function () {
                                     this.disabled = true;
                                     connection.open(predefinedRoomId);
-                                };
+                                };*/
 
                                 //console.log(str);
                                 gsheetClass.outerHTML = str;
