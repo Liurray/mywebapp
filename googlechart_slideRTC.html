@@ -381,7 +381,7 @@
                                     </div>
                                 </div>
                                 </section>`;
-                               
+
                             var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[
                                 0];
                             // Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
@@ -429,36 +429,37 @@
                                 // ..................RTCMultiConnection Code.............
                                 // ......................................................            
                                 document.getElementById('btn-open-room').onclick = function () {
-                                    var connection = new RTCMultiConnection();
-                                connection.socketMessageEvent = 'audio-conference-demo';
-                                // this line is VERY_important
-                                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+                                    alert(`您已經更新此團金鑰為 :`)
+                                   /* var connection = new RTCMultiConnection();
+                                    connection.socketMessageEvent = 'audio-conference-demo';
+                                    // this line is VERY_important
+                                    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
-                                // all below lines are optional; however recommended.
+                                    // all below lines are optional; however recommended.
 
-                                connection.session = {
-                                    audio: true,
-                                    video: false
-                                };
-                                connection.mediaConstraints = {
-                                    audio: true,
-                                    video: false
-                                };
+                                    connection.session = {
+                                        audio: true,
+                                        video: false
+                                    };
+                                    connection.mediaConstraints = {
+                                        audio: true,
+                                        video: false
+                                    };
 
-                                connection.sdpConstraints.mandatory = {
-                                    OfferToReceiveAudio: true,
-                                    OfferToReceiveVideo: false
-                                };
+                                    connection.sdpConstraints.mandatory = {
+                                        OfferToReceiveAudio: true,
+                                        OfferToReceiveVideo: false
+                                    };
 
-                                connection.onstream = function (event) {
-                                    document.body.appendChild(event.mediaElement);
-                                };
-                                var predefinedRoomId = 'key';
+                                    connection.onstream = function (event) {
+                                        document.body.appendChild(event.mediaElement);
+                                    };
+                                    var predefinedRoomId = 'key';
                                     this.disabled = true;
-                                    connection.open(predefinedRoomId);
+                                    connection.open(predefinedRoomId);*/
                                 };
-                                
-                                
+
+
                                 refresh = function () {
                                     var new_key = Math.random().toString(36).substr(4, 5);
                                     //alert("哈囉");
@@ -478,7 +479,7 @@
                                             })
                                     })
                                 }
-                             
+
 
                                 //console.log(str);
                                 gsheetClass.outerHTML = str;
