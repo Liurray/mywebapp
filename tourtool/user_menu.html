@@ -83,55 +83,54 @@
             })
             // 匹配
             $.ajax(userID_setting).done(function (response_user) {
-                for(var i =1 in response_user)
-                {
-                	if(i== Tour_ID && response_user[i].userID ==="Uxx5566"){
-                  console.log("找到")
-                  console.log(i+response_user[i].userID)
-                  find = 1;
-                  break;
-                  }
+                for (var i = 1 in response_user) {
+                    if (i == Tour_ID && response_user[i].userID === "Uxx5567") {
+                        console.log("找到")
+                        console.log(i + response_user[i].userID)
+                        find = 1;
+                        break;
+                    }
                 }
-            }).then(function(){
+            }).then(function () {
                 $(document).ready(function () {
-                console.log(find);
-                if (Tour_ID != "" && find == 1) {
-                    //slide function btn操作
-              
-                    //WebRTC function btn操作
-                    /*$("#openRTC").click(function () {
+                    console.log(find);
+                    if (Tour_ID != "" && find == 1) {
+                        //slide function btn操作
 
-                        console.log("進入語音導覽")
+                        //WebRTC function btn操作
+                        /*$("#openRTC").click(function () {
 
-                    });*/
+                            console.log("進入語音導覽")
 
-                    $('#done').click(function () {
-                   
-                })
-                //--小功能按鈕呼叫
+                        });*/
 
-                $('#openslide').click(function () {
-                    liff.openWindow({
-                        url: "https://liff.line.me/1655371574-0rNXV4GN?tourid=" +
-                            Tour_ID,
-                        external: false
-                    })
-                    console.log("開簡報")
+                        $('#done').click(function () {
 
-                })
+                        })
+                        //--小功能按鈕呼叫
 
-                } else {
+                        $('#openslide').click(function () {
+                            liff.openWindow({
+                                url: "https://liff.line.me/1655371574-0rNXV4GN?tourid=" +
+                                    Tour_ID,
+                                external: false
+                            })
+                            console.log("開簡報")
 
-                    alert(`您並沒有權限哦`);
-                    
+                        })
 
+                    } else {
+
+                        alert(`您並沒有權限哦`);
 
 
-                }
-            });
+
+
+                    }
+                });
             })
 
-        
+
 
 
 
@@ -161,14 +160,14 @@
     <ul>
         <div class="slide" style="text-align:center">
             <button class="waves-effect waves-light btn-large" id="openslide" href='#' data-activates='dropdown1'
-            style="text-align:centr ; background-color : #005AB5"><i
-                class="material-icons left">description</i>查看簡報</button>
-        <!--#005AB5-->    
+                style="text-align:centr ; background-color : #005AB5"><i
+                    class="material-icons left">description</i>查看簡報</button>
+            <!--#005AB5-->
         </div>
     </ul>
     <!--完成導覽-->
     <div class="DONE" style="text-align:center">
-    
+
         <button class="waves-effect waves-light btn-large" id="done"
             style="text-align:center; background-color :#AE0000"><i class="material-icons left">check</i>完成導覽</button>
         <!--#64A600-->
@@ -177,9 +176,9 @@
 
 
     </div>
-  
 
-      
+
+
 
 
     </div>
