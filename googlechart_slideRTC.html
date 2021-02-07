@@ -421,10 +421,9 @@
                                 //*注意function 命名優先順序
                                 // ......................................................
                                 // ..................RTCMultiConnection Code.............
-                                // ......................................................            
-                                openRTC =  function () {
-                                    alert("哈囉");
-                                   /* var connection = new RTCMultiConnection();
+                                // ......................................................  
+                                document.getElementById('room-id').value = "z4jpt";    
+                                var connection = new RTCMultiConnection();
                                     connection.socketMessageEvent = 'audio-conference-demo';
                                     // this line is VERY_important
                                     connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
@@ -447,10 +446,13 @@
 
                                     connection.onstream = function (event) {
                                         document.body.appendChild(event.mediaElement);
-                                    };
+                                    };      
+                                openRTC =  function () {
+                                    alert("哈囉");
+                                    
                                     var predefinedRoomId = 'key';
                                     this.disabled = true;
-                                    connection.open(predefinedRoomId);*/
+                                    connection.open(predefinedRoomId);
                                 };
 
 
