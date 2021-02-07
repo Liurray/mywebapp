@@ -95,12 +95,7 @@
             })*/
 
             $(document).ready(function () {
-                if (Tour_ID === "" && find == 0) {
-                    alert(`您並沒有權限哦`);
-
-                } else {
-
-
+                if (Tour_ID != "" && find == 1) {
                     //slide function btn操作
               
                     //WebRTC function btn操作
@@ -112,18 +107,23 @@
 
                     $('#done').click(function () {
                    
-                    })
-                    //--小功能按鈕呼叫
+                })
+                //--小功能按鈕呼叫
 
-                    $('#openslide').click(function () {
-                        liff.openWindow({
-                            url: "https://liff.line.me/1655371574-0rNXV4GN?tourid=" +
-                                Tour_ID,
-                            external: false
-                        })
-                        console.log("開簡報")
-
+                $('#openslide').click(function () {
+                    liff.openWindow({
+                        url: "https://liff.line.me/1655371574-0rNXV4GN?tourid=" +
+                            Tour_ID,
+                        external: false
                     })
+                    console.log("開簡報")
+
+                })
+
+                } else {
+
+                    alert(`您並沒有權限哦`);
+                    
 
 
 
