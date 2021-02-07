@@ -374,7 +374,7 @@
                                     <div class="input-field col s6" >
                                         <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20 width="50" height="50">
                                     <div class="center" width="50" height="50">
-                                        <button class="waves-effect waves-light btn-large" id="btn-open-room"style="text-align:centr ; background-color : #469df5"><i class="material-icons left">mic</i>建立語音頻道</button>
+                                        <button class="waves-effect waves-light btn-large" onclick="openRTC()id="btn-open-room"style="text-align:centr ; background-color : #469df5"><i class="material-icons left">mic</i>建立語音頻道</button>
                                     </div>
                                     <div id="room-urls"style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
                                         <div id="audios-container"></div>
@@ -428,8 +428,8 @@
                                 // ......................................................
                                 // ..................RTCMultiConnection Code.............
                                 // ......................................................            
-                                document.getElementById('btn-open-room').onclick = function () {
-                                    alert(`您已經更新此團金鑰為 :`)
+                                openRTC =  function () {
+                                    alert("哈囉");
                                    /* var connection = new RTCMultiConnection();
                                     connection.socketMessageEvent = 'audio-conference-demo';
                                     // this line is VERY_important
