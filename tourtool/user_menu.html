@@ -53,6 +53,7 @@
             let Tour_ID = tourid_params.toString().substr(7);
             console.log(Tour_ID);
             var slide_key = 0;
+            var find = 0;
             firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
                 function (snapshot) {
                     $('#update_time').text(snapshot.val().update_time);
@@ -66,7 +67,11 @@
                 "method": "GET",
                 "timeout": 0,
             };
-
+            var userID_setting = {
+                "url": "https://forchartjs.firebaseio.com/User.json",
+                "method": "GET",
+                "timeout": 0,
+            };
 
             //--改標題--
             $.ajax(TourID_setting).done(function (response) {
@@ -76,9 +81,20 @@
                 slidekey = response[Tour_ID].slide_key;
                 console.log(slidekey);
             })
+            // 匹配
+            $.ajax(userID_setting).done(function (response2) {
+                for(var i =1 in response2)
+                {
+                	if(i== Tour_ID && response[i].userID ==="Uxx5566"){
+                  console.log("找到")
+                  console.log(i+response[i].userID)
+                  find = 1;
+                  break;
+                  }
+            })
 
             $(document).ready(function () {
-                if (Tour_ID === "") {
+                if (Tour_ID === "" && find == 0) {
                     alert(`您並沒有權限哦`);
 
                 } else {
