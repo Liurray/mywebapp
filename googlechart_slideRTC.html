@@ -366,21 +366,9 @@
                             var columns = data.getNumberOfColumns();
                             var rows = data.getNumberOfRows();
                             var str =
-                                `<section class="make-center">
-                                    <div class="container" style="margin-right: auto;margin-left: auto;padding-right: 15px;padding-left: 15px;width: 100%;max-width: 1140px;">
-                                        <div class="Header" style="text-align:center">
-                                            <h5> 歡迎使用導覽通語音廣播系統</h5>
-                                        </div>
-                                    <div class="input-field col s6" >
-                                        <!--input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20 width="50" height="50"-->
-                                    <div class="center" width="50" height="50">
-                                        <button class="waves-effect waves-light btn-large" onclick="openRTC()style="text-align:centr ; background-color : #469df5"><i class="material-icons left">mic</i>建立語音頻道</button>
-                                    </div>
-                                    <div id="room-urls"style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;"></div>
-                                        <div id="audios-container"></div>
-                                    </div>
-                                </div>
-                                </section>`;
+                            `<section id="grand-finale">
+										 <h2> 導覽結束 </h2> 
+										 <button class="btn-large" onclick="openRTC();"style="text-align:center; background-color :#AE0000"><i class="material-icons left">check</i>完成導覽!</button></section>`;
 
                             var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[
                                 0];
