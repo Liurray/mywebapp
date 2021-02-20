@@ -16,7 +16,7 @@ var map = new mapboxgl.Map({
 
 var marker;
 var delta = 100;
-
+var vConsole = new VConsole();
 map.boxZoom.disable();
 map.dragPan.disable();
 map.doubleClickZoom.disable();
@@ -87,22 +87,19 @@ document.body.addEventListener('keydown', function(e) {
 }, true);
 
 var compass = document.querySelector('.js-compass');
-window.addEventListener('deviceorientation', function(event) {
-  var alpha = event.alpha;
-}, false);
+
 map.on('rotate', function() {
-  var rotate = 'rotate(' + alpha + 'deg)';
+  var rotate = 'rotate(' + (map.transform.angle * (180 / Math.PI)) + 'deg)';
   compass.style.transform = rotate;
 });
 
-
-var buttonLeft = ['left', document.querySelector('.js-left')];
+/*var buttonLeft = ['left', document.querySelector('.js-left')];
 var buttonRight = ['right', document.querySelector('.js-right')];
 var buttonTop = ['up', document.querySelector('.js-up')];
 var buttonBottom = ['down', document.querySelector('.js-down')];
 
 var buttons = [buttonLeft, buttonRight, buttonTop, buttonBottom];
-var persist;
+var persist;*/
 
 function buttonStart(b) {
   persist = setInterval(function() {
