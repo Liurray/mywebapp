@@ -87,19 +87,23 @@ document.body.addEventListener('keydown', function(e) {
 }, true);
 
 var compass = document.querySelector('.js-compass');
-
+window.addEventListener('deviceorientation',function(event){
+  var alpha;
+  console.log(alpha);
+})
 map.on('rotate', function() {
+  //監聽
   var rotate = 'rotate(' + (map.transform.angle * (180 / Math.PI)) + 'deg)';
   compass.style.transform = rotate;
 });
 
-/*var buttonLeft = ['left', document.querySelector('.js-left')];
+var buttonLeft = ['left', document.querySelector('.js-left')];
 var buttonRight = ['right', document.querySelector('.js-right')];
 var buttonTop = ['up', document.querySelector('.js-up')];
 var buttonBottom = ['down', document.querySelector('.js-down')];
 
 var buttons = [buttonLeft, buttonRight, buttonTop, buttonBottom];
-var persist;*/
+var persist;
 
 function buttonStart(b) {
   persist = setInterval(function() {
