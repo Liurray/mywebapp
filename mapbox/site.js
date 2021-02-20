@@ -57,7 +57,7 @@ function goDirection(dir) {
       move(map.getBearing() - 100, true);
       break;
     case 'right':
-      move(map.getBearing() + 60, true);
+      move(map.getBearing() + 15, true);
       break;
     case 'up':
       move([0, -delta]);
@@ -90,6 +90,7 @@ var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation',function(event){
   var alpha =event.alpha;
   var rotate = 'rotate(' + alpha + 'deg)';
+  move(map.getBearing() - alpha, true);
   compass.style.transform = rotate;
   //console.log(alpha);
 })
