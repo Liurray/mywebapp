@@ -93,7 +93,7 @@ window.addEventListener('deviceorientation',function(event){
 })
 map.on('rotate', function() {
   //監聽
-  var rotate = 'rotate(' + (map.transform.angle * (180 / Math.PI)) + 'deg)';
+  var rotate = 'rotate(' + alpha + 'deg)';
   compass.style.transform = rotate;
 });
 
