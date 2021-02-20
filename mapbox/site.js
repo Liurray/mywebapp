@@ -89,7 +89,7 @@ document.body.addEventListener('keydown', function(e) {
 var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation',function(event){
   var alpha;
-  console.log(alpha);
+  console.log("變動");
 })
 map.on('rotate', function() {
   //監聽
