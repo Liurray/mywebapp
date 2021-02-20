@@ -372,7 +372,7 @@
                                 `<section id="grand-finale">
                                          <h5> 歡迎使用語音廣播系統 </h5> 
                                          <div class="input-field col s6" >
-                                            <input type="text" id="room-id" value=輸入金鑰 autocorrect=off autocapitalize=off size=20 width="50" height="50">
+                                            <input type="text" name='roomkey' id="room-id" value=輸入金鑰 autocorrect=off autocapitalize=off size=20 width="50" height="50">
 										    <button class="btn-large" onclick="openRTC();"style="text-align:center; background-color : #469df5"><i class="material-icons left">mic</i>加入頻道</button></section>
                                             <div id="room-urls"
       style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;">
@@ -416,7 +416,7 @@
 
 
                                 }
-                                
+
 
                                 //*注意function 命名優先順序
                                 // ......................................................
@@ -455,13 +455,25 @@
                                 };
 
 
-                            
+
 
 
                                 //console.log(str);
                                 gsheetClass.outerHTML = str;
                                 Reveal.sync();
                                 console.log("初始完成!!")
+                                //當reveal js loading好
+                                Reveal.addEventListener('ready', function (event) {
+                                    $('input[type=text].roomkey').val('000000');
+                                    
+                                });
+
+
+
+
+
+
+
                                 Reveal.addEventListener('slidechanged', function (event) {
                                     firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
                                         currentslideX: Reveal.getState().indexh,
