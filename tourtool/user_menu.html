@@ -94,7 +94,7 @@
             }).then(function () {
                 $(document).ready(function () {
                     console.log(find);
-                    if (Tour_ID != "" && find == 1) {
+                    if (Tour_ID != "" && find == 0) {
                         //slide function btn操作
 
                         //WebRTC function btn操作
@@ -111,9 +111,9 @@
 
                         $('#openslide').click(function () {
                             liff.openWindow({
-                                url: "https://liff.line.me/1655371574-0rNXV4GN?tourid=" +
+                                url: "https://sideprojectslide.netlify.app/googlechart_slidertc_user?tourid=" +
                                     Tour_ID,
-                                external: false
+                                external: true
                             })
                             console.log("開簡報")
 
