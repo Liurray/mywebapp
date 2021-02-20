@@ -1,0 +1,179 @@
+::-moz-selection { background-color: transparent; }
+::selection { background-color: transparent; }
+
+body * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.map {
+  height: 180%;
+}
+.button-up {
+  bottom: 40px;
+  left: 40px;
+}
+.mb-attribution-container {
+  border-radius: 20px;
+  padding-bottom: 3px;
+}
+.fade {
+  background: -webkit-linear-gradient(rgba(62, 228, 216, 0.75) 10%, transparent 50%) left repeat;
+  background: linear-gradient(rgba(62, 228, 216, 0.75) 10%, transparent 50%) left repeat;
+  opacity: .75;
+  pointer-events: none;
+}
+.bat-container {
+  width: 125px;
+  height: 170px;
+  margin: auto;
+  bottom: 80px;
+}
+.bat-wrapper {
+  position: absolute;
+  height: 170px;
+  width: 125px;
+  animation: ease-in-out wiggle 7s 0s infinite alternate both;
+}
+.bat {
+  background-size: 2250px 170px;
+  background-image: url('bat.svg');
+  height: 170px;
+  width: 125px;
+  animation: flapping .4s steps(18) infinite alternate;
+}
+
+.bat-leg-1 {
+  bottom: 54px;
+  left: 55px;
+  display: block;
+  width: 4px;
+  height: 15px;
+  position: absolute;
+  border-radius: 12px;
+  background: #008dba;
+  animation: ease-in-out leg 2s 0s infinite alternate both;
+ }
+.bat-leg-2 {
+  bottom: 54px;
+  left: 65px;
+  display: block;
+  width: 4px;
+  height: 15px;
+  position: absolute;
+  border-radius: 12px;
+  background: #008dba;
+  animation: ease-in-out leg2 2s 0s infinite alternate both;
+ }
+ .bat-shadow {
+  position: absolute;
+  width: 20px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #005773;
+  opacity: .2;
+  top: 180px;
+  left: 60px;
+  animation: ease-in-out bat-shadow 7s 0s infinite alternate both;
+}
+
+.mapboxgl-ctrl-top-right {
+  z-index: 1;
+}
+
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl-group {
+  background-color: rgba(0,0,0,0.25);
+  box-shadow: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.mapboxgl-ctrl > button:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.mapboxgl-ctrl-icon.mapboxgl-ctrl-geolocate {
+  background-image: url(img/geolocate-icon.svg);
+  background-repeat: no-repeat;
+  background-position: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  }
+
+.compass {
+  top: 60px;
+}
+
+.compass-dot {
+  color: red;
+}
+
+.waypoint-dot {
+  animation: ease-in-out waypoint 1s 0s infinite alternate both;
+  background: red;
+  box-shadow: 0 0 0 5px rgba(255,0,0,.1);
+  width: 16px;
+  border-radius: 50%;
+  height: 16px;
+}
+.waypoint-shadow {
+  animation: ease-in-out waypoint-shadow 1s 0s infinite alternate both;
+  display: block;
+  position: absolute;
+  top: 40px;
+  width: 14px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #005773;
+  opacity: .2;
+}
+
+@keyframes waypoint {
+  0%   { box-shadow: 0 0 0 8px rgba(255,0,0,.1); background: red; transform: scale(.9);}
+  100% { box-shadow: 0 0 0 4px rgba(255,0,0,.1); background: rgba(240,100,0,1); transform: scale(1.1);}
+}
+
+@keyframes waypoint-shadow {
+  0%   { transform: scale(.9);}
+  100% { transform: scale(1.1);}
+}
+
+@keyframes leg {
+  0%   { transform: rotate(20deg) translateY(0px);}
+  10%  { transform: rotate(20deg) translateY(0px);}
+  100% { transform: rotate(-5deg) translateY(4px);}
+}
+
+@keyframes leg2 {
+  0%   { transform: rotate(-20deg) translateY(0px);}
+  90%  { transform: rotate(5deg) translateY(4px);}
+  100% { transform: rotate(5deg) translateY(4px);}
+}
+
+@keyframes wiggle {
+  0%   { transform: rotate( 0deg) translateY(-22px) scale(1.0);}
+  33%  { transform: rotate( -10deg) translateY(0px) scale(1.05) translateX(-15px);}
+  50%  { transform: rotate( 0deg) translateY(7px) scale(1.0) translateX(5px);}
+  66%  { transform: rotate( 5deg) translateY(15px);}
+  75%  { transform: rotate( 0deg) translateY(8px);}
+  100% { transform: rotate( 10deg) translateY(0px) translateX(-15px);}
+}
+
+@keyframes bat-shadow {
+  0%   { transform: scale(.7) translateX(0px);}
+  33%  { transform: scale(1) translateX(-5px);}
+  50%  { transform: scale(1.1) translateX(4px);}
+  66%  { transform: scale(1.3);}
+  75%  { transform: scale(1.2);}
+  100% { transform: scale(1.0) translateX(-5px);}
+}
+
+@keyframes flapping {
+   100% { background-position: -2250px 0px; }
+}
+

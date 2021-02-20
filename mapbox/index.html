@@ -1,0 +1,40 @@
+<html>
+<head>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <meta charset=utf-8 />
+  <title>Fly around | Mapbox</title>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet'/>
+  <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+  <link href='site.css' rel='stylesheet' />
+  <link rel="canonical" href="https://labs.mapbox.com/bites/00279/" >
+</head>
+<body class='fixed-left fixed-top clip'>
+  <div class='pin-top pin-left map' id='map'>
+  </div>
+  <div class='mb-attribution-container pad1x pad0y pin-bottomleft space-bottom1 space-left1 fill-darken1'>
+    <a target='_blank' href='https://www.mapbox.com/' class='mb-logo white small'></a>
+  </div>
+  <div class='pin-top pin-left fade'></div>
+  <div class='bat-container pin-bottom'>
+    <div class='bat-wrapper'>
+      <div class='bat js-bat'>
+        <div class='bat-leg-1'></div>
+        <div class='bat-leg-2'></div>
+      </div>
+    </div>
+    <div class='bat-shadow'></div>
+  </div>
+  <div class='buttons pin-bottomright space-right1 space-bottom1'>
+    <button class='fl quiet round-left button icon caret-left js-left'></button>
+    <button class='fl quiet round-top button icon caret-up pin-bottom button-up js-up'></button>
+    <button class='fl quiet unround button icon caret-down js-down'></button>
+    <button class='fl quiet round-right button icon caret-right js-right'></button>
+  </div>
+  <div class='compass dot fill-white pad1 pin-topright space-right1'>
+    <div class='js-compass compass-dot compass icon'></div>
+  </div>
+</body>
+</html>
+
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script>
+<script src='site.js'></script>
