@@ -89,11 +89,12 @@ document.body.addEventListener('keydown', function(e) {
 var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation', function(event) {
   var alpha = event.alpha;
+}, false);
 map.on('rotate', function() {
   var rotate = 'rotate(' + alpha + 'deg)';
   compass.style.transform = rotate;
 });
-}, false);
+
 
 var buttonLeft = ['left', document.querySelector('.js-left')];
 var buttonRight = ['right', document.querySelector('.js-right')];
