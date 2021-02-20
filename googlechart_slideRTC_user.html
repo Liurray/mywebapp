@@ -460,13 +460,11 @@
 
                                 //console.log(str);
                                 gsheetClass.outerHTML = str;
+                                $('input[type=text].roomkey').val('000000');
                                 Reveal.sync();
                                 console.log("初始完成!!")
                                 //當reveal js loading好
-                                Reveal.addEventListener('ready', function (event) {
-                                    $('input[type=text].roomkey').val('000000');
-                                    
-                                });
+                               
 
 
 
