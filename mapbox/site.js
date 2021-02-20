@@ -89,13 +89,15 @@ document.body.addEventListener('keydown', function(e) {
 var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation',function(event){
   var alpha =event.alpha;
-  console.log(alpha);
+  var rotate = 'rotate(' + alpha + 'deg)';
+  compass.style.transform = rotate;
+  //console.log(alpha);
 })
-map.on('rotate', function() {
+/*map.on('rotate', function() {
   //監聽
   var rotate = 'rotate(' + alpha + 'deg)';
   compass.style.transform = rotate;
-});
+});*/
 
 var buttonLeft = ['left', document.querySelector('.js-left')];
 var buttonRight = ['right', document.querySelector('.js-right')];
