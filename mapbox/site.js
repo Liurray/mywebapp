@@ -24,16 +24,11 @@ map.scrollZoom.disable();
 map.keyboard.disable();
 map.touchZoomRotate.disable();
 //
-var geolocate = new mapboxgl.Geolocate({position: 'top-right', positionOptions: {
+var geolocate = new mapboxgl.GeolocateControl({position: 'top-right', positionOptions: {
   enableHighAccuracy: true
   },trackUserLocation: true});
 map.addControl(geolocate);
-map.addControl(new mapboxgl.GeolocateControl({
-  positionOptions: {
-  enableHighAccuracy: true
-  },
-  trackUserLocation: true
-  }));
+
 geolocate.on('geolocate', function() {
   // Apparently this get's reset on result :/
   map.setBearing(-9.47);
