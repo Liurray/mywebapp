@@ -90,7 +90,7 @@ var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation',function(event){
   var alpha =event.alpha;
   var rotate = 'rotate(' + alpha + 'deg)';
-  move(map.getBearing() - alpha, true);
+  move(alpha, true);
   compass.style.transform = rotate;
   //console.log(alpha);
 })
