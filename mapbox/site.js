@@ -23,7 +23,7 @@ map.doubleClickZoom.disable();
 map.scrollZoom.disable();
 map.keyboard.disable();
 map.touchZoomRotate.disable();
-
+//
 var geolocate = new mapboxgl.Geolocate({position: 'top-right', positionOptions: {
   enableHighAccuracy: true
   },trackUserLocation: true});
