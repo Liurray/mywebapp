@@ -51,46 +51,14 @@ function move(pos, bearing) {
   }
 }
 
-function goDirection(dir) {
-  switch (dir) {
-    case 'left':
-      move(map.getBearing() - 100, true);
-      break;
-    case 'right':
-      move(map.getBearing() + 15, true);
-      break;
-    case 'up':
-      move([0, -delta]);
-      break;
-    case 'down':
-      move([0, delta]);
-      break;
-  }
-}
 
-document.body.addEventListener('keydown', function(e) {
-  switch (e.which) {
-    case 38: // up
-      goDirection('up');
-    break;
-    case 40: // down
-      goDirection('down');
-    break;
-    case 37: // left
-      goDirection('left');
-    break;
-    case 39: // right
-      goDirection('right');
-    break;
-  }
 
-}, true);
 
 var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation',function(event){
   var alpha =event.alpha;
   var rotate = 'rotate(' + alpha + 'deg)';
-  move(alpha-90, true);
+  move(alpha, true);
   compass.style.transform = rotate;
   //console.log(alpha);
 })
@@ -100,13 +68,7 @@ window.addEventListener('deviceorientation',function(event){
   compass.style.transform = rotate;
 });*/
 
-var buttonLeft = ['left', document.querySelector('.js-left')];
-var buttonRight = ['right', document.querySelector('.js-right')];
-var buttonTop = ['up', document.querySelector('.js-up')];
-var buttonBottom = ['down', document.querySelector('.js-down')];
 
-var buttons = [buttonLeft, buttonRight, buttonTop, buttonBottom];
-var persist;
 
 function buttonStart(b) {
   persist = setInterval(function() {
@@ -114,16 +76,7 @@ function buttonStart(b) {
   }, 20);
 }
 
-function buttonEnd() {
-  clearInterval(persist);
-}
 
-buttons.forEach(function(b) {
-  b[1].addEventListener('mousedown', buttonStart.bind(this, b));
-  b[1].addEventListener('touchstart', buttonStart.bind(this, b));
-  b[1].addEventListener('mouseup', buttonEnd.bind(this, b));
-  b[1].addEventListener('touchend', buttonEnd.bind(this, b));
-});
 
 function createMarker(e) {
   var markerEl = document.createElement('div');
