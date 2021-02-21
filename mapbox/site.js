@@ -24,9 +24,16 @@ map.scrollZoom.disable();
 map.keyboard.disable();
 map.touchZoomRotate.disable();
 
-var geolocate = new mapboxgl.Geolocate({position: 'top-right' });
+var geolocate = new mapboxgl.Geolocate({position: 'top-right', positionOptions: {
+  enableHighAccuracy: true
+  },trackUserLocation: true});
 map.addControl(geolocate);
-
+map.addControl(new mapboxgl.GeolocateControl({
+  positionOptions: {
+  enableHighAccuracy: true
+  },
+  trackUserLocation: true
+  }));
 geolocate.on('geolocate', function() {
   // Apparently this get's reset on result :/
   map.setBearing(-9.47);
@@ -98,3 +105,22 @@ function createMarker(e) {
 
 map.on('click', createMarker);
 map.on('touchstart', createMarker);
+map.on('locationfound', function(e) {
+  map.fitBounds(e.bounds);
+
+  myLayer.setGeoJSON({
+      type: 'Feature',
+      geometry: {
+          type: 'Point',
+          coordinates: [e.latlng.lng, e.latlng.lat]
+      },
+      properties: {
+          'title': 'Here I am!',
+          'marker-color': '#ff8888',
+          'marker-symbol': 'star'
+      }
+  });
+
+  // And hide the geolocation button
+  geolocate.parentNode.removeChild(geolocate);
+});
