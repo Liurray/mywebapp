@@ -23,10 +23,8 @@ map.doubleClickZoom.disable();
 map.scrollZoom.disable();
 map.keyboard.disable();
 map.touchZoomRotate.disable();
-//
-var geolocate = new mapboxgl.GeolocateControl({position: 'top-right', positionOptions: {
-  enableHighAccuracy: true
-  },trackUserLocation: true});
+
+var geolocate = new mapboxgl.Geolocate({position: 'top-right' ,trackUserLocation: true});
 map.addControl(geolocate);
 
 geolocate.on('geolocate', function() {
