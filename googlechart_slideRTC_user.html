@@ -472,12 +472,12 @@
 
 
 
-                                Reveal.addEventListener('slidechanged', function (event) {
-                                    firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
-                                        currentslideX: Reveal.getState().indexh,
-                                        currentslideY: Reveal.getState().indexv
-                                    })
-                                })
+                                firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
+                                        function (snapshot) {
+                                            Reveal.slide(snapshot.val().currentslideX, snapshot
+                                                .val()
+                                                .currentslideY);
+                                        });
 
                             }
 
