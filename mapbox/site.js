@@ -58,7 +58,7 @@ var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation',function(event){
   var alpha =event.alpha;
   var rotate = 'rotate(' + alpha + 'deg)';
-  move(map.getBearing()+15, true);
+  move(0-alpha, true);
   compass.style.transform = rotate;
   //console.log(alpha);
 })
