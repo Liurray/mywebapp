@@ -25,17 +25,9 @@ map.keyboard.disable();
 map.touchZoomRotate.disable();
 /*
 var geolocate = new mapboxgl.Geolocate({position: 'top-right' ,trackUserLocation: true});
-map.addControl(geolocate);
+map.addControl(geolocate);*/
 
-geolocate.on('geolocate', function(e) {
-  // Apparently this get's reset on result :/
-  var lng = e.coords.lngitude;
-  var lat = e.coords.latitude;
-  map.setLngLat([lng,lat]);
-      console.log(`position :`+lng +" "+ " "+lat);
-  map.setBearing(-9.47);
-  map.setPitch(45.00);
-});*/
+
 map.addControl(
   new mapboxgl.GeolocateControl({
     positionOptions: {
@@ -44,7 +36,15 @@ map.addControl(
     trackUserLocation: true
   })
 );
-
+geolocate.on('geolocate', function(e) {
+  // Apparently this get's reset on result :/
+  var lng = e.coords.lngitude;
+  var lat = e.coords.latitude;
+  map.setLngLat([lng,lat]);
+      console.log(`position :`+lng +" "+ " "+lat);
+  map.setBearing(-9.47);
+  map.setPitch(45.00);
+});
 function easeTo(t) {
   if (marker && t === 1) marker.remove();
   return t * (2 - t);
