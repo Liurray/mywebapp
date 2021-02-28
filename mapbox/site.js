@@ -29,6 +29,7 @@ map.addControl(geolocate);
 
 geolocate.on('geolocate', function() {
   // Apparently this get's reset on result :/
+  console.log();
   map.setBearing(-9.47);
   map.setPitch(45.00);
 });
@@ -58,7 +59,7 @@ var compass = document.querySelector('.js-compass');
 window.addEventListener('deviceorientation',function(event){
   var alpha =event.alpha;
   var rotate = 'rotate(' + alpha + 'deg)';
-  move(0-alpha, true);
+  move(0-alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
   compass.style.transform = rotate;
   //console.log(alpha);
 })
