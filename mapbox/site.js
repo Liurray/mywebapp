@@ -31,8 +31,8 @@ geolocate.on('geolocate', function(e) {
   // Apparently this get's reset on result :/
   var lon = e.coords.longitude;
   var lat = e.coords.latitude;
-  var position = [lon, lat];
-      console.log(position);
+  
+      console.log(`position :`+lon +" "+ " "+lat);
   map.setBearing(-9.47);
   map.setPitch(45.00);
 });
