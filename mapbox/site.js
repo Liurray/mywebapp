@@ -23,19 +23,12 @@ map.doubleClickZoom.disable();
 map.scrollZoom.disable();
 map.keyboard.disable();
 map.touchZoomRotate.disable();
-/*
+
 var geolocate = new mapboxgl.Geolocate({position: 'top-right' ,trackUserLocation: true});
-map.addControl(geolocate);*/
+map.addControl(geolocate);
 
 
-map.addControl(
-  new mapboxgl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true
-  })
-);
+
 geolocate.on('geolocate', function(e) {
   // Apparently this get's reset on result :/
   var lng = e.coords.lngitude;
