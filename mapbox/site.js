@@ -23,7 +23,7 @@ map.doubleClickZoom.disable();
 map.scrollZoom.disable();
 map.keyboard.disable();
 map.touchZoomRotate.disable();
-
+/*
 var geolocate = new mapboxgl.Geolocate({position: 'top-right' ,trackUserLocation: true});
 map.addControl(geolocate);
 
@@ -35,7 +35,15 @@ geolocate.on('geolocate', function(e) {
       console.log(`position :`+lng +" "+ " "+lat);
   map.setBearing(-9.47);
   map.setPitch(45.00);
-});
+});*/
+map.addControl(
+  new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true
+    },
+    trackUserLocation: true
+  })
+);
 
 function easeTo(t) {
   if (marker && t === 1) marker.remove();
@@ -59,10 +67,10 @@ function move(pos, bearing) {
 
 
 var compass = document.querySelector('.js-compass');
-window.addEventListener('deviceorientation',function(event){
-  var alpha =event.alpha;
+window.addEventListener('deviceorientation', function (event) {
+  var alpha = event.alpha;
   var rotate = 'rotate(' + alpha + 'deg)';
-  move(0-alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
+  move(0 - alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
   compass.style.transform = rotate;
   //console.log(alpha);
 })
@@ -75,7 +83,7 @@ window.addEventListener('deviceorientation',function(event){
 
 
 function buttonStart(b) {
-  persist = setInterval(function() {
+  persist = setInterval(function () {
     goDirection(b[0]);
   }, 20);
 }
@@ -92,7 +100,7 @@ function createMarker(e) {
   markerEl.appendChild(shadow);
   marker = new mapboxgl.Marker(markerEl).setLngLat(e.lngLat).addTo(map);
 
-  window.setTimeout(function() {
+  window.setTimeout(function () {
     map.flyTo({
       center: e.lngLat,
       easing: easeTo
@@ -102,20 +110,20 @@ function createMarker(e) {
 
 map.on('click', createMarker);
 map.on('touchstart', createMarker);
-map.on('locationfound', function(e) {
+map.on('locationfound', function (e) {
   map.fitBounds(e.bounds);
 
   myLayer.setGeoJSON({
-      type: 'Feature',
-      geometry: {
-          type: 'Point',
-          coordinates: [e.latlng.lng, e.latlng.lat]
-      },
-      properties: {
-          'title': 'Here I am!',
-          'marker-color': '#ff8888',
-          'marker-symbol': 'star'
-      }
+    type: 'Feature',
+    geometry: {
+      type: 'Point',
+      coordinates: [e.latlng.lng, e.latlng.lat]
+    },
+    properties: {
+      'title': 'Here I am!',
+      'marker-color': '#ff8888',
+      'marker-symbol': 'star'
+    }
   });
 
   // And hide the geolocation button
