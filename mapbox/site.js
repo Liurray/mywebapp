@@ -37,7 +37,7 @@ geolocate.on('geolocate', function(e) {
   map.setPitch(45.00);
 });
 
-/*function easeTo(t) {
+function easeTo(t) {
   if (marker && t === 1) marker.remove();
   return t * (2 - t);
 }
@@ -53,7 +53,7 @@ function move(pos, bearing) {
       easing: easeTo
     });
   }
-}*/
+}
 
 
 
