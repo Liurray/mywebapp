@@ -29,15 +29,15 @@ map.addControl(geolocate);
 
 geolocate.on('geolocate', function(e) {
   // Apparently this get's reset on result :/
-  var lon = e.coords.longitude;
+  var lng = e.coords.lngitude;
   var lat = e.coords.latitude;
-  
-      console.log(`position :`+lon +" "+ " "+lat);
+  map.setLngLat([lng,lat]);
+      console.log(`position :`+lng +" "+ " "+lat);
   map.setBearing(-9.47);
   map.setPitch(45.00);
 });
 
-function easeTo(t) {
+/*function easeTo(t) {
   if (marker && t === 1) marker.remove();
   return t * (2 - t);
 }
@@ -53,7 +53,7 @@ function move(pos, bearing) {
       easing: easeTo
     });
   }
-}
+}*/
 
 
 
