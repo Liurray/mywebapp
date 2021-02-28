@@ -27,9 +27,12 @@ map.touchZoomRotate.disable();
 var geolocate = new mapboxgl.Geolocate({position: 'top-right' ,trackUserLocation: true});
 map.addControl(geolocate);
 
-geolocate.on('geolocate', function() {
+geolocate.on('geolocate', function(e) {
   // Apparently this get's reset on result :/
-  console.log();
+  var lon = e.coords.longitude;
+  var lat = e.coords.latitude;
+  var position = [lon, lat];
+      console.log(position);
   map.setBearing(-9.47);
   map.setPitch(45.00);
 });
