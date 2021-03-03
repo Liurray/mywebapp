@@ -92,6 +92,26 @@
             </form>
 
         </div>
+        <div class="center" id="RTCkeyform" style="text-align:center ;display:none">
+
+            <div class="input-field col s6">
+                <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20 width="50"
+                    height="50">
+                <div class="center" width="50" height="50">
+                    <button class="waves-effect waves-light btn-large" id="btn-join-room" onClick="JoinRTC();"
+                        style="text-align:centr ; background-color : #469df5"><i
+                            class="material-icons left">mic</i>加入語音頻道</button>
+                </div>
+
+
+                <div id="room-urls"
+                    style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;">
+                </div>
+
+                <div id="audios-container"></div>
+            </div>
+
+        </div>
     </div>
 
 
@@ -274,7 +294,43 @@
                             packages: ['corechart', 'bar']
                         });
                         //****進入正式版***
-                        document.getElementById("form").style.display = "none";
+                        document.getElementById("keyform").style.display = "none";
+                        document.getElementById("RTCkeyform").style.display = "block";
+                        document.getElementById("room-id").value = key;
+                    }
+
+                    JoinRTC = function () {
+
+                        var connection = new RTCMultiConnection();
+                        connection.socketMessageEvent = 'audio-conference-demo';
+                        // this line is VERY_important
+                        connection.socketURL =
+                            'https://rtcmulticonnection.herokuapp.com:443/';
+
+                        // all below lines are optional; however recommended.
+
+                        connection.session = {
+                            audio: true,
+                            video: false
+                        };
+                        connection.mediaConstraints = {
+                            audio: true,
+                            video: false
+                        };
+
+                        connection.sdpConstraints.mandatory = {
+                            OfferToReceiveAudio: true,
+                            OfferToReceiveVideo: false
+                        };
+
+                        connection.onstream = function (event) {
+                            document.body.appendChild(event.mediaElement);
+                        };
+                        var predefinedRoomId = 'key';
+                        this.disabled = true;
+                        connection.join(predefinedRoomId);
+                        alert("您已成功加入頻道");
+                        document.getElementById("RTCkeyform").style.display = "none";
                         document.getElementById("slide").style.display = "block";
                         // 取得網址裡的參數   
                         var roomkey = key;
@@ -368,19 +424,8 @@
                             var data = response.getDataTable();
                             var columns = data.getNumberOfColumns();
                             var rows = data.getNumberOfRows();
-                            var str =
-                                `<section id="grand-finale">
-                                         <h5> 歡迎使用語音廣播系統 </h5> 
-                                         <div class="input-field col s6" >
-                                            <input type="text" name='roomkey' id="room-id" value=輸入金鑰 autocorrect=off autocapitalize=off size=20 width="50" height="50">
-										    <button class="btn-large" onclick="openRTC();"style="text-align:center; background-color : #469df5"><i class="material-icons left">mic</i>加入頻道</button></section>
-                                            <div id="room-urls"
-      style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;">
-    </div>
-    <div id="audios-container"></div>
-    </div>`;
-                            var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[
-                                0];
+                            var str = ``;
+                            var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
                             // Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
                             if (gsheetClass.outerHTML) {
                                 for (var r = 1; r < rows; r++) {
@@ -423,37 +468,6 @@
                                 // ..................RTCMultiConnection Code.............
                                 // ......................................................  
 
-                                openRTC = function () {
-                                    alert("您已成功加入頻道");
-                                    var connection = new RTCMultiConnection();
-                                    connection.socketMessageEvent = 'audio-conference-demo';
-                                    // this line is VERY_important
-                                    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
-
-                                    // all below lines are optional; however recommended.
-
-                                    connection.session = {
-                                        audio: true,
-                                        video: false
-                                    };
-                                    connection.mediaConstraints = {
-                                        audio: true,
-                                        video: false
-                                    };
-
-                                    connection.sdpConstraints.mandatory = {
-                                        OfferToReceiveAudio: true,
-                                        OfferToReceiveVideo: false
-                                    };
-
-                                    connection.onstream = function (event) {
-                                        document.body.appendChild(event.mediaElement);
-                                    };
-                                    var predefinedRoomId = 'key';
-                                    this.disabled = true;
-                                    connection.join(predefinedRoomId);
-                                };
-
 
 
 
@@ -464,7 +478,7 @@
                                 Reveal.sync();
                                 console.log("初始完成!!")
                                 //當reveal js loading好
-                               
+
 
 
 
@@ -473,11 +487,11 @@
 
 
                                 firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
-                                        function (snapshot) {
-                                            Reveal.slide(snapshot.val().currentslideX, snapshot
-                                                .val()
-                                                .currentslideY);
-                                        });
+                                    function (snapshot) {
+                                        Reveal.slide(snapshot.val().currentslideX, snapshot
+                                            .val()
+                                            .currentslideY);
+                                    });
 
                             }
 
