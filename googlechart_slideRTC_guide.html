@@ -76,7 +76,7 @@
 
     <div class="container" valign="center"
         style="margin-right: auto;margin-left: auto;padding-right: 15px;padding-left: 15px;width: 100%;max-width: 1140px;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
-        <div class="center" id="form" style="text-align:center">
+        <div class="center" id="keyform" style="text-align:center">
 
             <form class="col s12">
                 <div class="col center">
@@ -92,9 +92,29 @@
             </form>
 
         </div>
+        <div class="center" id="RTCkeyform" style="text-align:center">
+
+            <div class="input-field col s6" >
+                <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20 width="50" height="50">
+                <div class="center" width="50" height="50">
+                <button class="waves-effect waves-light btn-large" id="btn-open-room"
+                  style="text-align:centr ; background-color : #469df5"><i class="material-icons left">mic</i>建立語音頻道</button>
+                </div>
+            
+            
+                <div id="room-urls"
+                  style="text-align: center;display: none;background: #F1EDED;margin: 15px -10px;border: 1px solid rgb(189, 189, 189);border-left: 0;border-right: 0;">
+                </div>
+            
+                <div id="audios-container"></div>
+                </div>
+
+        </div>
+
     </div>
 
-
+    <!--document.getElementById("form").style.display = "none";
+    document.getElementById("slide").style.display = "block";-->
 
     <div class="reveal" id="slide" style="display:none">
 
@@ -131,7 +151,7 @@
                     console.log(snapshot.val().slide_key)
                     if (key !== snapshot.val().slide_key) {
                         alert("密碼錯誤 即將進入演示版簡報.......")
-                        document.getElementById("form").style.display = "none";
+                        document.getElementById("keyform").style.display = "none";
                         document.getElementById("slide").style.display = "block";
                         google.charts.load('current', {
                             packages: ['corechart', 'bar']
@@ -274,11 +294,14 @@
                             packages: ['corechart', 'bar']
                         });
                         //****進入正式版***
-                        document.getElementById("form").style.display = "none";
-                        document.getElementById("slide").style.display = "block";
+                        document.getElementById("keyform").style.display = "none";
+                        document.getElementById("RTCkeyform").style.display = "block";
+                        document.getElementById("room-id").value = key;
+                        document.getElementById("slide").style.display = "none";
                         // 取得網址裡的參數   
                         var roomkey = key;
                         console.log(roomkey);
+
                         function GetUrlVar(VarName) {
                             name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
                             var regexS = "[\\?&]" + VarName + "=([^&#]*)";
@@ -352,7 +375,7 @@
                             '/gviz/tq?sheet=' + 'complete';
                         google.charts.setOnLoadCallback(init);
                         var target_gsheet_class_once = 'gsheet';
-                        
+
 
                         function init() {
                             // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
@@ -368,7 +391,7 @@
                             var columns = data.getNumberOfColumns();
                             var rows = data.getNumberOfRows();
                             var str =
-                            `<section id="grand-finale">
+                                `<section id="grand-finale">
                                          <h5> 歡迎使用語音廣播系統 </h5> 
                                          <div class="input-field col s6" >
                                             <input type="text" id="room-id" value=輸入金鑰 autocorrect=off autocapitalize=off size=20 width="50" height="50">
@@ -424,8 +447,8 @@
                                 // ......................................................
                                 // ..................RTCMultiConnection Code.............
                                 // ......................................................  
-                                
-                                openRTC =  function () {
+
+                                openRTC = function () {
                                     alert("頻道已成功開啟");
                                     var connection = new RTCMultiConnection();
                                     connection.socketMessageEvent = 'audio-conference-demo';
