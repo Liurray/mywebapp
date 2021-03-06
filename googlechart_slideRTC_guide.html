@@ -95,8 +95,10 @@
         <div class="center" id="RTCkeyform" style="text-align:center ;display:none">
 
             <div class="input-field col s6">
+                <div class="center" id="inputkey" style="display: block;" >
                 <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20 width="50"
                     height="50">
+                </div>
                 <div class="center" width="50" height="50">
                     <button class="waves-effect waves-light btn-large" id="btn-open-room" onClick="OpenRTC();"
                         style="text-align:centr ; background-color : #469df5"><i
@@ -299,6 +301,7 @@
                         //****進入正式版***
                         document.getElementById("keyform").style.display = "none";
                         document.getElementById("RTCkeyform").style.display = "block";
+                        document.getElementById("inputkey").style.display = "none";
                         document.getElementById("room-id").value = key;
                     }
                     //開啟頻道功能函式
