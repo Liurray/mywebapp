@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Locate the user</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="firebase-app.js"></script>
+    <script src="firebase-analytics.js"></script>
+    <script src="firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>
+    <script>
+        //firebase init app
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div class='compass dot fill-white pad1 pin-topright space-right1'>
+        <div class='js-compass compass-dot compass icon'></div>
+    </div>
+    <script>
+        var marker;
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
+        var map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/streets-v11',
+            center: [-96, 37.8], // starting position
+            zoom: 3 // starting zoom
+        });
+        var userlocation_json = {
+            "url": "https://forchartjs.firebaseio.com/Map/G123/0.json",
+            "method": "GET",
+            "timeout": 0,
+        };
+        $.ajax(userlocation_json).done(function (response) {
+            //console.log(response);
+            //document.title = "導覽地圖" + response[Tour_ID].Tour_Title + "導覽";
+            for (var i = 1 in response) {
+                console.log(response[i].lat);
+                var marker = new mapboxgl.Marker()
+                    .setLngLat([response[i].lng, response[i].lat])
+                    .addTo(map);
+
+
+            }
+        })
+        // Add geolocate control to the map.
+        map.addControl(
+            new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            })
+        );
+        var compass = document.querySelector('.js-compass');
+        window.addEventListener('deviceorientation', function (event) {
+            var alpha = event.alpha;
+            var rotate = 'rotate(' + alpha + 'deg)';
+            move(0 - alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
+            compass.style.transform = rotate;
+            //console.log(alpha);
+        })
+
+        function easeTo(t) {
+            if (marker && t === 1) marker.remove();
+            return t * (2 - t);
+        }
+
+        function move(pos, bearing) {
+            if (bearing) {
+                map.easeTo({
+                    bearing: pos,
+                    easing: easeTo
+                });
+            } else {
+                map.panBy(pos, {
+                    easing: easeTo
+                });
+            }
+        }
+    </script>
+
+</body>
+
+</html>
