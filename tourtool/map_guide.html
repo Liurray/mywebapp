@@ -46,6 +46,10 @@
         <div class='js-compass compass-dot compass icon'></div>
     </div>
     <script>
+        var liffID='1655371574-rVZyLnpZ';
+        liff.init({
+            liffId: liffID
+        }).then(function () {
         var marker;
         mapboxgl.accessToken =
             'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
@@ -107,6 +111,10 @@
                 });
             }
         }
+    }).catch(function (error) {
+            console.log(error);
+
+        });
     </script>
 
 </body>
