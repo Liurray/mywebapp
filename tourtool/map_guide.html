@@ -47,72 +47,94 @@
         <div class='js-compass compass-dot compass icon'></div>
     </div>
     <script>
-        var liffID='1655371574-rVZyLnpZ';
+        var liffID = '1655371574-rVZyLnpZ';
         liff.init({
             liffId: liffID
         }).then(function () {
-        var marker;
-        mapboxgl.accessToken =
-            'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
-        var map = new mapboxgl.Map({
-            container: 'map', // container id
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [120, 24], // starting position
-            zoom: 3 // starting zoom
-        });
-        var userlocation_json = {
-            "url": "https://forchartjs.firebaseio.com/Map/G123/0.json",
-            "method": "GET",
-            "timeout": 0,
-        };
-        $.ajax(userlocation_json).done(function (response) {
-            //console.log(response);
-            //document.title = "導覽地圖" + response[Tour_ID].Tour_Title + "導覽";
-            for (var i = 1 in response) {
-                console.log(response[i].lat);
-                var marker = new mapboxgl.Marker()
-                    .setLngLat([response[i].lng, response[i].lat])
-                    .addTo(map);
+            var marker;
+            //mapbox金鑰匙
+
+            mapboxgl.accessToken =
+                'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
+            navigator.geolocation.getCurrentPosition(showPosition);
+
+            var userlocation_json = {
+                "url": "https://forchartjs.firebaseio.com/Map/G123/0.json",
+                "method": "GET",
+                "timeout": 0,
+            };
+            $.ajax(userlocation_json).done(function (response) {
+                //console.log(response);
+                //document.title = "導覽地圖" + response[Tour_ID].Tour_Title + "導覽";
+                for (var i = 1 in response) {
+                    console.log(response[i].lat);
+                    var marker = new mapboxgl.Marker()
+                        .setLngLat([response[i].lng, response[i].lat])
+                        .addTo(map);
 
 
-            }
-        })
-        // Add geolocate control to the map.
-        map.addControl(
-            new mapboxgl.GeolocateControl({
-                positionOptions: {
-                    enableHighAccuracy: true
-                },
-                trackUserLocation: true
+                }
             })
-        );
-        var compass = document.querySelector('.js-compass');
-        window.addEventListener('deviceorientation', function (event) {
-            var alpha = event.alpha;
-            var rotate = 'rotate(' + alpha + 'deg)';
-            move(0 - alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
-            compass.style.transform = rotate;
-            //console.log(alpha);
-        })
+            var map = new mapboxgl.Map({
+                    container: 'map', // container id
+                    style: 'mapbox://styles/mapbox/streets-v11',
 
-        function easeTo(t) {
-            if (marker && t === 1) marker.remove();
-            return t * (2 - t);
-        }
+                    center: [120, 25], // starting position
+                    zoom: 5 // starting zoom
+                });
 
-        function move(pos, bearing) {
-            if (bearing) {
-                map.easeTo({
-                    bearing: pos,
-                    easing: easeTo
-                });
-            } else {
-                map.panBy(pos, {
-                    easing: easeTo
-                });
+                
+                
+
+            function showPosition(position) {
+               
+               
+                map.addControl(
+                    new mapboxgl.GeolocateControl({
+                        positionOptions: {
+                            enableHighAccuracy: true
+                        },
+                        trackUserLocation: true
+                    })
+                );
+
+                // Add geolocate control to the map.
+
+                var compass = document.querySelector('.js-compass');
+                window.addEventListener('deviceorientation', function (event) {
+                    var alpha = event.alpha;
+                    var rotate = 'rotate(' + alpha + 'deg)';
+                    move(0 - alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
+                    compass.style.transform = rotate;
+                    //console.log(alpha);
+                })
+
+                function easeTo(t) {
+                    if (marker && t === 1) marker.remove();
+                    return t * (2 - t);
+                }
+
+                function move(pos, bearing) {
+                    if (bearing) {
+                        map.easeTo({
+                            bearing: pos,
+                            easing: easeTo
+                        });
+                    } else {
+                        map.panBy(pos, {
+                            easing: easeTo
+                        });
+                    }
+                }
+
+
+
+
             }
-        }
-    }).catch(function (error) {
+
+
+            
+        }).catch(function (error) {
             console.log(error);
 
         });
