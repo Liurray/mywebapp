@@ -61,7 +61,7 @@
                     alert('無法取得你的位置');
                 }
 
-                
+
 
                 // 跟使用者拿所在位置的權限
                 navigator.geolocation.getCurrentPosition(success, error);
@@ -70,21 +70,21 @@
                 alert('Sorry, 你的裝置不支援地理位置功能。')
 
             }
-            
+
             function success(position) {
-                    var lat = position.coords.latitude;
-                    var lng = position.coords.longitude;
-                    console.log(position.coords.latitude, position.coords.longitude);
-                    var Usermarker = new mapboxgl.Marker()
-                        .setLngLat([lng, lat])
-                        .addTo(map);
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+                console.log(position.coords.latitude, position.coords.longitude);
+                var Usermarker = new mapboxgl.Marker()
+                    .setLngLat([lng, lat])
+                    .addTo(map);
 
 
 
 
 
 
-                }
+            }
 
 
 
@@ -94,8 +94,9 @@
             var map = new mapboxgl.Map({
                 container: 'map', // container id
                 style: 'mapbox://styles/mapbox/streets-v11',
-                center: [120.67749420000001,24.1106308 ], // starting position
-                zoom: 10 // starting zoom
+                center: [120.67749420000001, 24.1106308], // starting position
+                zoom: 3 // starting zoom
+
             });
             var userlocation_json = {
                 "url": "https://forchartjs.firebaseio.com/Map/G123/0.json",
@@ -113,17 +114,22 @@
                 }
             })
             // Add geolocate control to the map.
-            map.addControl(
-                new mapboxgl.GeolocateControl({
-                    positionOptions: {
-                        enableHighAccuracy: true
-                    },
-                    fitBoundsOptions:{ 
-                        maxZoom:15 
-                    },
-                    trackUserLocation: true
-                })
-            );
+            var geoLocate = new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            })
+            map.addControl(geoLocate);
+            geoLocate.on('geolocate', function (e) {
+                console.log('geolocated');
+                map.flyTo({
+                    center: [e.coords.longitude, e.coords.latitude],
+                    zoom:18
+                });
+            });
+
+
             var compass = document.querySelector('.js-compass');
             window.addEventListener('deviceorientation', function (event) {
                 var alpha = event.alpha;
