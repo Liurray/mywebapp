@@ -61,7 +61,17 @@
                     alert('無法取得你的位置');
                 }
 
-                function success(position) {
+                
+
+                // 跟使用者拿所在位置的權限
+                navigator.geolocation.getCurrentPosition(success, error);
+
+            } else {
+                alert('Sorry, 你的裝置不支援地理位置功能。')
+
+            }
+            
+            function success(position) {
                     var lat = position.coords.latitude;
                     var lng = position.coords.longitude;
                     console.log(position.coords.latitude, position.coords.longitude);
@@ -75,16 +85,6 @@
 
 
                 }
-
-                // 跟使用者拿所在位置的權限
-                navigator.geolocation.getCurrentPosition(success, error);
-
-            } else {
-                alert('Sorry, 你的裝置不支援地理位置功能。')
-
-            }
-            
-
 
 
 
