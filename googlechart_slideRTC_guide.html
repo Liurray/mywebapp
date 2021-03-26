@@ -107,7 +107,7 @@
                         style="text-align:centr ; background-color : #469df5"><i
                             class="material-icons left">mic</i>建立語音頻道</button>
                     <div>
-                        <h3>請確保已戴上您的耳機並測試您的裝置音量</h3>
+                        <h3>請確保已戴上您的耳機</h3>
                     </div>
                 </div>
 
@@ -337,6 +337,14 @@
                     }
 
                     OpenRTC = function () {
+                        var toSpeak = new SpeechSynthesisUtterance(txtInput);
+                        var selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
+                        voices.forEach((voice) => {
+                            if (voice.name === selectedVoiceName) {
+                                toSpeak.voice = voice;
+                            }
+                        });
+                        synth.speak(toSpeak);
                         var connection = new RTCMultiConnection();
                         connection.socketMessageEvent = 'audio-conference-demo';
                         // this line is VERY_important
@@ -366,14 +374,7 @@
                         this.disabled = true;
                         connection.open(predefinedRoomId);
                         alert("頻道已成功開啟，請確保已戴上您的耳機並測試您的裝置音量");
-                        var toSpeak = new SpeechSynthesisUtterance(txtInput);
-                        var selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
-                        voices.forEach((voice) => {
-                            if (voice.name === selectedVoiceName) {
-                                toSpeak.voice = voice;
-                            }
-                        });
-                        synth.speak(toSpeak);
+                        
                         document.getElementById("RTCkeyform").style.display = "none";
                         document.getElementById("slide").style.display = "block";
 
