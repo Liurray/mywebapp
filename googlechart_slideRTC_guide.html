@@ -112,6 +112,11 @@
 
                 <div id="audios-container"></div>
             </div>
+            <div class="center" width="50" height="50">
+                <button class="waves-effect waves-light btn-large" id="btn-open-room" onClick="OpenSlide();"
+                    style="text-align:centr ; background-color : #469df5"><i
+                        class="material-icons left">mic</i>建立語音頻道</button>
+            </div>
 
         </div>
 
@@ -337,7 +342,7 @@
                         connection.open(predefinedRoomId);
                         alert("頻道已成功開啟");
                         document.getElementById("RTCkeyform").style.display = "none";
-                        document.getElementById("slide").style.display = "block";
+                        
 
                         // 取得網址裡的參數   
                         var roomkey = key;
@@ -524,6 +529,9 @@
 
 
                     };
+                    OpenSlide = function() {
+                        document.getElementById("slide").style.display = "block";  
+                    }
 
 
 
