@@ -343,7 +343,8 @@
                         this.disabled = true;
                         connection.open(predefinedRoomId);
                         alert("頻道已成功開啟");
-                    
+                        document.getElementById("slide").style.display = "block";
+
                         
                         
 
@@ -352,8 +353,7 @@
                     
                     OpenSlide = function() {
                         document.getElementById("RTCkeyform").style.display = "none";
-                        document.getElementById("slide").style.display = "block";
-
+                        
                         // 取得網址裡的參數   
                         var roomkey = key;
                         console.log(roomkey);
