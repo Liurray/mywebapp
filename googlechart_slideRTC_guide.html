@@ -306,6 +306,7 @@
                         //****進入正式版***
                         document.getElementById("keyform").style.display = "none";
                         document.getElementById("RTCkeyform").style.display = "block";
+                        document.getElementById("slide").style.display = "none";
                         document.getElementById("inputkey").style.display = "none";
                         document.getElementById("room-id").value = key;
                     }
@@ -340,7 +341,9 @@
                         var predefinedRoomId = 'key';
                         this.disabled = true;
                         connection.open(predefinedRoomId);
+                        document.getElementById("RTCkeyform").style.display = "none";
                         alert("頻道已成功開啟");
+
                         
                     };
                     
