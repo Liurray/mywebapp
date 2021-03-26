@@ -106,6 +106,9 @@
                     <button class="waves-effect waves-light btn-large" id="btn-open-room" onClick="OpenRTC();"
                         style="text-align:centr ; background-color : #469df5"><i
                             class="material-icons left">mic</i>建立語音頻道</button>
+                    <div>
+                        <h3>請確保已戴上您的耳機並測試您的裝置音量</h3>
+                    </div>
                 </div>
 
 
@@ -362,7 +365,7 @@
                         var predefinedRoomId = 'key';
                         this.disabled = true;
                         connection.open(predefinedRoomId);
-                        alert("頻道已成功開啟，請戴上您的耳機測試您的裝置音量");
+                        alert("頻道已成功開啟，請確保已戴上您的耳機並測試您的裝置音量");
                         var toSpeak = new SpeechSynthesisUtterance(txtInput);
                         var selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
                         voices.forEach((voice) => {
