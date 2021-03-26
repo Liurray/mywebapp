@@ -95,9 +95,9 @@
         <div class="center" id="RTCkeyform" style="text-align:center ;display:none">
 
             <div class="input-field col s6">
-                <div class="center" id="inputkey" style="display: block;">
-                    <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20 width="50"
-                        height="50">
+                <div class="center" id="inputkey" style="display: block;" >
+                <input type="text" id="room-id" value="" autocorrect=off autocapitalize=off size=20 width="50"
+                    height="50">
                 </div>
                 <div class="center" width="50" height="50">
                     <button class="waves-effect waves-light btn-large" id="btn-open-room" onClick="OpenRTC();"
@@ -112,18 +112,8 @@
 
                 <div id="audios-container"></div>
             </div>
-            <div class="center" id="TTS" style="display: block;">
-                <select id='voiceList'></select> <br><br>
-                <button class="waves-effect waves-light btn-large" id='btnSpeak'
-                    style="text-align:centr ; background-color : #469df5"><i
-                        class="material-icons left">mic</i>語音音量測試</button>
-                <button class="waves-effect waves-light btn-large" id='btnSpeak' onClick="OpenSlide();"
-                    style="text-align:centr ; background-color : #f32929"><i
-                        class="material-icons left">mic</i>進入簡報</button>
 
-            </div>
         </div>
-
 
     </div>
 
@@ -316,7 +306,6 @@
                     }
                     //開啟頻道功能函式
 
-                    //**語音tts測試
                     OpenRTC = function () {
                         var connection = new RTCMultiConnection();
                         connection.socketMessageEvent = 'audio-conference-demo';
@@ -347,49 +336,9 @@
                         this.disabled = true;
                         connection.open(predefinedRoomId);
                         alert("頻道已成功開啟");
-                        var txtInput = "您好，請測試您的裝置音量"
-                        var voiceList = document.querySelector('#voiceList');
-                        var btnSpeak = document.querySelector('#btnSpeak');
-                        var synth = window.speechSynthesis;
-                        var voices = [];
-
-                        PopulateVoices();
-                        if (speechSynthesis !== undefined) {
-                            speechSynthesis.onvoiceschanged = PopulateVoices;
-                        }
-
-                        btnSpeak.addEventListener('click', () => {
-                            var toSpeak = new SpeechSynthesisUtterance(txtInput);
-                            var selectedVoiceName = voiceList.selectedOptions[0].getAttribute(
-                                'data-name');
-                            voices.forEach((voice) => {
-                                if (voice.name === selectedVoiceName) {
-                                    toSpeak.voice = voice;
-                                }
-                            });
-                            synth.speak(toSpeak);
-                        });
-
-                        function PopulateVoices() {
-                            voices = synth.getVoices();
-                            var selectedIndex = voiceList.selectedIndex < 0 ? 0 : voiceList.selectedIndex;
-                            voiceList.innerHTML = '';
-                            voices.forEach((voice) => {
-                                var listItem = document.createElement('option');
-                                listItem.textContent = voice.name;
-                                listItem.setAttribute('data-lang', voice.lang);
-                                listItem.setAttribute('data-name', voice.name);
-                                voiceList.appendChild(listItem);
-                            });
-
-                            voiceList.selectedIndex = selectedIndex;
-                        }
-
                         document.getElementById("RTCkeyform").style.display = "none";
+                        document.getElementById("slide").style.display = "block";
 
-
-
-                      
                         // 取得網址裡的參數   
                         var roomkey = key;
                         console.log(roomkey);
@@ -576,9 +525,7 @@
 
                     };
 
-                    OpenSlide = function () {
-                            document.getElementById("slide").style.display = "block";
-                        }
+
 
 
 
