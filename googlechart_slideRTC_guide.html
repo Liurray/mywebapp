@@ -112,13 +112,7 @@
 
                 <div id="audios-container"></div>
             </div>
-        </div>
-        <div class="center" id="slide" style="text-align:center ;display:none">
-            <div class="center" width="50" height="50">
-                <button class="waves-effect waves-light btn-large" id="btn-open-room" onClick="OpenSlide();"
-                    style="text-align:centr ; background-color : #469df5"><i
-                        class="material-icons left">mic</i>進入簡報</button>
-            </div>
+
         </div>
 
     </div>
@@ -307,7 +301,6 @@
                         //****進入正式版***
                         document.getElementById("keyform").style.display = "none";
                         document.getElementById("RTCkeyform").style.display = "block";
-                        
                         document.getElementById("inputkey").style.display = "none";
                         document.getElementById("room-id").value = key;
                     }
@@ -343,14 +336,6 @@
                         this.disabled = true;
                         connection.open(predefinedRoomId);
                         alert("頻道已成功開啟");
-                        document.getElementById("RTCkeyform").style.display = "none";
-                        document.getElementById("slide").style.display = "block";
-                        
-
-                        
-                    };
-                    
-                    OpenSlide = function() {
                         document.getElementById("RTCkeyform").style.display = "none";
                         document.getElementById("slide").style.display = "block";
 
@@ -537,7 +522,9 @@
 
                         }
 
-                    }
+
+                    };
+
 
 
 
