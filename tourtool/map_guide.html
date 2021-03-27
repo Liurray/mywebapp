@@ -108,9 +108,11 @@
                 //document.title = "導覽地圖" + response[Tour_ID].Tour_Title + "導覽";
                 for (var i = 1 in response) {
                     console.log(response[i].lat);
-                    var marker = new mapboxgl.Marker()
+                    if(response[i].type==='guide'){
+                        var marker = new mapboxgl.Marker({ "color": "#b40219" })
                         .setLngLat([response[i].lng, response[i].lat])
                         .addTo(map);
+                    }
                 }
             })
             // Add geolocate control to the map.
