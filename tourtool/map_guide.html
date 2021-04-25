@@ -94,10 +94,40 @@
             var map = new mapboxgl.Map({
                 container: 'map', // container id
                 style: 'mapbox://styles/mapbox/streets-v11',
-                center: [120.67749420000001, 24.1106308], // starting position
+                center: [120.673195, 24.121166], // starting position
                 zoom: 15 // starting zoom
 
             });
+            map.on('load', function () {
+                map.addSource('floorplan', {
+                    // GeoJSON Data source used in vector tiles, documented at
+                    // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+                    'type': 'geojson',
+                    'data': 'https://raw.githubusercontent.com/Liurray/mywebapp/main/mapbox/features.geojson'
+                });
+                map.addLayer({
+                    'id': 'room-extrusion',
+                    'type': 'fill-extrusion',
+                    'source': 'floorplan',
+                    'paint': {
+                        // See the Mapbox Style Specification for details on data expressions.
+                        // https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions
+
+                        // Get the fill-extrusion-color from the source 'color' property.
+                        'fill-extrusion-color': ['get', 'color'],
+
+                        // Get fill-extrusion-height from the source 'height' property.
+                        'fill-extrusion-height': ['get', 'height'],
+
+                        // Get fill-extrusion-base from the source 'base_height' property.
+                        'fill-extrusion-base': ['get', 'base_height'],
+
+                        // Make extrusions slightly opaque for see through indoor walls.
+                        'fill-extrusion-opacity': 0.5
+                    }
+                });
+            });
+
             var userlocation_json = {
                 "url": "https://forchartjs.firebaseio.com/Map/G123/0.json",
                 "method": "GET",
@@ -108,10 +138,12 @@
                 //document.title = "導覽地圖" + response[Tour_ID].Tour_Title + "導覽";
                 for (var i = 1 in response) {
                     console.log(response[i].lat);
-                    if(response[i].type==='guide'){
-                        var marker = new mapboxgl.Marker({ "color": "#b40219" })
-                        .setLngLat([response[i].lng, response[i].lat])
-                        .addTo(map);
+                    if (response[i].type === 'guide') {
+                        var marker = new mapboxgl.Marker({
+                                "color": "#b40219"
+                            })
+                            .setLngLat([response[i].lng, response[i].lat])
+                            .addTo(map);
                     }
                 }
             })
@@ -127,7 +159,7 @@
                 console.log('geolocated');
                 map.flyTo({
                     center: [e.coords.longitude, e.coords.latitude],
-                    zoom:17
+                    zoom: 17
                 });
             });
 
