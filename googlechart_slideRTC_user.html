@@ -331,7 +331,14 @@
                         voiceList.selectedIndex = selectedIndex;
                     }
                     JoinRTC = function () {
-
+                        var toSpeak = new SpeechSynthesisUtterance(txtInput);
+                        var selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
+                        voices.forEach((voice) => {
+                            if (voice.name === selectedVoiceName) {
+                                toSpeak.voice = voice;
+                            }
+                        });
+                        synth.speak(toSpeak);
                         var connection = new RTCMultiConnection();
                         connection.socketMessageEvent = 'audio-conference-demo';
                         // this line is VERY_important
@@ -360,7 +367,7 @@
                         var predefinedRoomId = 'key';
                         this.disabled = true;
                         connection.join(predefinedRoomId);
-                        alert("您已成功加入頻道");
+                        alert("頻道已成功開啟，請確保已戴上您的耳機並測試您的裝置音量");
                         document.getElementById("RTCkeyform").style.display = "none";
                         document.getElementById("slide").style.display = "block";
                         // 取得網址裡的參數   
