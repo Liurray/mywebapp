@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Locate the user</title>
+    <title>您的導覽地圖</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
@@ -26,6 +26,12 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
+    <!--導航api-->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js">
+    </script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css"
+        type="text/css">
     <style>
         body {
             margin: 0;
@@ -33,16 +39,108 @@
         }
 
         #map {
-            position: absolute;
+            position: fixed;
             top: 0;
             bottom: 0;
             width: 100%;
+        }
+
+        .map-overlay-container {
+            position: fixed;
+            width: 25%;
+            top: 0px;
+            left: 450px;
+            padding: 10px;
+            z-index: 1;
+        }
+
+        .map-overlay {
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            background-color: #fff;
+            border-radius: 3px;
+            padding: 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .map-overlay h2,
+        .map-overlay p {
+            margin: 0 0 10px;
+        }
+
+
+        .listing-group {
+            font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            font-weight: 600;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+            border-radius: 3px;
+            max-width: 20%;
+            color: #fff;
+        }
+
+        .listing-group input[type='checkbox']:first-child+label {
+            border-radius: 3px 3px 0 0;
+        }
+
+        .listing-group label:last-child {
+            border-radius: 0 0 3px 3px;
+            border: none;
+        }
+
+        .listing-group input[type='checkbox'] {
+            display: none;
+        }
+
+        .listing-group input[type='checkbox']+label {
+            background-color: #3386c0;
+            display: block;
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+        }
+
+        .listing-group input[type='checkbox']+label {
+            background-color: #3386c0;
+            text-transform: capitalize;
+        }
+
+        .listing-group input[type='checkbox']+label:hover,
+        .listing-group input[type='checkbox']:checked+label {
+            background-color: #4ea0da;
+        }
+
+        .listing-group input[type='checkbox']:checked+label:before {
+            content: '✔';
+            margin-right: 5px;
         }
     </style>
 </head>
 
 <body>
+    <nav id="menu"></nav>
     <div id="map"></div>
+    <div id="map-overlay-container" style="display:none">
+        <div class="map-overlay-container">
+            <div class="map-overlay">
+                <h2 id="location-title"></h2>
+                <p id="location-description"></p>
+                <small></small>
+            </div>
+        </div>
+
+    </div>
+    <nav id="listing-group" class="listing-group">
+
+        <input type="checkbox" id="direction_check">
+        <label for="direction_check">為我導航</label>
+        <input type="checkbox" id="layer_check">
+        <label for="layer_check">展場圖例</label>
+        <input type="checkbox" id="autoplay_check">
+        <label for="autoplay_check">展場自動導覽</label>
+
+    </nav>
     <div class='compass dot fill-white pad1 pin-topright space-right1'>
         <div class='js-compass compass-dot compass icon'></div>
     </div>
@@ -95,12 +193,104 @@
                 container: 'map', // container id
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [120.673195, 24.121166], // starting position
-                zoom: 18 ,// starting zoom,
+                zoom: 18, // starting zoom,
                 pitch: 40,
                 bearing: 20,
                 antialias: true
 
             });
+            var title = document.getElementById('location-title');
+            var description = document.getElementById('location-description');
+
+            //自動撥放控制變數
+            var auto_play = "0";
+            //導航變數
+            var direction = new MapboxDirections({
+                accessToken: mapboxgl.accessToken
+            })
+
+
+            //地點簡介
+            var locations = [{
+                    'id': '2',
+                    'title': '社管大樓',
+                    'description': "社管大樓在這囉",
+                    'camera': {
+                        center: [120.67318466877342, 24.12098924526695],
+                        zoom: 16.21,
+                        pitch: 50
+                    }
+                },
+                {
+                    'id': '3',
+                    'title': '中興湖',
+                    'description': "中興湖有很多鵝",
+                    'camera': {
+                        center: [120.674204, 24.120940],
+                        bearing: -8.9,
+                        zoom: 17.68
+                    }
+                },
+                {
+                    'id': '1',
+                    'title': '綜合大樓',
+                    'description': '綜合大樓啦',
+                    'camera': {
+                        center: [120.67262676928165, 24.121792190234714],
+                        bearing: 25.3,
+                        zoom: 16.5
+                    }
+                }
+            ];
+            //這裡開始為自 動 導 覽 功能
+            function highlightBorough(code) {
+                // Only show the polygon feature that cooresponds to `borocode` in the data
+                map.setFilter('highlight', ['==', 'borocode', code]);
+            }
+
+            function playback(index) {
+                title.textContent = locations[index].title;
+                description.textContent = locations[index].description;
+                var timeout;
+                highlightBorough(locations[index].id ? locations[index].id : '');
+
+                // Animate the map position based on camera properties
+                map.flyTo(locations[index].camera);
+
+                map.once('moveend', function () {
+                    if (auto_play == 0) {
+                        //使用者要求自動撥放
+                        // Duration the slide is on screen after interaction
+                        timeout = window.setTimeout(function () {
+                            // Increment index
+                            index = index + 1 === locations.length ? 0 : index + 1;
+                            playback(index);
+                        }, 5000); // After callback, show the location for 3 seconds.
+
+                    } else {
+                        clearTimeout(timeout);
+                        console.log("中斷播放");
+
+                    }
+
+                });
+            }
+
+            // Display the last title/description first
+            title.textContent = locations[locations.length - 1].title;
+            description.textContent = locations[locations.length - 1].description;
+
+
+
+
+
+
+
+
+
+
+
+
             map.on('load', function () {
                 map.addSource('floorplan', {
                     // GeoJSON Data source used in vector tiles, documented at
@@ -129,7 +319,66 @@
                         'fill-extrusion-opacity': 0.5
                     }
                 });
+                map.addSource('boroughs', {
+                    'type': 'vector',
+                    'url': 'mapbox://mapbox.8ibmsn6u'
+                });
+                map.addLayer({
+                        'id': 'highlight',
+                        'type': 'fill',
+                        'source': 'boroughs',
+                        'source-layer': 'original',
+                        'paint': {
+                            'fill-color': '#fd6b50',
+                            'fill-opacity': 0.25
+                        },
+                        'filter': ['==', 'borocode', '']
+                    },
+                    'settlement-subdivision-label'
+                ); // Place polygon under the neighborhood labels.
+
+                // Start the playback animation for each borough
+                document
+                    .getElementById('listing-group')
+                    .addEventListener('change', function (e) {
+                        var handler = e.target.id;
+                        if (e.target.checked) {
+                            switch (handler) {
+                                case 'direction_check':
+                                    map.addControl(direction, 'top-left')
+
+                                    console.log("為我導航~");
+                                    break;
+                                case 'autoplay_check':
+                                    playback(0);
+                                    $("#map-overlay-container").show()
+                                    auto_play = 0;
+                                    console.log("展區導覽自動撥放");
+                                    break;
+                                case 'layer_check':
+                                    console.log("展區圖例圖層顯示");
+                                    break;
+                            }
+                        } else {
+                            switch (handler) {
+                                case 'direction_check':
+                                    map.removeControl(direction)
+                                    console.log("【關閉】為我導航~");
+                                    break;
+                                case 'autoplay_check':
+                                    $("#map-overlay-container").hide()
+                                    auto_play = 1;
+                                    console.log("【關閉】展區導覽自動撥放");
+                                    break;
+                                case 'layer_check':
+                                    console.log("【關閉】展區圖例圖層顯示");
+                                    break;
+                            }
+                        }
+
+                    });
             });
+
 
             var userlocation_json = {
                 "url": "https://forchartjs.firebaseio.com/Map/G123/0.json",
