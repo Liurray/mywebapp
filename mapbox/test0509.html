@@ -1,0 +1,238 @@
+<html>
+
+
+<head>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <meta charset=utf-8 />
+    <title>Fly around | Mapbox</title>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='https://www.mapbox.com/base/latest/base.css' rel='stylesheet' />
+    <link href='site.css' rel='stylesheet' />
+    <link rel="canonical" href="https://labs.mapbox.com/bites/00279/">
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
+</head>
+
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script>
+
+
+<body>
+    <nav id="menu"></nav>
+    <div id="map"></div>
+    <div class="map-overlay-container">
+        <div class="map-overlay">
+            <h2 id="location-title"></h2>
+            <p id="location-description"></p>
+            <small></small>
+        </div>
+
+    </div>
+    <nav id="listing-group" class="listing-group">
+
+        <input type="checkbox" id="boxZoom" checked="checked">
+        <label for="boxZoom">為我導航</label>
+        <input type="checkbox" id="dragRotate" checked="checked">
+        <label for="dragRotate">展場圖例</label>
+        <input type="checkbox" id="hello" checked="checked">
+        <label for="hello">展場自動導覽</label>
+
+    </nav>
+</body>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .map-overlay-container {
+        position: absolute;
+        width: 25%;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        z-index: 1;
+    }
+
+    .map-overlay {
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        background-color: #fff;
+        border-radius: 3px;
+        padding: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .map-overlay h2,
+    .map-overlay p {
+        margin: 0 0 10px;
+    }
+
+
+    .listing-group {
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        font-weight: 600;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+        border-radius: 3px;
+        max-width: 20%;
+        color: #fff;
+    }
+
+    .listing-group input[type='checkbox']:first-child+label {
+        border-radius: 3px 3px 0 0;
+    }
+
+    .listing-group label:last-child {
+        border-radius: 0 0 3px 3px;
+        border: none;
+    }
+
+    .listing-group input[type='checkbox'] {
+        display: none;
+    }
+
+    .listing-group input[type='checkbox']+label {
+        background-color: #3386c0;
+        display: block;
+        cursor: pointer;
+        padding: 10px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    }
+
+    .listing-group input[type='checkbox']+label {
+        background-color: #3386c0;
+        text-transform: capitalize;
+    }
+
+    .listing-group input[type='checkbox']+label:hover,
+    .listing-group input[type='checkbox']:checked+label {
+        background-color: #4ea0da;
+    }
+
+    .listing-group input[type='checkbox']:checked+label:before {
+        content: '✔';
+        margin-right: 5px;
+    }
+</style>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR1bDhoMGc0ODJvcGt3aWhwaDF1ZyJ9.7ggcNvsWf7SpkIe5-zENxg';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [120.675019, 24.123711],
+        maxZoom: 20,
+        minZoom: 9,
+        zoom: 9.68
+    });
+
+    var title = document.getElementById('location-title');
+    var description = document.getElementById('location-description');
+    //地點簡介
+    var locations = [{
+            'id': '2',
+            'title': '社管大樓',
+            'description': "社管大樓在這囉",
+            'camera': {
+                center: [120.67318466877342, 24.12098924526695],
+                zoom: 16.21,
+                pitch: 50
+            }
+        },
+        {
+            'id': '3',
+            'title': '中興湖',
+            'description': "中興湖有很多鵝",
+            'camera': {
+                center: [120.674204, 24.120940],
+                bearing: -8.9,
+                zoom: 17.68
+            }
+        },
+        {
+            'id': '1',
+            'title': '綜合大樓',
+            'description': '綜合大樓啦',
+            'camera': {
+                center: [120.67262676928165, 24.121792190234714],
+                bearing: 25.3,
+                zoom: 16.5
+            }
+        }
+    ];
+    //這裡開始為自 動 導 覽 功能
+    function highlightBorough(code) {
+        // Only show the polygon feature that cooresponds to `borocode` in the data
+        map.setFilter('highlight', ['==', 'borocode', code]);
+    }
+
+    function playback(index) {
+        title.textContent = locations[index].title;
+        description.textContent = locations[index].description;
+
+        highlightBorough(locations[index].id ? locations[index].id : '');
+
+        // Animate the map position based on camera properties
+        map.flyTo(locations[index].camera);
+
+        map.once('moveend', function () {
+            // Duration the slide is on screen after interaction
+            window.setTimeout(function () {
+                // Increment index
+                index = index + 1 === locations.length ? 0 : index + 1;
+                playback(index);
+            }, 3000); // After callback, show the location for 3 seconds.
+        });
+    }
+
+    // Display the last title/description first
+    title.textContent = locations[locations.length - 1].title;
+    description.textContent = locations[locations.length - 1].description;
+
+    map.on('load', function () {
+        map.addSource('boroughs', {
+            'type': 'vector',
+            'url': 'mapbox://mapbox.8ibmsn6u'
+        });
+        map.addLayer({
+                'id': 'highlight',
+                'type': 'fill',
+                'source': 'boroughs',
+                'source-layer': 'original',
+                'paint': {
+                    'fill-color': '#fd6b50',
+                    'fill-opacity': 0.25
+                },
+                'filter': ['==', 'borocode', '']
+            },
+            'settlement-subdivision-label'
+        ); // Place polygon under the neighborhood labels.
+
+        // Start the playback animation for each borough
+        playback(0);
+        document
+            .getElementById('listing-group')
+            .addEventListener('change', function (e) {
+                var handler = e.target.id;
+                if (e.target.checked) {
+                    map[handler].enable();
+                } else {
+                    map[handler].disable();
+                }
+            });
+    });
+</script>
+
+
+
+</html>
