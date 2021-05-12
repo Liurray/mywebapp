@@ -535,6 +535,14 @@
                             switch (handler) {
                                 case 'user_location':
                                     Usermarker.remove()
+                                    map.flyTo({
+                                        center: [
+                                        120.673195, 24.121166
+                                        ],
+                                        zoom: 9,
+                                        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                                    });
+                                    
                                     console.log("【關閉】目前位置");
                                     break;
                                 case 'direction_check':
