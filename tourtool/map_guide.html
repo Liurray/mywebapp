@@ -73,7 +73,7 @@
             font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
             font-weight: 600;
             position: absolute;
-            top: 300px;
+            top: 0px;
             right: 25px;
             z-index: 1;
             border-radius: 3px;
@@ -136,7 +136,8 @@
 
     <nav id="menu_map">
         <nav id="listing-group" class="listing-group">
-
+            <input type="checkbox" id="user_location">
+            <label for="user_location">目前位置</label>
             <input type="checkbox" id="direction_check">
             <label for="direction_check">為我導航</label>
             <input type="checkbox" id="tour_location">
@@ -157,8 +158,8 @@
         liff.init({
             liffId: liffID
         }).then(function () {
-            var lat;
-            var lng;
+            var lat = 0;
+            var lng = 0;
             //開啟權限
             if (navigator.geolocation) {
 
@@ -176,15 +177,17 @@
                 alert('Sorry, 你的裝置不支援地理位置功能。')
 
             }
+            var lng;
+            var lat;
 
             function success(position) {
-                var lat = position.coords.latitude;
-                var lng = position.coords.longitude;
-                console.log(position.coords.latitude, position.coords.longitude);
-                /*var Usermarker = new mapboxgl.Marker()
-                    .setLngLat([lng, lat])
-                    .addTo(map);  
-                */
+                lat = position.coords.latitude;
+                lng = position.coords.longitude;
+                console.log("經緯度座標為"+parseFloat(lat)+"跟"+parseFloat(lng));
+
+
+
+
 
 
 
@@ -201,7 +204,7 @@
                 container: 'map', // container id
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: [120.673195, 24.121166], // starting position
-                zoom: 18, // starting zoom,
+                zoom: 16, // starting zoom,
                 pitch: 40,
                 bearing: 20,
                 antialias: true
@@ -225,6 +228,7 @@
 
             // implementation of CustomLayerInterface to draw a pulsing dot icon on the map
             // see https://docs.mapbox.com/mapbox-gl-js/api/#customlayerinterface for more info
+            //動態點變數
             var pulsingDot = {
                 width: size,
                 height: size,
@@ -290,7 +294,71 @@
                     return true;
                 }
             };
+            var pulsingDot = {
+                width: size,
+                height: size,
+                data: new Uint8Array(size * size * 4),
 
+                // get rendering context for the map canvas when layer is added to the map
+                onAdd: function () {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    this.context = canvas.getContext('2d');
+                },
+
+                // called once before every frame where the icon will be used
+                render: function () {
+                    var duration = 1000;
+                    var t = (performance.now() % duration) / duration;
+
+                    var radius = (size / 2) * 0.3;
+                    var outerRadius = (size / 2) * 0.7 * t + radius;
+                    var context = this.context;
+
+                    // draw outer circle
+                    context.clearRect(0, 0, this.width, this.height);
+                    context.beginPath();
+                    context.arc(
+                        this.width / 2,
+                        this.height / 2,
+                        outerRadius,
+                        0,
+                        Math.PI * 2
+                    );
+                    context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')';
+                    context.fill();
+
+                    // draw inner circle
+                    context.beginPath();
+                    context.arc(
+                        this.width / 2,
+                        this.height / 2,
+                        radius,
+                        0,
+                        Math.PI * 2
+                    );
+                    context.fillStyle = 'rgba(255, 100, 100, 1)';
+                    context.strokeStyle = 'white';
+                    context.lineWidth = 2 + 4 * (1 - t);
+                    context.fill();
+                    context.stroke();
+
+                    // update this image's data with data from the canvas
+                    this.data = context.getImageData(
+                        0,
+                        0,
+                        this.width,
+                        this.height
+                    ).data;
+
+                    // continuously repaint the map, resulting in the smooth animation of the dot
+                    map.triggerRepaint();
+
+                    // return `true` to let the map know that the image was updated
+                    return true;
+                }
+            };
             //地點簡介
             var locations = [{
                     'id': '2',
@@ -373,7 +441,9 @@
 
 
             map.on('load', function () {
-
+                var Usermarker = new mapboxgl.Marker()
+                    
+                //, position.coords.longitude
                 map.addSource('floorplan', {
                     // GeoJSON Data source used in vector tiles, documented at
                     // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
@@ -426,6 +496,19 @@
                         var handler = e.target.id;
                         if (e.target.checked) {
                             switch (handler) {
+                                case 'user_location':
+                                    map.flyTo({
+                                        center: [
+                                            lng, lat
+                                        ],
+                                        zoom: 18,
+                                        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                                    });
+                                    Usermarker.setLngLat([lng, lat]).addTo(map);
+                                    //do_something(position.coords.latitude, position.coords.longitude);
+
+                                    console.log("目前位置啟用");
+                                    break;
                                 case 'direction_check':
                                     map.addControl(direction, 'top-left')
 
@@ -450,6 +533,10 @@
                             }
                         } else {
                             switch (handler) {
+                                case 'user_location':
+                                    Usermarker.remove()
+                                    console.log("【關閉】目前位置");
+                                    break;
                                 case 'direction_check':
                                     map.removeControl(direction)
                                     console.log("【關閉】為我導航~");
@@ -521,12 +608,13 @@
                     }
                 }
             })
-            // Add geolocate control to the map.
+            /* Add geolocate control to the map.
             var geoLocate = new mapboxgl.GeolocateControl({
                 positionOptions: {
                     enableHighAccuracy: true
                 },
-                trackUserLocation: true
+                trackUserLocation: false,
+                showUserLocation:false
             })
             map.addControl(geoLocate);
             geoLocate.on('geolocate', function (e) {
@@ -535,6 +623,14 @@
                     center: [e.coords.longitude, e.coords.latitude],
                     zoom: 17
                 });
+            });*/
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                /*var Usermarker = new mapboxgl.Marker()
+                                            .setLngLat([120.67325708814289,24.1209574211248
+                                            ])*/
+                console.log("已經取得座標");
+                //do_something(position.coords.latitude, position.coords.longitude);
             });
 
 
