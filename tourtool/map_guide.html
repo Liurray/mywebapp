@@ -142,10 +142,17 @@
             <label for="direction_check">為我導航</label>
             <input type="checkbox" id="tour_location">
             <label for="tour_location">旅團位置</label>
-            <input type="checkbox" id="image_check">
-            <label for="image_check">展場圖例</label>
             <input type="checkbox" id="autoplay_check">
             <label for="autoplay_check">展區導覽</label>
+            <input type="checkbox" id="image_check">
+            <label for="image_check">展場圖例</label>
+            <div id='example' style="position: fixed;
+            right: 85px;display: none">
+                <nav id="example-group" class="listing-group">
+                </div>
+
+
+
 
         </nav>
         <div class='compass dot fill-white pad1 pin-topright space-right1'>
@@ -183,7 +190,7 @@
             function success(position) {
                 lat = position.coords.latitude;
                 lng = position.coords.longitude;
-                console.log("經緯度座標為"+parseFloat(lat)+"跟"+parseFloat(lng));
+                console.log("經緯度座標為" + parseFloat(lat) + "跟" + parseFloat(lng));
 
 
 
@@ -219,7 +226,91 @@
             var direction = new MapboxDirections({
                 accessToken: mapboxgl.accessToken
             })
-            //導遊動態點
+
+
+
+            //測資
+            var places = {
+                'type': 'FeatureCollection',
+                'features': [{
+                        'type': 'Feature',
+                        'properties': {
+                            'icon': 'theatre'
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-77.038659, 38.931567]
+                        }
+                    },
+                    {
+                        'type': 'Feature',
+                        'properties': {
+                            'icon': 'theatre'
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-77.003168, 38.894651]
+                        }
+                    },
+                    {
+                        'type': 'Feature',
+                        'properties': {
+                            'icon': 'bar'
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-77.090372, 38.881189]
+                        }
+                    },
+                    {
+                        'type': 'Feature',
+                        'properties': {
+                            'icon': 'bicycle'
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-77.052477, 38.943951]
+                        }
+                    },
+                    {
+                        'type': 'Feature',
+                        'properties': {
+                            'icon': 'music'
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-77.031706, 38.914581]
+                        }
+                    },
+                    {
+                        'type': 'Feature',
+                        'properties': {
+                            'icon': 'music'
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-77.020945, 38.878241]
+                        }
+                    },
+                    {
+                        'type': 'Feature',
+                        'properties': {
+                            'icon': 'music'
+                        },
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [-77.007481, 38.876516]
+                        }
+                    }
+                ]
+            };
+            var exampleGroup = document.getElementById('example-group');
+
+
+
+
+
+
 
 
 
@@ -391,6 +482,21 @@
                     }
                 }
             ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             //這裡開始為自 動 導 覽 功能
             function highlightBorough(code) {
                 // Only show the polygon feature that cooresponds to `borocode` in the data
@@ -442,7 +548,64 @@
 
             map.on('load', function () {
                 var Usermarker = new mapboxgl.Marker()
-                    
+                map.addSource('places', {
+                    'type': 'geojson',
+                    'data': places
+                });
+
+                places.features.forEach(function (feature) {
+                    var symbol = feature.properties['icon'];
+                    var layerID = 'poi-' + symbol;
+
+                    // Add a layer for this symbol type if it hasn't been added already.
+                    if (!map.getLayer(layerID)) {
+                        map.addLayer({
+                            'id': layerID,
+                            'type': 'symbol',
+                            'source': 'places',
+                            'layout': {
+                                // These icons are a part of the Mapbox Light style.
+                                // To view all images available in a Mapbox style, open
+                                // the style in Mapbox Studio and click the "Images" tab.
+                                // To add a new image to the style at runtime see
+                                // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
+                                'icon-image': symbol + '-15',
+                                'icon-allow-overlap': true
+                            },
+                            'filter': ['==', 'icon', symbol]
+                        });
+
+                        // Add checkbox and label elements for the layer.
+                        //加入css 控制因素
+                        var input = document.createElement('input');
+                        input.type = 'checkbox';
+                        input.id = layerID;
+                        input.style.display = 'none';
+                        input.checked = true;
+                        exampleGroup.appendChild(input);
+
+                        var label = document.createElement('label');
+                        label.setAttribute('for', layerID);
+                        label.textContent = symbol;
+                        exampleGroup.appendChild(label);
+
+                        // When the checkbox changes, update the visibility of the layer.
+                        input.addEventListener('change', function (e) {
+                            map.setLayoutProperty(
+                                layerID,
+                                'visibility',
+                                e.target.checked ? 'visible' : 'none'
+                            );
+                        });
+
+                    }
+                });
+
+
+
+
+
+
                 //, position.coords.longitude
                 map.addSource('floorplan', {
                     // GeoJSON Data source used in vector tiles, documented at
@@ -526,10 +689,12 @@
                                     auto_play = 0;
                                     console.log("展區導覽自動撥放");
                                     break;
-                                case 'layer_check':
-
-                                    console.log("展區圖例圖層顯示");
+                                case 'image_check':
+                                    $("#example").show();
+                                    console.log("展區導覽自動撥放");
                                     break;
+
+
                             }
                         } else {
                             switch (handler) {
@@ -537,12 +702,12 @@
                                     Usermarker.remove()
                                     map.flyTo({
                                         center: [
-                                        120.673195, 24.121166
+                                            120.673195, 24.121166
                                         ],
                                         zoom: 15,
                                         essential: true // this animation is considered essential with respect to prefers-reduced-motion
                                     });
-                                    
+
                                     console.log("【關閉】目前位置");
                                     break;
                                 case 'direction_check':
@@ -553,20 +718,16 @@
                                     map.removeImage("pulsing-dot")
                                     console.log("【關閉】導遊團目前位置");
                                     break;
-                                case 'autoplay_check':
-                                    $("#map-overlay-container").hide()
-                                    auto_play = 1;
+                                case 'image_check':
+                                    $("#example").hide();
                                     console.log("【關閉】展區導覽自動撥放");
                                     break;
-                                case 'layer_check':
 
-                                    console.log("【關閉】展區圖例圖層顯示");
-                                    break;
                             }
                         }
 
                     });
-                //旅團目前位置(動態點)
+
 
                 map.addSource('points', {
                     'type': 'geojson',
