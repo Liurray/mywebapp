@@ -232,77 +232,147 @@
             //測資
             var places = {
                 'type': 'FeatureCollection',
-                'features': [{
+                "features": [{
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "restaurant"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.67243,
+                                24.122528
+                            ],
+                            "type": "Point"
+                        },
+                        "id": "6618de21df2d421f17e54437e7187fb7"
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "commercial"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.674749,
+                                24.119994
+                            ],
+                            "type": "Point"
+                        },
+                        "id": "8a2406ac688d0969b86c554550b77d7a"
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "cafe"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.674594,
+                                24.119997
+                            ],
+                            "type": "Point"
+                        },
+                        "id": "a1e6d1c94e671de71e5dbb25f536f7bf"
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "attraction"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.673871,
+                                24.120747
+                            ],
+                            "type": "Point"
+                        },
+                        "id": "abde526e82b33ce3ad7f0c0b991bcc9e"
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "marker-15"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.672587,
+                                24.121843
+                            ],
+                            "type": "Point"
+                        },
+                        "id": "d05d9de6226ab5accb8adaebab8d74d9"
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "marker-15"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.673347,
+                                24.120834
+                            ],
+                            "type": "Point"
+                        },
+                        "id": "d7ab8cddbfd2fc7636c94a05b1058902"
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "commercial"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.673299,
+                                24.121165
+                            ],
+                            "type": "Point"
+                        },
+                        "id": "ec355f26f1b421dd02f8c8397ef13e13"
+                    }
+                ],
+                "type": "FeatureCollection"
+                /*'features': [{
                         'type': 'Feature',
                         'properties': {
-                            'icon': 'theatre'
+                            'icon': '商店'
                         },
                         'geometry': {
                             'type': 'Point',
-                            'coordinates': [-77.038659, 38.931567]
+                            'coordinates': [ 120.67332446266215,24.121137191967865]
                         }
                     },
                     {
                         'type': 'Feature',
                         'properties': {
-                            'icon': 'theatre'
+                            'icon': 'attraction'
                         },
                         'geometry': {
                             'type': 'Point',
-                            'coordinates': [-77.003168, 38.894651]
+                            'coordinates': [120.67481577090291, 24.120652485497647 ]
                         }
                     },
                     {
                         'type': 'Feature',
                         'properties': {
-                            'icon': 'bar'
+                            'icon': 'commercial'
                         },
                         'geometry': {
                             'type': 'Point',
-                            'coordinates': [-77.090372, 38.881189]
+                            'coordinates': [120.67460786480083,24.12005676693077]
                         }
                     },
                     {
                         'type': 'Feature',
                         'properties': {
-                            'icon': 'bicycle'
+                            'icon': 'cafe'
                         },
                         'geometry': {
                             'type': 'Point',
-                            'coordinates': [-77.052477, 38.943951]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'icon': 'music'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-77.031706, 38.914581]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'icon': 'music'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-77.020945, 38.878241]
-                        }
-                    },
-                    {
-                        'type': 'Feature',
-                        'properties': {
-                            'icon': 'music'
-                        },
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [-77.007481, 38.876516]
+                            'coordinates': [120.67229449437016,24.122464005336358 ]
                         }
                     }
-                ]
+                ]*/
             };
             var exampleGroup = document.getElementById('example-group');
 
@@ -717,6 +787,10 @@
                                 case 'tour_location':
                                     map.removeImage("pulsing-dot")
                                     console.log("【關閉】導遊團目前位置");
+                                    break;
+                                case 'autoplay_check':
+                                    auto_play = 1;
+                                    console.log("【關閉】展區導覽自動撥放");
                                     break;
                                 case 'image_check':
                                     $("#example").hide();
