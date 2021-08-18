@@ -121,7 +121,12 @@
 	<hr />
 	<div>作業系統: <span id="getOS"></span></div>
 	<div>使用語言: <span id="getLanguage"></span></div>
+	<button onclick="logout()">登出</button>
 	<hr />
-
+	<script>
+		function logout() {
+			liff.logout();
+		}
+		</script>
 </body>
 </html>
