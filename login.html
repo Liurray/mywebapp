@@ -18,7 +18,19 @@
 	<script charset="utf-8" src="/sdk.js"></script>
 
 	<script>
-	
+		document.addEventListener("DOMContentLoaded", function () {
+			// 參考 https://developers.line.biz/en/reference/liff/#initialize-liff-app
+			liff
+				.init({
+					// 這裡要改成自己的LIFF URL的後半段 https://liff.line.me/##########-XXXXXXXX
+					liffId: '1655371574-rK5awXB5'
+				})
+				.then(() => {
+					if (!isLoggedIn) {
+						liff.login({
+							redirectUri: 'https://google.com'
+						});
+					}
 
 					// 參考 https://developers.line.biz/en/reference/liff/#get-line-version
 					document.getElementById("getLineVersion").innerHTML = liff.getLineVersion();
@@ -53,9 +65,11 @@
 					// 參考 https://developers.line.biz/en/reference/liff/#get-language
 					document.getElementById("getLanguage").innerHTML = liff.getLanguage();
 
-			
-		
-	
+				})
+				.catch((err) => {
+					alert(JSON.stringify(err));
+				});
+		});
 
 
 		
