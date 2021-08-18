@@ -15,68 +15,31 @@
 
 	<!-- LIFF v1只能用到2021年4月 https://developers.line.biz/en/docs/liff/versioning-policy/ -->
 	<!-- LIFF v2從2019年10月啟用 https://developers.line.biz/en/docs/liff/developing-liff-apps/#developing-a-liff-app -->
-	<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-	<button id="login">登入 LINE</button>
-	<button id="logout">登出 LINE</button>
+	<script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
+	<img id = "pic">
+	<p id = "name"> 使用者名稱</p>
+	<p id = "UID">使用者UID</p>
+	<button id = "logout" onclick="logout()">登出</button>
 	<script>
-		var liffID = '1655371574-rK5awXB5'
-		liff
-			.init({
-				// 這裡要改成自己的LIFF URL的後半段 https://liff.line.me/##########-XXXXXXXX
-				liffId: liffID
+		async function main() {
+			await liff.init({
+				liffId: '1655371574-rK5awXB5'
 			})
-			.then(() => {
-				const btnLogin = document.getElementById('login');
-		btnLogin.addEventListener('click', () => {
-			// 先確認使用者未登入
-			if (!isLoggedIn) {
-				liff.login();
-				// 參考 https://developers.line.biz/en/reference/liff/#get-line-version
-				document.getElementById("getLineVersion").innerHTML = liff.getLineVersion();
-
-				// 參考 https://developers.line.biz/en/reference/liff/#is-in-client
-				document.getElementById("isInClient").innerHTML = liff.isInClient();
-
-				// 參考 https://developers.line.biz/en/reference/liff/#get-context
-				document.getElementById("getContextViewType").innerHTML = liff.getContext().viewType;
-				document.getElementById("getContextType").innerHTML = liff.getContext().type;
-				document.getElementById("getContextUtouId").innerHTML = liff.getContext().utouId;
-				document.getElementById("getContextGroupId").innerHTML = liff.getContext().groupId;
-				document.getElementById("getContextRoomId").innerHTML = liff.getContext().roomId;
-
-				// 參考 https://developers.line.biz/en/reference/liff/#is-logged-in
-				document.getElementById("isLoggedIn").innerHTML = liff.isLoggedIn();
-
-				// 參考 https://developers.line.biz/en/reference/liff/#get-profile
-				liff.getProfile()
-					.then(profile => {
-						document.getElementById("getProfileDisplayName").innerHTML = profile.displayName;
-						document.getElementById("getProfileUserId").innerHTML = profile.userId;
-						document.getElementById("getProfilePictureUrl").innerHTML = profile.pictureUrl;
-					})
-
-
-
-				// 參考 https://developers.line.biz/en/reference/liff/#get-os
-				document.getElementById("getOS").innerHTML = liff.getOS();
-
-				// 參考 https://developers.line.biz/en/reference/liff/#get-language
-				document.getElementById("getLanguage").innerHTML = liff.getLanguage();
+			if (liff.isLoggedIn()) {
+				getUserProfile()
+			}else {
+				liff.login()
 			}
-		});
+		}
+		main()
+		async function getUserProfile(){
+			const profile = await liff.getUserProfile()
+			document.getElementById("pic").src = profile.pictureUrl
+			document.getElementById("name").append(profile.displayName)
+		
+			
+		}
 
-		const btnLogout = document.getElementById('logout');
-		btnLogout.addEventListener('click', () => {
-			// 先確認使用者是否是登入的狀態
-			if (isLoggedIn) {
-				liff.logout();
-				window.location.reload(); // 登出後重整一次頁面
-			}
-		});
-
-				
-
-			})
 		
 	</script>
 
