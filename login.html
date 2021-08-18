@@ -33,9 +33,10 @@
 		}
 		main()
 		async function getUserProfile(){
-			const profile = await liff.getUserProfile()
+			const profile = await liff.getProfile()
 			document.getElementById("pic").src = profile.pictureUrl
 			document.getElementById("name").append(profile.displayName)
+			document.getElementById("UID").append(profile.userId)
 		
 			
 		}
@@ -56,23 +57,6 @@
 
 
 
-	<hr />
-	<div>LINE版本: <span id="getLineVersion"></span></div>
-	<div>內建瀏覽: <span id="isInClient"></span></div>
-	<div>LIFF尺寸: <span id="getContextViewType"></span></div>
-	<div>來自何處: <span id="getContextType"></span></div>
-	<div>1對1聊天: <span id="getContextUtouId"></span></div>
-	<div>群組序號: <span id="getContextGroupId"></span></div>
-	<div>聊天室號: <span id="getContextRoomId"></span></div>
-	<div>登入與否: <span id="isLoggedIn"></span></div>
-	<hr />
-	<div>使用名稱: <span id="getProfileDisplayName"></span></div>
-	<div>使用序號: <span id="getProfileUserId"></span></div>
-	<div>頭像圖檔: <span id="getProfilePictureUrl"></span></div>
-	<hr />
-	<div>作業系統: <span id="getOS"></span></div>
-	<div>使用語言: <span id="getLanguage"></span></div>
-	<hr />
 
 </body>
 
