@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/owl.theme.default.min.css">
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="owl.carousel.min.js"></script>
+<script charset="utf-8" src="/sdk.js">
+    //LIFF初始化 SDK.JS
+</script>
+<style>
+    h3 {
+  color: #ffffff !important;
+  background-color: #83b5aa;
+  border-left: 12px solid #5c726e;
+  padding : 1px 1px 1px 20px;
+}
+</style>
+
+<body>
+    
+    <!-- Set up your HTML -->
+    <div id = "title"><h3>快來看看導遊推薦的粉絲團有哪些</h3>
+    
+        <h4 color="#ffffff" background-color="#83b5aa" border-left= 12px solid #5c726e padding = (1px,1px,1px,20px)>這裡蒐集了導遊所關注的粉絲團內容，歡迎參考看看</h4>
+        <hr size="8px" align="center" width="100%" color="#eac096">
+    </div>
+    <div id="fb_groups">
+        <div class="profilecontent" id="fb_group_pic"></div>
+    </div>
+    <div id="content title"><h3>左右滑動來查看這粉絲團的最新資訊</h3>
+    
+        <hr size="8px" align="center" width="100%" color="#eac096">
+    </div>
+    <div id='fb1_content' style="display: block;">
+
+        <div class="textcontent" id="fb_content"></div>
+
+    </div>
+
+
+    <script>
+       
+
+
+        var FB_group = [];
+        FB_group.push("102967032083937");
+        FB_group.push("104745581854224");
+        console.log(FB_group);
+        var fb_group_btnHtml = `<div class="owl-carousel owl-theme">`
+        for (var i = 0; i < FB_group.length; i++) {
+            fb_group_btnHtml += `<div class="item">` + `<button type="button" id = ` + FB_group[i] +
+                `>` + `<img src=http://graph.facebook.com/` + FB_group[i] +
+                `/picture?type=large></button></div>`
+            console.log(`http://graph.facebook.com/` + FB_group[i] + `/picture?type=large`)
+        }
+        fb_group_btnHtml += `</div>`
+        $('#fb_group_pic').html(fb_group_btnHtml)
+        $('.owl-carousel ').owlCarousel({
+            loop: false,
+            margin: 5,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 3
+                }
+            }
+        })
+
+        $("button").click(function () {
+           
+        var group_index = this.id;
+        console.log("你成功按下"+this.id);
+        var Data_index = FB_group.indexOf(group_index);
+            var appendHtml = `<div class="owl-carousel owl-theme">`
+                for (var i = 0; i <  FBjson[Data_index].data.length; i++) {
+            if(FBjson[Data_index].data[i].message !=undefined){
+                appendHtml += '<div class="item"><h4>' + FBjson[Data_index].data[i].message + '</h4></div>'
+            }
+            
+            //console.log(Json_data[i]);
+        }
+        appendHtml += `</div>`
+        $('#fb_content').html(appendHtml)
+        $('.owl-carousel ').owlCarousel({
+            loop: false,
+            margin: 5,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 3
+                }
+            }
+        })
+
+        });
+
+
+
+
+
+
+
+
+        //粉絲團789
+        var FBjson = [];
+        var dataUrl1 =
+            "https://graph.facebook.com/102967032083937/feed?access_token=EAAEq7clzjskBAHAJ879zetPdNtUEHYFWAjDh4CttFfKJfZBWYZAXQC7F1t5CfLZCVeoasRtd0xq7R0XE0WnHlJRLZCtSuT4kTI2aYRFXeA0AjVFuEIKJG84lYkbxpKsxyI4Mnx9sJCiJrhFqwQyiG5OP1aoxxNaJAVYPnI7qFN1HXuhVVXcF"
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', dataUrl1, true)
+        xhr.send()
+        xhr.onload = function () {
+            var data = JSON.parse(this.responseText);
+            //console.log(data);
+            FBjson.push(data);
+            console.log(FBjson);
+            var dataUrl2 =
+                "https://graph.facebook.com/104745581854224/feed?access_token=EAAEq7clzjskBAHAJ879zetPdNtUEHYFWAjDh4CttFfKJfZBWYZAXQC7F1t5CfLZCVeoasRtd0xq7R0XE0WnHlJRLZCtSuT4kTI2aYRFXeA0AjVFuEIKJG84lYkbxpKsxyI4Mnx9sJCiJrhFqwQyiG5OP1aoxxNaJAVYPnI7qFN1HXuhVVXcF"
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', dataUrl2, true)
+            xhr.send()
+            xhr.onload = function () {
+                var data = JSON.parse(this.responseText);
+                //console.log(data);
+                FBjson.push(data);
+                console.log(FBjson);
+            }
+            var appendHtml = `<div class="owl-carousel owl-theme">`
+            for (var i = 0; i < data.data.length; i++) {
+                if (data.data[i].message != undefined) {
+                    appendHtml += '<div class="item"><h4>' + data.data[i].message + '</h4></div>'
+                }
+
+                //console.log(Json_data[i]);
+            }
+            appendHtml += `</div>`
+            $('#fb_content').html(appendHtml)
+            $('.owl-carousel ').owlCarousel({
+                loop: false,
+                margin: 5,
+                nav: true,
+                responsive: {
+                    0: {
+                        items: 3
+                    }
+                }
+            })
+        }
+
+
+
+
+
+    
+    </script>
+
+</body>
+
+</html>
