@@ -28,7 +28,7 @@
 				.then(() => {
 					if (!isLoggedIn) {
 						liff.login({
-							redirectUri: 'https://sideprojectslide.netlify.app/login.html'
+							redirectUri: 'https://google.com'
 						});
 					}
 
@@ -72,30 +72,10 @@
 		});
 
 
-		// 參考 https://developers.line.biz/en/reference/liff/#scan-code
-		function scanCode() {
-			if (liff.scanCode) {
-				liff.scanCode().then(result => {
-					document.getElementById("scanCode").value = result.value;
-				});
-			}
-		}
+		
 
 
-		// 參考 https://developers.line.biz/en/reference/liff/#send-messages
-		// 在設定Scopes時，因為回傳訊息就必須將chat_message.write也勾選起來。
-		function sendMessages() {
-			liff.sendMessages([{
-					type: 'text',
-					text: document.getElementById("sendMessages").value
-				}])
-				.then(() => {
-					alert("已回傳訊息");
-				})
-				.catch((err) => {
-					console.log('error', err);
-				});
-		}
+		
 	</script>
 
 	<style>
@@ -131,6 +111,7 @@
 	<hr />
 	<script>
 		function logout() {
+			console.log("登出了 !")
 			if(isLoggedIn) {
           liff.logout();
           window.location.reload(); // 登出後重整一次頁面
