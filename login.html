@@ -26,7 +26,11 @@
 				liffId: liffID
 			})
 			.then(() => {
-
+				const btnLogin = document.getElementById('login');
+		btnLogin.addEventListener('click', () => {
+			// 先確認使用者未登入
+			if (!isLoggedIn) {
+				liff.login();
 				// 參考 https://developers.line.biz/en/reference/liff/#get-line-version
 				document.getElementById("getLineVersion").innerHTML = liff.getLineVersion();
 
@@ -58,15 +62,6 @@
 
 				// 參考 https://developers.line.biz/en/reference/liff/#get-language
 				document.getElementById("getLanguage").innerHTML = liff.getLanguage();
-
-			})
-		const btnLogin = document.getElementById('login');
-		btnLogin.addEventListener('click', () => {
-			// 先確認使用者未登入
-			if (!isLoggedIn) {
-				liff.login({
-					redirectUri: 'https://sideprojectslide.netlify.app/login.html'
-				});
 			}
 		});
 
@@ -78,6 +73,11 @@
 				window.location.reload(); // 登出後重整一次頁面
 			}
 		});
+
+				
+
+			})
+		
 	</script>
 
 	<style>
