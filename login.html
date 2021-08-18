@@ -42,7 +42,7 @@
 					document.getElementById("getContextViewType").innerHTML = liff.getContext().viewType;
 					document.getElementById("getContextType").innerHTML = liff.getContext().type;
 					document.getElementById("getContextUtouId").innerHTML = liff.getContext().utouId;
-				
+
 
 					// 參考 https://developers.line.biz/en/reference/liff/#is-logged-in
 					document.getElementById("isLoggedIn").innerHTML = liff.isLoggedIn();
@@ -69,12 +69,6 @@
 					alert(JSON.stringify(err));
 				});
 		});
-
-
-		
-
-
-		
 	</script>
 
 	<style>
@@ -105,15 +99,22 @@
 	<hr />
 	<div>作業系統: <span id="getOS"></span></div>
 	<div>使用語言: <span id="getLanguage"></span></div>
-	<button onclick="logout()">登出</button>
+	<button onclick="mylogout()">登出</button><button onclick="mylogin()">登入</button>
 	<hr />
 	<script>
-		function logout() {
+		function mylogout() {
 			console.log("登出了 !")
-			if(isLoggedIn) {
-          liff.logout();
-          window.location.reload(); // 登出後重整一次頁面
-        }
+			if (isLoggedIn) {
+				liff.logout();
+				window.location.reload(); // 登出後重整一次頁面
+			}
+		}
+		function mylogin() {
+			console.log("登了 !")
+			if (!isLoggedIn) {
+				liff.login();
+				
+			}
 		}
 	</script>
 </body>
