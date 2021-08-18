@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>登入驗證頁面
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	
+	<!-- LIFF v1只能用到2021年4月 https://developers.line.biz/en/docs/liff/versioning-policy/ -->
+	<!-- LIFF v2從2019年10月啟用 https://developers.line.biz/en/docs/liff/developing-liff-apps/#developing-a-liff-app -->
+    <script charset="utf-8" src="/sdk.js"></script>
+	
+    <script>
+	
+         document.addEventListener("DOMContentLoaded", function(){
+		    // 參考 https://developers.line.biz/en/reference/liff/#initialize-liff-app
+            liff
+                .init({
+					// 這裡要改成自己的LIFF URL的後半段 https://liff.line.me/##########-XXXXXXXX
+                    liffId: '1655371574-rK5awXB5'    
+                })
+                .then(() => {
+				
+					// 參考 https://developers.line.biz/en/reference/liff/#get-line-version
+					document.getElementById("getLineVersion").innerHTML = liff.getLineVersion();
+
+					// 參考 https://developers.line.biz/en/reference/liff/#is-in-client
+					document.getElementById("isInClient").innerHTML = liff.isInClient();
+
+					// 參考 https://developers.line.biz/en/reference/liff/#get-context
+					document.getElementById("getContextViewType").innerHTML = liff.getContext().viewType;
+					document.getElementById("getContextType").innerHTML = liff.getContext().type;
+					document.getElementById("getContextUtouId").innerHTML = liff.getContext().utouId;
+					document.getElementById("getContextGroupId").innerHTML = liff.getContext().groupId;
+					document.getElementById("getContextRoomId").innerHTML = liff.getContext().roomId;
+
+					// 參考 https://developers.line.biz/en/reference/liff/#is-logged-in
+					document.getElementById("isLoggedIn").innerHTML = liff.isLoggedIn();
+					
+					// 參考 https://developers.line.biz/en/reference/liff/#get-profile
+					liff.getProfile()
+					.then(profile => {
+					    document.getElementById("getProfileDisplayName").innerHTML = profile.displayName;
+					    document.getElementById("getProfileUserId").innerHTML = profile.userId;
+					    document.getElementById("getProfilePictureUrl").innerHTML = profile.pictureUrl;
+					})
+					.catch((err) => {
+					  console.log('error', err);
+					});	
+
+					// 參考 https://developers.line.biz/en/reference/liff/#get-os
+					document.getElementById("getOS").innerHTML = liff.getOS();
+
+					// 參考 https://developers.line.biz/en/reference/liff/#get-language
+					document.getElementById("getLanguage").innerHTML = liff.getLanguage();
+
+                })
+                .catch((err) => {
+                    alert(JSON.stringify(err));
+                });
+        });
+
+ 	  
+	    // 參考 https://developers.line.biz/en/reference/liff/#scan-code
+	    function scanCode() {	    
+		  if (liff.scanCode) {
+		    liff.scanCode().then(result => {
+		  	  document.getElementById("scanCode").value = result.value;
+		    });
+		  }		
+	    }	
+	  
+	  
+	    // 參考 https://developers.line.biz/en/reference/liff/#send-messages
+		// 在設定Scopes時，因為回傳訊息就必須將chat_message.write也勾選起來。
+	    function sendMessages() {
+		  liff.sendMessages([
+		    {
+			  type: 'text',
+			  text: document.getElementById("sendMessages").value
+		    }
+		  ])
+		  .then(() => {
+		    alert("已回傳訊息");
+		  })
+		  .catch((err) => {
+		    console.log('error', err);
+		  });	  
+	    }
+		
+    </script>
+	
+    <style>
+       div{ word-wrap:break-word; word-break:normal;}
+    </style>
+	
+</head>
+<body>
+
+  
+
+	<hr />  
+	<div>LINE版本: <span id="getLineVersion"></span></div>
+	<div>內建瀏覽: <span id="isInClient"></span></div>
+	<div>LIFF尺寸: <span id="getContextViewType"></span></div>
+	<div>來自何處: <span id="getContextType"></span></div>
+	<div>1對1聊天: <span id="getContextUtouId"></span></div>
+	<div>群組序號: <span id="getContextGroupId"></span></div>
+	<div>聊天室號: <span id="getContextRoomId"></span></div>
+	<div>登入與否: <span id="isLoggedIn"></span></div>
+	<hr />
+	<div>使用名稱: <span id="getProfileDisplayName"></span></div>
+	<div>使用序號: <span id="getProfileUserId"></span></div>
+	<div>頭像圖檔: <span id="getProfilePictureUrl"></span></div>
+	<hr />
+	<div>作業系統: <span id="getOS"></span></div>
+	<div>使用語言: <span id="getLanguage"></span></div>
+	<hr />
+
+</body>
+</html>
