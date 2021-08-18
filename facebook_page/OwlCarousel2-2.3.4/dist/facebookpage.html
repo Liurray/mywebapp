@@ -8,9 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="owl.carousel.min.js"></script>
-<script charset="utf-8" src="/sdk.js">
-    //LIFF初始化 SDK.JS
-</script>
+
 <style>
     h3 {
   color: #ffffff !important;
@@ -108,7 +106,7 @@
         //粉絲團789
         var FBjson = [];
         var dataUrl1 =
-            "https://graph.facebook.com/102967032083937/feed?access_token=EAAEq7clzjskBAHAJ879zetPdNtUEHYFWAjDh4CttFfKJfZBWYZAXQC7F1t5CfLZCVeoasRtd0xq7R0XE0WnHlJRLZCtSuT4kTI2aYRFXeA0AjVFuEIKJG84lYkbxpKsxyI4Mnx9sJCiJrhFqwQyiG5OP1aoxxNaJAVYPnI7qFN1HXuhVVXcF"
+            "https://graph.facebook.com/102967032083937/feed?access_token=EAAgm5Abo5ZBsBALcfCodioLbmAsggMddMkyw4sZAYvC8EaOmM6gQaKaLr7u2Ho6U4uQY19yM2tYXV9vXzus5X1O2iUHdluf5g9XoQbIGBYeoIphtsYm99qgGjC76F6HSP5jSFORiExTOUof58YarAMr6FKirJZBF8jxuvkJRvnaYkMAdcOD"
         var xhr = new XMLHttpRequest()
         xhr.open('GET', dataUrl1, true)
         xhr.send()
@@ -118,7 +116,7 @@
             FBjson.push(data);
             console.log(FBjson);
             var dataUrl2 =
-                "https://graph.facebook.com/104745581854224/feed?access_token=EAAEq7clzjskBAHAJ879zetPdNtUEHYFWAjDh4CttFfKJfZBWYZAXQC7F1t5CfLZCVeoasRtd0xq7R0XE0WnHlJRLZCtSuT4kTI2aYRFXeA0AjVFuEIKJG84lYkbxpKsxyI4Mnx9sJCiJrhFqwQyiG5OP1aoxxNaJAVYPnI7qFN1HXuhVVXcF"
+                "https://graph.facebook.com/104745581854224/feed?access_token=EAAgm5Abo5ZBsBALcfCodioLbmAsggMddMkyw4sZAYvC8EaOmM6gQaKaLr7u2Ho6U4uQY19yM2tYXV9vXzus5X1O2iUHdluf5g9XoQbIGBYeoIphtsYm99qgGjC76F6HSP5jSFORiExTOUof58YarAMr6FKirJZBF8jxuvkJRvnaYkMAdcOD"
             var xhr = new XMLHttpRequest()
             xhr.open('GET', dataUrl2, true)
             xhr.send()
