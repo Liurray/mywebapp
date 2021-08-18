@@ -8,6 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="owl.carousel.min.js"></script>
+<script charset="utf-8" src="/sdk.js">
+    //LIFF初始化 SDK.JS
+</script>
 <style>
     h3 {
   color: #ffffff !important;
@@ -18,6 +21,7 @@
 </style>
 
 <body>
+    
     <!-- Set up your HTML -->
     <div id = "title"><h3>快來看看導遊推薦的粉絲團有哪些</h3>
     
@@ -39,6 +43,12 @@
 
 
     <script>
+         var liffID = '1655371574-MXokVqpo';
+        liff.init({
+            liffId: liffID
+        }).then(function () {
+
+            
         var FB_group = [];
         FB_group.push("102967032083937");
         FB_group.push("104745581854224");
@@ -147,7 +157,7 @@
 
 
 
-
+    })
     </script>
 
 </body>
