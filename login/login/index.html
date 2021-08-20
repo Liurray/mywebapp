@@ -5,9 +5,24 @@
 	<title>導覽通驗證頁面</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--//////init firebase-->
 	<script src="/firebase-app.js"></script>
     <script src="/firebase-analytics.js"></script>
     <script src="/firebase-database.js"></script>
+	<script>
+        //firebase init app
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<!-- LIFF v1只能用到2021年4月 https://developers.line.biz/en/docs/liff/versioning-policy/ -->
 	<!-- LIFF v2從2019年10月啟用 https://developers.line.biz/en/docs/liff/developing-liff-apps/#developing-a-liff-app -->
