@@ -77,13 +77,14 @@
 		firebase.database().ref('User/').on("value", function (snapshot) {
 				console.log(userId);
 					snapshot.forEach(function (item) {
-						console.log(item.val().userID);
+						//console.log(item.val().userID);
 						if(item.val().userID===userId){
 							document.getElementById("login_result").innerHTML ="驗證結果:成功 ";
-							return;
-						}else{
-							document.getElementById("login_result").innerHTML = "驗證結果:失敗 此使用者未登錄在資料庫中"
+							console.log("找到了")
+							break;
 						}
+						document.getElementById("login_result").innerHTML = "驗證結果:失敗 此使用者未登錄在資料庫中"
+						
 					})
 		})
 	</script>
