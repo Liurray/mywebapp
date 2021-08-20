@@ -75,9 +75,9 @@
 		}
 		 
 		firebase.database().ref('User/').on("value", function (snapshot) {
-
+				console.log(userId);
 					snapshot.forEach(function (item) {
-						if(item.userID==userId){
+						if(item.val().userID==userId){
 							document.getElementById("login_result") ="驗證結果:成功 "
 						}else{
 							document.getElementById("login_result") ="驗證結果:失敗 此使用者未登錄在資料庫中"
