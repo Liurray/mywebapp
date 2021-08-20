@@ -37,8 +37,8 @@
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-85 p-b-20">
 				<form class="login100-form validate-form">
-					<span class="login100-form-title p-b-70">
-						<p id ='username'></p> <!--使用者名稱顯示在這-->
+					<span class="login100-form-title p-b-70" id ='username'>
+						<!--使用者名稱顯示在這-->
 					</span>
 					<span class="login100-form-avatar">
 						<img id="profile_img" src="images/avatar-01.jpg" alt="AVATAR"> <!--使用者個人照片-->
@@ -104,9 +104,8 @@
 		
 			
 		}
-		function logout(){
-			liff.logout();
-			window.location.reload()
+		function close(){
+			liff.closeWindow()
 			
 		}
 
