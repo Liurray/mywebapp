@@ -79,9 +79,10 @@
 					snapshot.forEach(function (item) {
 						console.log(item.val().userID);
 						if(item.val().userID===userId){
-							document.getElementById("login_result") ="驗證結果:成功 "
+							document.getElementById("login_result").append ="驗證結果:成功 "
+							break;
 						}else{
-							document.getElementById("login_result") ="驗證結果:失敗 此使用者未登錄在資料庫中"
+							document.getElementById("login_result").append ="驗證結果:失敗 此使用者未登錄在資料庫中"
 						}
 					})
 		})
