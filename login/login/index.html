@@ -32,6 +32,37 @@
 <!--===============================================================================================-->
 </head>
 <body>
+		<!--主程式-->
+		<script>
+			async function main() {
+				await liff.init({
+					liffId: '1655371574-rK5awXB5'
+				})
+				if (liff.isLoggedIn()) {
+					getUserProfile()
+				}else {
+					liff.login()
+				}
+			}
+			main()
+			async function getUserProfile(){
+				const profile = await liff.getProfile()
+				document.getElementById("profile_img").src = profile.pictureUrl
+				document.getElementById("username").append(profile.displayName)
+				
+			
+				
+			}
+			function close(){
+				console.log("關閉liff")
+				liff.closeWindow()
+				
+			}
+	
+			
+		</script>
+
+
 	
 	<div class="limiter">
 		<div class="container-login100">
@@ -83,34 +114,6 @@
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
 
-	<!--主程式-->
-	<script>
-		async function main() {
-			await liff.init({
-				liffId: '1655371574-rK5awXB5'
-			})
-			if (liff.isLoggedIn()) {
-				getUserProfile()
-			}else {
-				liff.login()
-			}
-		}
-		main()
-		async function getUserProfile(){
-			const profile = await liff.getProfile()
-			document.getElementById("profile_img").src = profile.pictureUrl
-			document.getElementById("username").append(profile.displayName)
-			
-		
-			
-		}
-		function close(){
-			console.log("關閉liff")
-			liff.closeWindow()
-			
-		}
 
-		
-	</script>
 </body>
 </html>
