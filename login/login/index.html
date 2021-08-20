@@ -49,15 +49,12 @@
 				const profile = await liff.getProfile()
 				document.getElementById("profile_img").src = profile.pictureUrl
 				document.getElementById("username").append(profile.displayName)
+				document.getElementById("UID").append(profile.userId)
 				
 			
 				
 			}
-			function close(){
-				console.log("關閉liff")
-				liff.closeWindow()
-				
-			}
+			
 	
 			
 		</script>
@@ -79,13 +76,10 @@
 
 					<span class="login100-form-title p-b-900">
 						<p id ='login_result'>驗證結果:</p> <!--驗證結果顯示在這-->
+						<p id ='UID'></p>
 					</span>
 
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn" onclick="close()">
-							關閉頁面
-						</button>
-					</div>
+					
 
 
 					</ul>
