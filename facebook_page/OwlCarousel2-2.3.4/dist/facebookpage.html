@@ -110,7 +110,7 @@
         //粉絲團789
         var FBjson = [];
         var dataUrl1 =
-            "https://graph.facebook.com/102967032083937/feed?access_token=EAAgm5Abo5ZBsBAKKcGdznmFDoDtZCkiqmbQICc3pOZC64vO85pdd9XeG3PMDSFwbOKGFAazJf8e4z49kIorCjLYOgEZA8gdPt7eaWuaTNyhYDqCtIcdwgKvR7m18p9VfuZAjI8tmP0voJiKzWOaEFyUZBg0o9IR9jmZAn75cmKKTgZDZD"
+            "https://graph.facebook.com/102967032083937/feed?access_token=EAAgm5Abo5ZBsBAKZCeblwfj77qmfGdXaHLNAjpCdKGlmlQ8X65TyHm6dRwWnsLJMmCAkQBsToITuF4GAHLPHkmMtvCaRSDf1ZAHbtfLCSop3bwD2cA2VHRvRnJ9RH7ByT3DcfzgNal83xL6Q2DFgGxoiLpe8cGYToQk6GEk1jr3DWrHrGifqZCGbP2kyj5ZC0grrHM81ZA5gZDZD"
         var xhr = new XMLHttpRequest()
         xhr.open('GET', dataUrl1, true)
         xhr.send()
@@ -120,8 +120,8 @@
             FBjson.push(data);
             console.log(FBjson);
             var dataUrl2 =
-                "https://graph.facebook.com/104745581854224/feed?access_token=EAAgm5Abo5ZBsBAKKcGdznmFDoDtZCkiqmbQICc3pOZC64vO85pdd9XeG3PMDSFwbOKGFAazJf8e4z49kIorCjLYOgEZA8gdPt7eaWuaTNyhYDqCtIcdwgKvR7m18p9VfuZAjI8tmP0voJiKzWOaEFyUZBg0o9IR9jmZAn75cmKKTgZDZD"
-            var xhr = new XMLHttpRequest()
+                "https://graph.facebook.com/104745581854224/feed?access_token=EAAgm5Abo5ZBsBAKZCeblwfj77qmfGdXaHLNAjpCdKGlmlQ8X65TyHm6dRwWnsLJMmCAkQBsToITuF4GAHLPHkmMtvCaRSDf1ZAHbtfLCSop3bwD2cA2VHRvRnJ9RH7ByT3DcfzgNal83xL6Q2DFgGxoiLpe8cGYToQk6GEk1jr3DWrHrGifqZCGbP2kyj5ZC0grrHM81ZA5gZDZD"
+            var xhr = new XMLHttpRequest()                                    
             xhr.open('GET', dataUrl2, true)
             xhr.send()
             xhr.onload = function () {
