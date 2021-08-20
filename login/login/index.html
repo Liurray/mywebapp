@@ -75,17 +75,21 @@
 		}
 		 
 		firebase.database().ref('User/').on("value", function (snapshot) {
+			var find = "";
 				console.log(userId);
-					for(let i = 0;i<snapshot.length;i++) {
+					snapshot.forEach(function (item) {
 						//console.log(item.val().userID);
-						if(snapshot[i].userID===userId){
-							document.getElementById("login_result").innerHTML ="驗證結果:成功 ";
+						if(item.val().userID===userId){
 							console.log("找到了")
-							break;
+							find = "1";
+							
 						}
-						document.getElementById("login_result").innerHTML = "驗證結果:失敗 此使用者未登錄在資料庫中"
+					})
+					if(find ==="1"){
+						document.getElementById("login_result").innerHTML ="驗證結果:成功 ";
+					}else{
+						document.getElementById("login_result").innerHTML ="驗證結果:失敗 ";
 					}
-					
 		})
 	</script>
 
