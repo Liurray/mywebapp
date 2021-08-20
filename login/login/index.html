@@ -76,16 +76,16 @@
 		 
 		firebase.database().ref('User/').on("value", function (snapshot) {
 				console.log(userId);
-					snapshot.forEach(function (item) {
+					for(let i = 0;i<snapshot.length;i++) {
 						//console.log(item.val().userID);
-						if(item.val().userID===userId){
+						if(snapshot[i].userID===userId){
 							document.getElementById("login_result").innerHTML ="驗證結果:成功 ";
 							console.log("找到了")
 							break;
 						}
 						document.getElementById("login_result").innerHTML = "驗證結果:失敗 此使用者未登錄在資料庫中"
-						
-					})
+					}
+					
 		})
 	</script>
 
