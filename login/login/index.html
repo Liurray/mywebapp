@@ -80,7 +80,7 @@
 						console.log(item.val().userID);
 						if(item.val().userID===userId){
 							document.getElementById("login_result").innerHTML ="驗證結果:成功 ";
-							break;
+							return;
 						}else{
 							document.getElementById("login_result").innerHTML = "驗證結果:失敗 此使用者未登錄在資料庫中"
 						}
