@@ -122,7 +122,7 @@
 		main()
 
 		function getUserProfile() {
-			const profile = await liff.getProfile()
+			const profile = liff.getProfile()
 			document.getElementById("profile_img").src = profile.pictureUrl
 			document.getElementById("username").append(profile.displayName)
 			document.getElementById("UID").append(profile.userId)
