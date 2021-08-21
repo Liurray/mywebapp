@@ -109,34 +109,33 @@
 	<!--主程式-->
 	<script>
 		var userId = "";
-
+		var liffID = '1655371574-rK5awXB5';
 		liff.init({
-
-			liffId: '1655371574-rK5awXB5'
+			liffId: liffID
 		}).then(function () {
-			getUserProfile()
-
-			function getUserProfile() {
-				const profile = liff.getProfile()
-				document.getElementById("profile_img").src = profile.pictureUrl
-				document.getElementById("username").append(profile.displayName)
-				document.getElementById("UID").append(profile.userId)
-				userId = profile.userId;
-
-				firebase.database().ref('User/').on("value", function (snapshot) {
-					var find = "";
-					console.log(userId);
-					snapshot.forEach(function (item) {
-						//console.log(item.val().userID);
-						if (item.val().userID === userId) {
-							console.log("找到了")
-							find = "1";
-
-						}
-					})
+			liff.getProfile()
+				.then(profile => {
+					document.getElementById("profile_img").src = profile.pictureUrl
+					document.getElementById("profile_img").src = profile.pictureUrl
+					document.getElementById("username").append(profile.displayName)
+					document.getElementById("UID").append(profile.userId)
 				})
-			}
 
+
+			userId = profile.userId;
+
+			firebase.database().ref('User/').on("value", function (snapshot) {
+				var find = "";
+				console.log(userId);
+				snapshot.forEach(function (item) {
+					//console.log(item.val().userID);
+					if (item.val().userID === userId) {
+						console.log("找到了")
+						find = "1";
+
+					}
+				})
+			})
 			login = function () {
 				console.log("改版 !")
 				/*if (find === "1") {
@@ -145,12 +144,6 @@
 					document.getElementById("login_result").innerHTML = "驗證結果:失敗 ";
 				}*/
 			}
-
-
-
-
-
-
 		})
 	</script>
 
