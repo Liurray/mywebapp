@@ -93,11 +93,13 @@
 			await liff.init({
 				liffId: '1655371574-rK5awXB5'
 			})
-			/*if (liff.isLoggedIn()) {
+			if (liff.isLoggedIn()) {
 				getUserProfile()
 			} else {
-				liff.login()
-			}*/
+				liff.login({
+					redirect:"https://sideprojectslide.netlify.app/login/login/index.html"
+				})
+			}
 		}
 		main()
 		async function getUserProfile() {
