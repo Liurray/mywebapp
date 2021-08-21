@@ -119,10 +119,11 @@
 					document.getElementById("profile_img").src = profile.pictureUrl
 					document.getElementById("username").append(profile.displayName)
 					document.getElementById("UID").append(profile.userId)
+					userId = profile.userId;
 				})
 
 
-			userId = profile.userId;
+			
 
 			firebase.database().ref('User/').on("value", function (snapshot) {
 				var find = "";
@@ -137,7 +138,7 @@
 				})
 			})
 			login = function () {
-				console.log("改版 !")
+				alert(`hello`)
 				/*if (find === "1") {
 					document.getElementById("login_result").innerHTML = "驗證結果:成功 ";
 				} else {
