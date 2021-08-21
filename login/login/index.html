@@ -49,7 +49,7 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<!--===============================================================================================-->
-
+	
 	<div id="dropDownSelect1"></div>
 
 	<!--===============================================================================================-->
@@ -84,9 +84,9 @@
 						<img id="profile_img" alt="AVATAR">
 						<!--使用者個人照片-->
 					</span>
-
-
-
+	
+	
+	
 					<span class="login100-form-title p-b-900">
 						<p id='login_result'>驗證結果:</p>
 						<!--驗證結果顯示在這-->
@@ -97,10 +97,10 @@
 							確定登入
 						</button>
 					</div>
-
-
-
-
+	
+	
+	
+	
 					</ul>
 				</form>
 			</div>
@@ -120,46 +120,42 @@
 			}
 		}
 		main()
-
-		function getUserProfile() {
-			const profile = liff.getProfile()
+		async function getUserProfile() {
+			const profile = await liff.getProfile()
 			document.getElementById("profile_img").src = profile.pictureUrl
 			document.getElementById("username").append(profile.displayName)
 			document.getElementById("UID").append(profile.userId)
 			userId = profile.userId;
+		}
 
+		firebase.database().ref('User/').on("value", function (snapshot) {
+			var find = "";
+			console.log(userId);
+			snapshot.forEach(function (item) {
+				//console.log(item.val().userID);
+				if (item.val().userID === userId) {
+					console.log("找到了")
+					find = "1";
 
-			firebase.database().ref('User/').on("value", function (snapshot) {
-				var find = "";
-				console.log(userId);
-				snapshot.forEach(function (item) {
-					//console.log(item.val().userID);
-					if (item.val().userID === userId) {
-						console.log("找到了")
-						find = "1";
-
-					}
-				})
-
-
-
-
-
+				}
 			})
-		}
 
-		login = function () {
-			if (find === "1") {
-				document.getElementById("login_result").innerHTML = "驗證結果:成功 ";
-			} else {
-				document.getElementById("login_result").innerHTML = "驗證結果:失敗 ";
+			 login  =function() {
+				if (find === "1") {
+					document.getElementById("login_result").innerHTML = "驗證結果:成功 ";
+				} else {
+					document.getElementById("login_result").innerHTML = "驗證結果:失敗 ";
+				}
 			}
-		}
+
+
+
+		})
 	</script>
 
 
 
-
+	
 
 
 
