@@ -111,10 +111,14 @@
 		var userId = "";
 		async function main() {
 			await liff.init({
+			
 				liffId: '1655371574-rK5awXB5'
 			})
 			if (liff.isLoggedIn()) {
-				getUserProfile()
+				liff.login().then(function (){
+					getUserProfile()
+				})
+				
 			} else {
 				liff.login()
 			}
