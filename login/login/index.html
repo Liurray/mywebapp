@@ -96,9 +96,7 @@
 			if (liff.isLoggedIn()) {
 				getUserProfile()
 			} else {
-				liff.login({
-					redirect:"https://sideprojectslide.netlify.app/login/login/index.html"
-				})
+				liff.login()
 			}
 		}
 		main()
