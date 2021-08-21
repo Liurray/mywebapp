@@ -70,7 +70,7 @@
 					<p id='UID'></p>
 				</span>
 				<div class="container-login100-form-btn">
-					<button class="login100-form-btn" onclick="login();">
+					<button  onclick="login();">
 						確定登入
 					</button>
 				</div>
@@ -122,7 +122,7 @@
 				}
 			})
 
-			 login  =function() {
+			 login  = async function() {
 				if (find === "1") {
 					document.getElementById("login_result").innerHTML = "驗證結果:成功 ";
 				} else {
