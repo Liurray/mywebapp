@@ -182,11 +182,11 @@ iframe {
 /*------------------------------------------------------------------
 [ Form ]*/
 
-.login100-form {
+.login100 {
   width: 100%;
 }
 
-.login100-form-title {
+.login100-title {
   display: block;
   font-family: Poppins-Bold;
   font-size: 39px;
@@ -195,7 +195,7 @@ iframe {
   text-align: center;
 }
 
-.login100-form-avatar {
+.login100-avatar {
   display: block;
   width: 120px;
   height: 120px;
@@ -204,7 +204,7 @@ iframe {
   margin: 0 auto;
 }
 
-.login100-form-avatar img {
+.login100-avatar img {
   width: 100%;
 }
 
@@ -299,7 +299,7 @@ iframe {
 
 /*------------------------------------------------------------------
 [ Button ]*/
-.container-login100-form-btn {
+.container-login100-btn {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -310,7 +310,7 @@ iframe {
   justify-content: center;
 }
 
-.login100-form-btn {
+.login100-btn {
   font-family: Poppins-Medium;
   font-size: 16px;
   color: #fff;
@@ -342,7 +342,7 @@ iframe {
   transition: all 0.4s;
 }
 
-.login100-form-btn:hover  {
+.login100-btn:hover  {
   background-color: #333333;
   box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
   -moz-box-shadow: 0 10px 30px 0px rgba(51, 51, 51, 0.5);
