@@ -8,18 +8,18 @@
 
 	<!--//////init firebase-->
 	<script src="/firebase-app.js"></script>
-    <script src="/firebase-analytics.js"></script>
-    <script src="/firebase-database.js"></script>
+	<script src="/firebase-analytics.js"></script>
+	<script src="/firebase-database.js"></script>
 	<script>
-        //firebase init app
-        var firebaseConfig = {
-            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
-            authDomain: "forchartjs.firebaseapp.com",
-            databaseURL: "https://forchartjs.firebaseio.com"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-    </script>
+		//firebase init app
+		var firebaseConfig = {
+			apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+			authDomain: "forchartjs.firebaseapp.com",
+			databaseURL: "https://forchartjs.firebaseio.com"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+	</script>
 
 
 
@@ -54,7 +54,7 @@
 <body>
 	<!--主程式-->
 	<script>
-		var  userId = "";
+		var userId = "";
 		async function main() {
 			await liff.init({
 				liffId: '1655371574-rK5awXB5'
@@ -73,26 +73,29 @@
 			document.getElementById("UID").append(profile.userId)
 			userId = profile.userId;
 		}
-		 
+
 		firebase.database().ref('User/').on("value", function (snapshot) {
 			var find = "";
-				console.log(userId);
-					snapshot.forEach(function (item) {
-						//console.log(item.val().userID);
-						if(item.val().userID===userId){
-							console.log("找到了")
-							find = "1";
-							
-						}
-					}).then(function (){
+			console.log(userId);
+			snapshot.forEach(function (item) {
+				//console.log(item.val().userID);
+				if (item.val().userID === userId) {
+					console.log("找到了")
+					find = "1";
 
-						if(find ==="1"){
-						document.getElementById("login_result").innerHTML ="驗證結果:成功 ";
-					}else{
-						document.getElementById("login_result").innerHTML ="驗證結果:失敗 ";
-					}
-					})
-				
+				}
+			})
+
+			function login() {
+				if (find === "1") {
+					document.getElementById("login_result").innerHTML = "驗證結果:成功 ";
+				} else {
+					document.getElementById("login_result").innerHTML = "驗證結果:失敗 ";
+				}
+			}
+
+
+
 		})
 	</script>
 
@@ -117,6 +120,11 @@
 						<!--驗證結果顯示在這-->
 						<p id='UID'></p>
 					</span>
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" onclick="login()">
+							確定登入
+						</button>
+					</div>
 
 
 
