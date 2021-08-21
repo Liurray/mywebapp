@@ -76,33 +76,33 @@
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-85 p-b-20">
-				
-					<span class="login100-title p-b-70" id='username'>
-						<!--使用者名稱顯示在這-->
-					</span>
-					<span class="login100-avatar">
-						<img id="profile_img" alt="AVATAR">
-						<!--使用者個人照片-->
-					</span>
+
+				<span class="login100-title p-b-70" id='username'>
+					<!--使用者名稱顯示在這-->
+				</span>
+				<span class="login100-avatar">
+					<img id="profile_img" alt="AVATAR">
+					<!--使用者個人照片-->
+				</span>
 
 
 
-					<span class="login100-title p-b-900">
-						<p id='login_result'>驗證結果:</p>
-						<!--驗證結果顯示在這-->
-						<p id='UID'></p>
-					</span>
-					<div class="container-login100-btn">
-						<button class="login100-btn" onclick="login()" >
-							確定登入
-						</button>
-					</div>
+				<span class="login100-title p-b-900">
+					<p id='login_result'>驗證結果:</p>
+					<!--驗證結果顯示在這-->
+					<p id='UID'></p>
+				</span>
+				<div class="container-login100-btn">
+					<button class="login100-btn" onclick="login()">
+						確定登入
+					</button>
+				</div>
 
 
 
 
-					</ul>
-				
+				</ul>
+
 			</div>
 		</div>
 	</div>
@@ -110,6 +110,7 @@
 	<script>
 		var userId = "";
 		var liffID = '1655371574-rK5awXB5';
+		var find = '';
 		liff.init({
 			liffId: liffID
 		}).then(function () {
@@ -120,25 +121,21 @@
 					document.getElementById("username").append(profile.displayName)
 					document.getElementById("UID").append(profile.userId)
 					userId = profile.userId;
+					firebase.database().ref('User/').on("value", function (snapshot) {
+
+						console.log(userId);
+						snapshot.forEach(function (item) {
+							//console.log(item.val().userID);
+							if (item.val().userID === userId) {
+								console.log("找到了")
+								find = "1";
+
+							}
+						})
+					})
 				})
-
-
-			
-
-			firebase.database().ref('User/').on("value", function (snapshot) {
-				var find = "";
-				console.log(userId);
-				snapshot.forEach(function (item) {
-					//console.log(item.val().userID);
-					if (item.val().userID === userId) {
-						console.log("找到了")
-						find = "1";
-
-					}
-				})
-			})
 			login = function () {
-				
+
 				if (find === "1") {
 					document.getElementById("login_result").innerHTML = "驗證結果:成功 ";
 				} else {
