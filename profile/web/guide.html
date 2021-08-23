@@ -75,7 +75,7 @@
 			</script>
 		</div>
 		<div class="form-w3l">
-			
+
 			<div class="img">
 				<img id=profile_img src="./images/profile.jpg" alt="image">
 				<h2 id='username' style="color: black;">使用者ID</h2>
@@ -125,24 +125,30 @@
 							document.getElementById("profile_img").src = profile.pictureUrl
 							document.getElementById("username").append(profile.displayName)
 							userId = profile.userId;
+							var guide_name = "";
+							var guide_tel = "";
 							firebase.database().ref('Guide/G123/').on("value", function (snapshot) {
 
 								console.log(userId);
 								snapshot.forEach(function (item) {
 									//console.log(item.val().userID);
 									//如果item.val().login_check=0 則開始通過驗證 可以進行操作
-									$('#myName').attr('placeholder', item.val().guide_name);
-									$('#myphone').attr('placeholder', item.val().tel);
+									guide_name = item.val().guide_name;
+									guide_tel = item.val().tel;
+									console.log(item.val().guide_name);
+									console.log(item.val().guide_name);
 
 								})
 							})
+							$('#myName').attr('placeholder', item.val().guide_name);
+							$('#myphone').attr('placeholder', item.val().tel);
+
 						})
 
 
 
 
-				}
-				else{
+				} else {
 					alert("未獲得權限，請先登錄您的導覽通以便進行功能操作 !");
 					liff.closeWindow();
 				}
