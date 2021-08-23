@@ -102,8 +102,18 @@
 			</div>
 			<script>
 				edit_done = function () {
+					firebase.database().ref('Guide/G123/').update({
+						guide_name: guide_name,
+						tel: guide_tel
+					})
+					alert("你已經成功更新資料 !")
 
-					console.log("設定完成")
+
+
+
+
+
+
 				}
 			</script>
 		</div>
