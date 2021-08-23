@@ -114,6 +114,7 @@
 		liff.init({
 			liffId: liffID
 		}).then(function () {
+			liff.login();
 			liff.getProfile()
 				.then(profile => {
 					document.getElementById("profile_img").src = profile.pictureUrl
