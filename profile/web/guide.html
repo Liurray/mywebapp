@@ -100,27 +100,14 @@
 			<div class="w3l-btn">
 				<input type="submit" id="edit_done" onclick="edit_done()" disabled name="button" value="確認修改" />
 			</div>
-			<script>
-				edit_done = function () {
-					firebase.database().ref('Guide/G123/').update({
-						guide_name: guide_name,
-						tel: guide_tel
-					})
-					alert("你已經成功更新資料 !")
-
-
-
-
-
-
-
-				}
-			</script>
+		
 		</div>
 	</div>
 	<script>
 		//主程式
 		var login_check = "0";
+		var guide_name = "";
+		var guide_tel = "";
 		var userId = ""; //測試資料
 		var liffID = '1655371574-8OKOj1aK';
 		async function main() {
@@ -137,8 +124,7 @@
 							document.getElementById("profile_img").src = profile.pictureUrl
 							document.getElementById("username").append(profile.displayName)
 							userId = profile.userId;
-							var guide_name = "";
-							var guide_tel = "";
+
 							firebase.database().ref('Guide/G123/').on("value", function (snapshot) {
 
 								console.log(userId);
@@ -169,6 +155,20 @@
 			}
 		}
 		main()
+		edit_done = function () {
+					firebase.database().ref('Guide/G123/').update({
+						guide_name: guide_name,
+						tel: guide_tel
+					})
+					alert("你已經成功更新資料 !")
+
+
+
+
+
+
+
+				}
 	</script>
 
 	<footer>
