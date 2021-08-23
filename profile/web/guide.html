@@ -136,13 +136,14 @@
 									//如果item.val().login_check=0 則開始通過驗證 可以進行操作
 									guide_name = item.val().guide_name;
 									guide_tel = item.val().tel;
-									console.log(guide_name);
-									console.log(guide_tel);
+								
 
 								})
 							})
-							$('#myName').attr('placeholder', item.val().guide_name);
-							$('#myphone').attr('placeholder', item.val().tel);
+									console.log(guide_name);
+									console.log(guide_tel);
+							$('#myName').attr('placeholder',guide_name);
+							$('#myphone').attr('placeholder',guide_tel);
 
 						})
 
