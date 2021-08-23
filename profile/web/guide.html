@@ -128,22 +128,20 @@
 							userId = profile.userId;
 							var guide_name = "";
 							var guide_tel = "";
-							firebase.database().ref('Guide/G123').on("value", function (snapshot) {
+							firebase.database().ref('Guide/G123/').on("value", function (snapshot) {
 
 								console.log(userId);
-								
-									//console.log(item.val().userID);
-									//如果item.val().login_check=0 則開始通過驗證 可以進行操作
-									guide_name = snapshot.val().guide_name;
-									guide_tel = snapshot.val().tel;
-								
-
-								
+								guide_name = snapshot.child("name").val();
+								console.log(guide_name);
+								guide_tel = snapshot.child("tel").val();
+								console.log(guide_name);
+										
 							})
-									console.log(guide_name);
-									console.log(guide_tel);
-							$('#myName').attr('placeholder',guide_name);
-							$('#myphone').attr('placeholder',guide_tel);
+						
+							
+							console.log(guide_tel);
+							$('#myName').attr('placeholder', guide_name);
+							$('#myphone').attr('placeholder', guide_tel);
 
 						})
 
