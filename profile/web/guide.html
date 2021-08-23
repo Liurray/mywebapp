@@ -131,11 +131,11 @@
 							firebase.database().ref('Guide/G123').on("value", function (snapshot) {
 
 								console.log(userId);
-								snapshot.forEach(function (item) {
+								
 									//console.log(item.val().userID);
 									//如果item.val().login_check=0 則開始通過驗證 可以進行操作
-									guide_name = item.val().guide_name;
-									guide_tel = item.val().tel;
+									guide_name = snapshot.val().guide_name;
+									guide_tel = snapshot.val().tel;
 								
 
 								})
