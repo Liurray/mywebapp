@@ -131,10 +131,10 @@
 							firebase.database().ref('Guide/G123/').on("value", function (snapshot) {
 
 								console.log(userId);
-								guide_name = snapshot.child("name").val();
+								guide_name = snapshot.child("guide_name").val();
 								console.log(guide_name);
 								guide_tel = snapshot.child("tel").val();
-								console.log(guide_name);
+								console.log(guide_tel);
 										
 							})
 						
