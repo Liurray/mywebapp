@@ -70,6 +70,7 @@
 				function edit_profile() {
 					document.getElementById("myName").disabled = false;
 					document.getElementById("myphone").disabled = false;
+					document.getElementById("edit_done").disabled = false;
 					console.log("edit click !")
 
 				}
@@ -97,7 +98,7 @@
 			</div>
 
 			<div class="w3l-btn">
-				<input type="submit" onclick="edit_done()" disabled name="button" value="確認修改" />
+				<input type="submit" id="edit_done" onclick="edit_done()" disabled name="button" value="確認修改" />
 			</div>
 			<script>
 				edit_done = function () {
