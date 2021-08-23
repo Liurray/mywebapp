@@ -135,13 +135,13 @@
 								console.log(guide_name);
 								guide_tel = snapshot.child("tel").val();
 								console.log(guide_tel);
-										
+								$('#myName').attr('placeholder', guide_name);
+								$('#myphone').attr('placeholder', guide_tel);
 							})
-						
-							
-							console.log(guide_tel);
-							$('#myName').attr('placeholder', guide_name);
-							$('#myphone').attr('placeholder', guide_tel);
+
+
+
+
 
 						})
 
