@@ -110,11 +110,10 @@
 	<script>
 		var userId = "";
 		var liffID = '1655371574-rK5awXB5';
+		async function main(){
+		await 	liff.init({liffId: liffID})
 		var find = '';
-		liff.init({
-			liffId: liffID
-		}).then(function () {
-			liff.login();
+		if( liff.isLoggedIn()){
 			liff.getProfile()
 				.then(profile => {
 					document.getElementById("profile_img").src = profile.pictureUrl
@@ -149,7 +148,12 @@
 					document.getElementById("login_btn").style.display="none";
 				}
 			}
-		})
+		}
+		else{
+			liff.login()
+		}
+	}
+	main()
 	</script>
 
 
