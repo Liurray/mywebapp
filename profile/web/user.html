@@ -210,6 +210,7 @@
 		var guide_name = "";
 		var guide_tel = "";
 		var userId = ""; //測試資料
+		var BreakException = {};
 		var liffID = '1655371574-GnRlDL6R';
 		async function main() {
 			await liff.init({
@@ -232,6 +233,7 @@
 								//console.log(item.val().userID);
 								if (item.val().userID === userId) {
 									console.log("找到了"+login_index);
+									throw BreakException;
 								}
 								else{
 									login_index = login_index + 1;
