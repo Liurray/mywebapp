@@ -1,0 +1,174 @@
+<!--
+	Author: W3layouts
+	Author URL: http://w3layouts.com
+	License: Creative Commons Attribution 3.0 Unported
+	License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<script src="jquery-3.5.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- LIFF v1只能用到2021年4月 https://developers.line.biz/en/docs/liff/versioning-policy/ -->
+	<!-- LIFF v2從2019年10月啟用 https://developers.line.biz/en/docs/liff/developing-liff-apps/#developing-a-liff-app -->
+	<script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
+	<title>使用者資料設定</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords"
+		content="User Profile Form A Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+	<script type="application/x-javascript">
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
+
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!-- Meta tag Keywords -->
+	<!-- css files -->
+	<link href="css/style.css" rel="stylesheet" type="text/css" media="all">
+	<link rel="stylesheet" href="css/font-awesome.css"> <!-- Font-Awesome-Icons-CSS -->
+	<!-- //css files -->
+	<!-- online-fonts -->
+
+	<!--//online-fonts -->
+	<!--//////init firebase-->
+	<script src="/firebase-app.js"></script>
+	<script src="/firebase-analytics.js"></script>
+	<script src="/firebase-database.js"></script>
+	<script>
+		//firebase init app
+		var firebaseConfig = {
+			apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+			authDomain: "forchartjs.firebaseapp.com",
+			databaseURL: "https://forchartjs.firebaseio.com"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+	</script>
+
+
+
+
+
+
+</head>
+
+<body>
+
+	<div class="header">
+		<h1>使用者資料</h1>
+	</div>
+	<div class="w3-main">
+		<div class="edit-btn">
+			<button id="edit" onclick="edit_profile()">編輯</button>
+			<script>
+				function edit_profile() {
+					document.getElementById("myName").disabled = false;
+					document.getElementById("myphone").disabled = false;
+					document.getElementById("edit_done").disabled = false;
+					console.log("edit click !")
+
+				}
+			</script>
+		</div>
+		<div class="form-w3l">
+
+			<div class="img">
+				<img id=profile_img src="./images/profile.jpg" alt="image">
+				<h2 id='username' style="color: black;"></h2>
+			</div>
+
+			<div class="w3l-user">
+				<span><i class="fa fa-user-circle-o w3l-1" aria-hidden="true"></i></span>
+				<input type="text" id="myName" disabled name="name" placeholder="guide name預設"
+					required="" />
+				<div class="clear"></div>
+			</div>
+
+			<div class="w3l-phone">
+				<span><i class="fa fa-mobile w3l-4" aria-hidden="true"></i></span>
+				<input type="text" id="myphone" name="phone" disabled placeholder="電話預設"
+					required="" />
+				<div class="clear"></div>
+			</div>
+
+			<div class="w3l-btn">
+				<input type="submit" id="edit_done" onclick="edit_done()" disabled name="button" value="確認修改" />
+			</div>
+		
+		</div>
+	</div>
+	<script>
+		//主程式
+		var login_check = "0";
+		var guide_name = "";
+		var guide_tel = "";
+		var userId = ""; //測試資料
+		var liffID = '1655371574-8OKOj1aK';
+		async function main() {
+			await liff.init({
+				liffId: liffID
+			})
+
+			if (liff.isLoggedIn()) {
+				if (login_check === "0") {
+					alert("已經成功驗證，點擊右上編輯按鈕即可開始修改資料");
+					//已經驗證登錄 可以修改資料了 !
+					liff.getProfile()
+						.then(profile => {
+							document.getElementById("profile_img").src = profile.pictureUrl
+							document.getElementById("username").append(profile.displayName)
+							userId = profile.userId;
+
+							firebase.database().ref('Guide/G123/').on("value", function (snapshot) {
+
+								console.log(userId);
+								guide_name = snapshot.child("guide_name").val();
+								console.log(guide_name);
+								guide_tel = snapshot.child("tel").val();
+								console.log(guide_tel);
+								$('#myName').attr('placeholder', guide_name);
+								$('#myphone').attr('placeholder', guide_tel);
+							})
+
+
+
+
+
+						})
+
+
+
+
+				} else {
+					alert("未獲得權限，請先登錄您的導覽通以便進行功能操作 !");
+					liff.closeWindow();
+				}
+
+			} else {
+				liff.login()
+			}
+		}
+		main()
+		edit_done = function () {
+					firebase.database().ref('Guide/G123/').update({
+						guide_name: document.getElementById('myName').value,
+						tel: document.getElementById('myphone').value
+					})
+					alert("你已經成功更新資料 !")
+					liff.closeWindow();
+
+				}
+	</script>
+
+	<footer>
+
+	</footer>
+</body>
+
+</html>
