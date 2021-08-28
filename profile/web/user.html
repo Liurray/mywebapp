@@ -232,7 +232,7 @@
 							snapshot.forEach(function (item) {
 								//console.log(item.val().userID);
 								if (item.val().userID === userId) {
-									console.log("找到了"+snapshot.ref().parent().name());
+									console.log("找到了"+item.key);
 									
 								}
 							
