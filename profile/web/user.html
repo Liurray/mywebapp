@@ -290,15 +290,7 @@
 			}
 		}
 		main()
-		edit_done = function () {
-			firebase.database().ref('Guide/G123/').update({
-				guide_name: document.getElementById('myName').value,
-				tel: document.getElementById('myphone').value
-			})
-			alert("你已經成功更新資料 !")
-			liff.closeWindow();
-
-		}
+		
 	</script>
 
 	<footer>
