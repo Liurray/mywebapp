@@ -288,6 +288,9 @@
 								
 							})
 							alert("你已經成功更新資料 !")
+							firebase.database().ref('User/').update({
+								user_conut:user_conut+1
+							})
 							liff.closeWindow();
 
 						}
