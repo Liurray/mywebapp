@@ -272,7 +272,7 @@
 		}
 		main()
 		edit_done = function () {
-			firebase.database().ref('User/user_conut').on("value", function (snapshot) {
+			firebase.database().ref('User/user_count').on("value", function (snapshot) {
 				user_conut = snapshot.val();
 			})
 			console.log(user_conut)
