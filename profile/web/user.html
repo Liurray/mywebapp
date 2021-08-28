@@ -205,7 +205,7 @@
 	</div>
 	<script>
 		//主程式
-		var login_check = "0";
+		var login_index = "0";
 		var user_conut = "";
 		var guide_name = "";
 		var guide_tel = "";
@@ -231,23 +231,12 @@
 							snapshot.forEach(function (item) {
 								//console.log(item.val().userID);
 								if (item.val().userID === userId) {
-									console.log("找到了")
-									login_check = "1";
-
+									console.log("找到了"+login_index);
+								}
+								else{
+									login_index = login_index + 1;
 								}
 							})
-						}).then(function () {
-							if (login_check === "1") {
-								alert("已經成功驗證，點擊右上編輯按鈕即可開始修改資料");
-								//已經驗證登錄 可以修改資料了 !
-								firebase.database().ref('User/user_conut').on("value", function (snapshot) {
-									user_conut = snapshot.val();
-								})
-
-							} else {
-								alert("未獲得權限，請先建立一份您的個人資料 !");
-
-							}
 						})
 
 
@@ -276,7 +265,7 @@
 				user_conut = snapshot.val();
 			})
 			console.log(user_conut)
-			firebase.database().ref('User/' + user_conut).update({
+			firebase.database().ref('User/' + login_index).update({
 				ICD_tag: document.getElementById('ICD').value,
 				Tour_ID: "",
 				age: document.getElementById('myage').value,
@@ -295,9 +284,7 @@
 				firebase.database().ref('User/').update({user_count:user_conut})
 				alert("你已經成功更新資料 !")
 			})
-			
-			
-			
+
 			liff.closeWindow();
 
 		}
