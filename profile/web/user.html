@@ -250,26 +250,7 @@
 							}
 						})
 
-						edit_done = function () {
-							firebase.database().ref('User/'+user_conut).update({
-								ICD_tag:document.getElementById('ICD').value,
-								Tour_ID:"",
-								age: document.getElementById('myage').value,
-								city:document.getElementById('city').value,
-								education:document.getElementById('study').value,
-								goal:document.getElementById('goal').value,
-								guide_ID:"",
-								lan:document.getElementById('lan').value,
-								name:document.getElementById('myName').value,
-								occupation:document.getElementById('occ').value,
-								userID:userId
-								
-								
-							})
-							alert("你已經成功更新資料 !")
-							liff.closeWindow();
-
-						}
+						
 
 
 
@@ -290,6 +271,26 @@
 			}
 		}
 		main()
+		edit_done = function () {
+							firebase.database().ref('User/'+user_conut).update({
+								ICD_tag:document.getElementById('ICD').value,
+								Tour_ID:"",
+								age: document.getElementById('myage').value,
+								city:document.getElementById('city').value,
+								education:document.getElementById('study').value,
+								goal:document.getElementById('goal').value,
+								guide_ID:"",
+								lan:document.getElementById('lan').value,
+								name:document.getElementById('myName').value,
+								occupation:document.getElementById('occ').value,
+								userID:userId
+								
+								
+							})
+							alert("你已經成功更新資料 !")
+							liff.closeWindow();
+
+						}
 		
 	</script>
 
