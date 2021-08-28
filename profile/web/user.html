@@ -170,7 +170,7 @@
 			<!--職業-->
 			<div class="w3l-user">
 				<span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
-				<select name="occ"  id="occ"style="width: 150px;">
+				<select name="occ" id="occ" style="width: 150px;">
 					<option>請選擇你職業</option>
 					<option>學生</option>
 					<option>軍警</option>
@@ -206,7 +206,7 @@
 	<script>
 		//主程式
 		var login_check = "0";
-		var user_conut ="";
+		var user_conut = "";
 		var guide_name = "";
 		var guide_tel = "";
 		var userId = ""; //測試資料
@@ -240,17 +240,17 @@
 							if (login_check === "1") {
 								alert("已經成功驗證，點擊右上編輯按鈕即可開始修改資料");
 								//已經驗證登錄 可以修改資料了 !
-								firebase.database().ref('User/user_conut').on("value", function (snapshot){
+								firebase.database().ref('User/user_conut').on("value", function (snapshot) {
 									user_conut = snapshot.val();
 								})
-								
+
 							} else {
 								alert("未獲得權限，請先建立一份您的個人資料 !");
 
 							}
 						})
 
-						
+
 
 
 
@@ -272,28 +272,31 @@
 		}
 		main()
 		edit_done = function () {
-							firebase.database().ref('User/'+user_conut).update({
-								ICD_tag:document.getElementById('ICD').value,
-								Tour_ID:"",
-								age: document.getElementById('myage').value,
-								city:document.getElementById('city').value,
-								education:document.getElementById('study').value,
-								goal:document.getElementById('goal').value,
-								guide_ID:"",
-								lan:document.getElementById('lan').value,
-								name:document.getElementById('myName').value,
-								occupation:document.getElementById('occ').value,
-								userID:userId
-								
-								
-							})
-							user_count =user_conut+1;
-							alert("你已經成功更新資料 !")
-							firebase.database().ref('User/user_count').update(user_conut)
-							liff.closeWindow();
+			firebase.database().ref('User/user_conut').on("value", function (snapshot) {
+				user_conut = snapshot.val();
+			})
+			console.log(user_conut)
+			firebase.database().ref('User/' + user_conut).update({
+				ICD_tag: document.getElementById('ICD').value,
+				Tour_ID: "",
+				age: document.getElementById('myage').value,
+				city: document.getElementById('city').value,
+				education: document.getElementById('study').value,
+				goal: document.getElementById('goal').value,
+				guide_ID: "",
+				lan: document.getElementById('lan').value,
+				name: document.getElementById('myName').value,
+				occupation: document.getElementById('occ').value,
+				userID: userId
 
-						}
-		
+
+			})
+			user_count = user_conut + 1;
+			alert("你已經成功更新資料 !")
+			firebase.database().ref('User/user_count').update(user_conut)
+			liff.closeWindow();
+
+		}
 	</script>
 
 	<footer>
