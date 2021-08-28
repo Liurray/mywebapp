@@ -99,7 +99,7 @@
 			<!--城市(選)-->
 			<div class="w3l-user">
 				<span><i class="fa fa-home w3l-1" aria-hidden="true"></i></span>
-				<select name="fa-graduation-cap" style="width: 150px;">
+				<select name="city" id="city" style="width: 150px;">
 					<option>請選擇所在城市</option>
 					<option>台北市</option>
 					<option>新北市</option>
@@ -123,8 +123,8 @@
 					<option>基隆市</option>
 					<option>新竹市</option>
 					<option>嘉義市</option>
-				
-					
+
+
 				</select>
 				<div class="clear"></div>
 			</div>
@@ -132,13 +132,13 @@
 			<!--學歷-->
 			<div class="w3l-user">
 				<span><i class="fa fa-graduation-cap w3l-1" aria-hidden="true"></i></span>
-				<select name="fa-graduation-cap" style="width: 150px;">
+				<select name="study" id="study" style="width: 150px;">
 					<option>請選擇你學歷</option>
 					<option>國小</option>
 					<option>國高中</option>
 					<option>大專學院</option>
 					<option>研究所以上</option>
-			
+
 				</select>
 				<div class="clear"></div>
 			</div>
@@ -146,11 +146,11 @@
 			<!--旅行目標(選)-->
 			<div class="w3l-user">
 				<span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i></span>
-				<select name="fa-graduation-cap" style="width: 150px;">
+				<select name="goal" id="goal" style="width: 150px;">
 					<option>請選擇你旅行目的</option>
 					<option>休閒觀光</option>
 					<option>學習</option>
-				
+
 				</select>
 				<div class="clear"></div>
 			</div>
@@ -158,11 +158,11 @@
 			<!--語言-->
 			<div class="w3l-user">
 				<span><i class="fa fa-language w3l-1" aria-hidden="true"></i></span>
-				<select name="fa-graduation-cap" style="width: 150px;">
+				<select name="lan" id="lan" style="width: 150px;">
 					<option>請選擇你語言</option>
 					<option>英文</option>
 					<option>中文</option>
-				
+
 				</select>
 				<div class="clear"></div>
 			</div>
@@ -170,7 +170,7 @@
 			<!--職業-->
 			<div class="w3l-user">
 				<span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
-				<select name="fa-graduation-cap" style="width: 150px;">
+				<select name="occ"  id="occ"style="width: 150px;">
 					<option>請選擇你職業</option>
 					<option>學生</option>
 					<option>軍警</option>
@@ -189,11 +189,11 @@
 			<!--是否有身心障礙-->
 			<div class="w3l-user">
 				<span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
-				<select name="fa-graduation-cap" style="width: 150px;">
+				<select name="ICD" id="ICD" style="width: 150px;">
 					<option>是否有身心障礙疾病</option>
 					<option>是</option>
 					<option>否</option>
-					
+
 				</select>
 				<div class="clear"></div>
 			</div>
@@ -206,6 +206,7 @@
 	<script>
 		//主程式
 		var login_check = "0";
+		var user_conut ="";
 		var guide_name = "";
 		var guide_tel = "";
 		var userId = ""; //測試資料
@@ -216,39 +217,73 @@
 			})
 
 			if (liff.isLoggedIn()) {
-				if (login_check === "0") {
-					alert("已經成功驗證，點擊右上編輯按鈕即可開始修改資料");
-					//已經驗證登錄 可以修改資料了 !
-					liff.getProfile()
-						.then(profile => {
-							document.getElementById("profile_img").src = profile.pictureUrl
-							document.getElementById("username").append(profile.displayName)
-							userId = profile.userId;
 
-							firebase.database().ref('Guide/G123/').on("value", function (snapshot) {
+				liff.getProfile()
+					.then(profile => {
+						document.getElementById("profile_img").src = profile.pictureUrl
+						document.getElementById("username").append(profile.displayName)
+						userId = profile.userId;
 
-								console.log(userId);
-								guide_name = snapshot.child("guide_name").val();
-								console.log(guide_name);
-								guide_tel = snapshot.child("tel").val();
-								console.log(guide_tel);
-								$('#myName').attr('placeholder', guide_name);
-								$('#myphone').attr('placeholder', guide_tel);
+						//比對資料庫做驗證
+						firebase.database().ref('User/').on("value", function (snapshot) {
+
+							console.log(userId);
+							snapshot.forEach(function (item) {
+								//console.log(item.val().userID);
+								if (item.val().userID === userId) {
+									console.log("找到了")
+									login_check = "1";
+
+								}
 							})
+						}).then(function () {
+							if (login_check === "1") {
+								alert("已經成功驗證，點擊右上編輯按鈕即可開始修改資料");
+								//已經驗證登錄 可以修改資料了 !
+								firebase.database().ref('User/user_conut').on("value", function (snapshot){
+									user_conut = snapshot.val();
+								})
+								
+							} else {
+								alert("未獲得權限，請先建立一份您的個人資料 !");
 
-
-
-
-
+							}
 						})
 
+						edit_done = function () {
+							firebase.database().ref('User/'+user_conut).update({
+								ICD_tag:document.getElementById('ICD').value,
+								Tour_ID:"",
+								age: document.getElementById('myage').value,
+								city:document.getElementById('city').value,
+								education:document.getElementById('study').value,
+								goal:document.getElementById('goal').value,
+								guide_ID:"",
+								lan:document.getElementById('lan').value,
+								name:document.getElementById('myName').value,
+								occupation:document.getElementById('occ').value,
+								userID:userId
+								
+								
+							})
+							alert("你已經成功更新資料 !")
+							liff.closeWindow();
+
+						}
 
 
 
-				} else {
-					alert("未獲得權限，請先登錄您的導覽通以便進行功能操作 !");
-					liff.closeWindow();
-				}
+
+
+
+
+
+
+
+					})
+
+
+
 
 			} else {
 				liff.login()
