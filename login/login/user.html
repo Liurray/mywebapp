@@ -283,7 +283,10 @@
 							snapshot) {
 							if (snapshot.exists()) {
 								console.log('這筆exist');
-								alert("您已經成功驗證 !")
+								alert("您已經成功驗證 !").then(function(){
+									liff.closeWindow()
+								})
+								
 							} else {
 								console.log('not exist');
 								alert("資料庫未找到您的資料，請先申請加入導覽通")
