@@ -73,7 +73,7 @@
 
 
 <body>
-	<div class="limiter" id="login_page" style="display: none;">
+	<div class="limiter" id="login_page" style="display: block;">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-85 p-b-20">
 
@@ -96,6 +96,9 @@
 					<button class="login100-btn" id='login_btn' style="display: none;" onclick="login()">
 						確定登入
 					</button>
+					<button class="login100-btn" id='sign_btn' style="display: none;" onclick="signup()">
+						登入申請
+					</button>
 				</div>
 
 
@@ -106,7 +109,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container" id = "profile" style="display: block;margin: auto; width:50px ;">
+	<div class="container" id = "profile" style="display: none;margin: auto; width:50px ;">
 		<div class="header" style="width: 600px;">
 			<h1>使用者資料</h1>
 		</div>
@@ -270,6 +273,7 @@
 
 				function show_btn() {
 					document.getElementById("login_btn").style.display = "block";
+					document.getElementById("signup_btn").style.display = "block";
 				}
 
 				function close_window() {
@@ -300,17 +304,13 @@
 						
 							document.getElementById("login_result").innerHTML =
 								`<font size="6" color="#ff0000">失敗 ! 請您先加入導覽通</font>`;
-						
-						
-					
-						
-						document.getElementById("login_page").style.display = "none";
 
-						document.getElementById("profile").style.display = "block";
-					
-
-					
 					}
+
+				}
+				signup = function(){
+					document.getElementById("login_page").style.display ="none";
+					document.getElementById("profile").style.display ="block";
 
 				}
 			} else {
