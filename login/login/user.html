@@ -73,7 +73,7 @@
 
 
 <body>
-	<div class="limiter" style="display: block;">
+	<div class="limiter" id="login_page" style="display: block;">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-85 p-b-20">
 
@@ -275,7 +275,7 @@
 								//console.log(item.val().userID);
 								if (item.val().userID === userId) {
 									console.log("找到了")
-									find = "1";
+									find = "0";
 
 								}
 							})
@@ -310,19 +310,19 @@
 						close_window();
 
 					} else {
-						var clock = 3;
+					
 
-						function reciprocal() {
-							document.getElementById("login_result").innerHTML =
-								`<font size="6" color="#ff0000">失敗 ! 請確認您是否有加入導覽通` +
-								clock + `秒後將關閉此畫面</font>`;
-							setTimeout(reciprocal, 1000);
-							clock -= 1;
-						}
-						reciprocal();
 						
-						document.getElementById("login_btn").style.display = "none";
-						close_window();
+							document.getElementById("login_result").innerHTML =
+								`<font size="6" color="#ff0000">失敗 ! 請您先加入導覽通</font>`;
+						
+						
+					
+						
+						document.getElementById("login_page").style.display = "none";
+
+						document.getElementById("profile").style.display = "block";
+					
 					}
 
 				}
