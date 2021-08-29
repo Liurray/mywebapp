@@ -60,7 +60,7 @@
 
 <body>
 	
-	<div id = "profile" style="display: none;">
+	<div id = "profile" ">
 	<div class="header">
 		<h1>使用者資料</h1>
 	</div>
@@ -208,11 +208,7 @@
 	</div>
 	<script>
 
-		/*主程式
-	
-		var user_conut = "";
-		var guide_name = "";
-		var guide_tel = "";
+		//主程式
 		var userId = ""; //測試資料
 		
 		var liffID = '1655371574-GnRlDL6R';
@@ -230,17 +226,19 @@
 						userId = profile.userId;
 
 						//比對資料庫做驗證
-						firebase.database().ref('User/').on("value", function (snapshot) {
+						firebase.database().ref("User/" + userId).once('value', function (
+							snapshot) {
+							if (snapshot.exists()) {
+								console.log('這筆exist');
+								alert("資料已登錄 可以編輯您的資料 !")
+							} else {
+								console.log('not exist');
+								alert("資料庫未找到您的資料，請先申請加入導覽通").then(function(){
+									liff.closeWindow()
+								})
+							}
 
-							console.log(userId);
-							snapshot.forEach(function (item) {
-								//console.log(item.val().userID);
-								if (item.val().userID === userId) {
-									console.log("找到了"+item.key);
-									
-								}
-							
-							})
+
 						})
 
 
@@ -265,11 +263,7 @@
 		}
 		main()
 		edit_done = function () {
-			firebase.database().ref('User/user_count').on("value", function (snapshot) {
-				user_conut = snapshot.val();
-			})
-			console.log(user_conut)
-			firebase.database().ref('User/' +user_conut).update({
+			firebase.database().ref('User/' +userId).update({
 				ICD_tag: document.getElementById('ICD').value,
 				Tour_ID: "",
 				age: document.getElementById('myage').value,
@@ -284,14 +278,12 @@
 
 
 			}).then(function(){	
-				user_conut = user_conut + 1;
-				firebase.database().ref('User/').update({user_count:user_conut})
 				alert("你已經成功更新資料 !")
 			})
 
 			liff.closeWindow();
 
-		}*/
+		}
 	</script>
 
 	<footer>
