@@ -260,16 +260,7 @@
 						document.getElementById("username").append(profile.displayName)
 
 						userId = profile.userId;
-						firebase.database().ref("User/" + userId).once('value', function (
-							snapshot) {
-							if (snapshot.exists()) {
-								console.log('這筆exist');
-							} else {
-								console.log('not exist');
-							}
-
-
-						})
+					
 
 
 					})
@@ -288,7 +279,18 @@
 					}, 3000);
 				}
 				login = function () {
+					firebase.database().ref("User/" + userId).once('value', function (
+							snapshot) {
+							if (snapshot.exists()) {
+								console.log('這筆exist');
+								alert("您已經成功驗證 !")
+							} else {
+								console.log('not exist');
+								alert("資料庫未找到您的資料，請先申請加入導覽通")
+							}
 
+
+						})
 
 
 
@@ -341,9 +343,4 @@
 
 </body>
 
-</html>.then(function (){
-
-console.log(exsit)
-})
-
-}
+</html>
