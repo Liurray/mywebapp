@@ -48,8 +48,6 @@
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<link href="css/style.css" rel="stylesheet" type="text/css" media="all">
-	<link rel="stylesheet" href="css/font-awesome.css"> <!-- Font-Awesome-Icons-CSS -->
 	<!--===============================================================================================-->
 
 	<div id="dropDownSelect1"></div>
@@ -75,7 +73,7 @@
 
 
 <body>
-	<div class="limiter" id="login_page" style="display: block;">
+	<div class="limiter" id="login_page" style="display: none;">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-85 p-b-20">
 
@@ -108,46 +106,31 @@
 			</div>
 		</div>
 	</div>
-	<div id = "profile" style="display: none;">
-		<div class="header">
+	<div class="container" id = "profile" style="display: block;margin: auto; width:50px ;">
+		<div class="header" style="width: 600px;">
 			<h1>使用者資料</h1>
 		</div>
 	
-		<div class="w3-main">
-			<div class="edit-btn">
-				<button id="edit" onclick="edit_profile()">編輯</button>
-				<script>
-					function edit_profile() {
-						document.getElementById("myName").disabled = false;
-						document.getElementById("myage").disabled = false;
-						document.getElementById("edit_done").disabled = false;
-						//console.log("edit click !")
 	
-					}
-				</script>
-			</div>
-			<div class="form-w3l">
+			<div >
 	
-				<div class="img">
-					<img id=profile_img src="./images/profile.jpg" alt="image">
-					<h2 id='username' style="color: black;"></h2>
-				</div>
+				
 				<!--姓名-->
-				<div class="w3l-user">
+				<div >
 					<span><i class="fa fa-user-circle-o w3l-1" aria-hidden="true"></i></span>
-					<input type="text" id="myName" disabled name="name" placeholder="姓名預設" required="" />
+					<input type="text" id="myName"  name="name" placeholder="姓名預設" required="" />
 					<div class="clear"></div>
 				</div>
 	
 				<!--年齡-->
-				<div class="w3l-user">
+				<div >
 					<span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i></span>
-					<input type="text" id="myage" disabled name="age" placeholder="年齡預設" required="" />
+					<input type="text" id="myage"  name="age" placeholder="年齡預設" required="" />
 					<div class="clear"></div>
 				</div>
 	
 				<!--城市(選)-->
-				<div class="w3l-user">
+				<div >
 					<span><i class="fa fa-home w3l-1" aria-hidden="true"></i></span>
 					<select name="city" id="city" style="width: 150px;">
 						<option>請選擇所在城市</option>
@@ -180,7 +163,7 @@
 				</div>
 	
 				<!--學歷-->
-				<div class="w3l-user">
+				<div >
 					<span><i class="fa fa-graduation-cap w3l-1" aria-hidden="true"></i></span>
 					<select name="study" id="study" style="width: 150px;">
 						<option>請選擇你學歷</option>
@@ -190,11 +173,11 @@
 						<option>研究所以上</option>
 	
 					</select>
-					<div class="clear"></div>
+					
 				</div>
 	
 				<!--旅行目標(選)-->
-				<div class="w3l-user">
+				<div >
 					<span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i></span>
 					<select name="goal" id="goal" style="width: 150px;">
 						<option>請選擇你旅行目的</option>
@@ -206,7 +189,7 @@
 				</div>
 	
 				<!--語言-->
-				<div class="w3l-user">
+				<div >
 					<span><i class="fa fa-language w3l-1" aria-hidden="true"></i></span>
 					<select name="lan" id="lan" style="width: 150px;">
 						<option>請選擇你語言</option>
@@ -214,11 +197,11 @@
 						<option>中文</option>
 	
 					</select>
-					<div class="clear"></div>
+					
 				</div>
 	
 				<!--職業-->
-				<div class="w3l-user">
+				<div>
 					<span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
 					<select name="occ" id="occ" style="width: 150px;">
 						<option>請選擇你職業</option>
@@ -234,10 +217,10 @@
 						<option>家管</option>
 						<option>退休</option>
 					</select>
-					<div class="clear"></div>
+				
 				</div>
 				<!--是否有身心障礙-->
-				<div class="w3l-user">
+				<div >
 					<span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
 					<select name="ICD" id="ICD" style="width: 150px;">
 						<option>是否有身心障礙疾病</option>
@@ -245,10 +228,10 @@
 						<option>否</option>
 	
 					</select>
-					<div class="clear"></div>
+				
 				</div>
-				<div class="w3l-btn">
-					<input type="submit" id="edit_done" onclick="edit_done()" disabled name="button" value="確認修改" />
+				<div >
+					<input type="submit" id="edit_done" onclick="edit_done()" disabled name="button" value="確任送出" />
 				</div>
 	
 			</div>
@@ -324,6 +307,8 @@
 						document.getElementById("login_page").style.display = "none";
 
 						document.getElementById("profile").style.display = "block";
+					
+
 					
 					}
 
