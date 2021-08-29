@@ -112,7 +112,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container" id="profile" style="display: none;margin: auto; width:50px ;">
+		<div class="container" id="sign_page" style="display: none;margin: auto; width:50px ;">
 			<div class="header" style="width: 600px;">
 				<h1>使用者資料</h1>
 			</div>
@@ -257,7 +257,7 @@
 					.then(profile => {
 						document.getElementById("profile_img").src = profile.pictureUrl
 						document.getElementById("username").append(profile.displayName)
-						document.getElementById("UID").append(profile.userId)
+						
 						userId = profile.userId;
 						firebase.database().ref('User/').on("value", function (snapshot) {
 
@@ -312,8 +312,9 @@
 
 				}
 				signup = function () {
+					console.log("申請資料跳轉")
 					document.getElementById("login_page").style.display = "none";
-					document.getElementById("profile").style.display = "block";
+					document.getElementById("sign_page").style.display = "block";
 
 				}
 			} else {
