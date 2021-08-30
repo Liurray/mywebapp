@@ -31,13 +31,16 @@
       var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
       // if (gsheetClass.outerHTML) {
       for (var r = 0; r < rows; r++) {
-        if (data.getFormattedValue(r, 0) === '@') str += '[{';
-        console.log("開頭")
-
-
-
-
-        str += `"id": "` + data.getFormattedValue(r, 1) + `",
+        if (data.getFormattedValue(r, 0) === '@') 
+        {
+          str += '[{';
+        }
+        if (data.getFormattedValue(r, 0) === '#'){
+          str = str.substring(0, str.length - 1)
+        }
+        else{
+          str +='{'
+          str += `"id": "` + data.getFormattedValue(r, 1) + `",
                                       "title" : "` + data.getFormattedValue(r, 2) + `",
                                       "desctiption" : "` + data.getFormattedValue(r, 3) + `",
                                       "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
@@ -45,12 +48,10 @@
                                       "bearing": -8.9,
                         							"zoom": 17.68
                                       },`
-        if (data.getFormattedValue(r, 0) === '#')
-          str = str.substring(0, str.length - 1)
-        str += '}]';
-
+        }
+        
       }
-
+      str += '}]';
 
 
       console.log(str);
