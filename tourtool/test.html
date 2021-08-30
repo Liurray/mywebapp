@@ -32,13 +32,9 @@
       // if (gsheetClass.outerHTML) {
       for (var r = 0; r < rows; r++) {
         if (data.getFormattedValue(r, 0) === '@') 
-        {
           str += '[{';
-        }
-        else if (data.getFormattedValue(r, 0) === '#'){
+        if (data.getFormattedValue(r, 0) === '#'){
           str = str.substring(0, str.length - 1) +'}]'
-        }
-        else{
           str +='{'
           str += `"id": "` + data.getFormattedValue(r, 1) + `",
                                       "title" : "` + data.getFormattedValue(r, 2) + `",
