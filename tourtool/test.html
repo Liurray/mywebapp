@@ -35,8 +35,8 @@
         {
           str += '[{';
         }
-        if (data.getFormattedValue(r, 0) === '#'){
-          str = str.substring(0, str.length - 1)
+        else if (data.getFormattedValue(r, 0) === '#'){
+          str = str.substring(0, str.length - 1) +'}]'
         }
         else{
           str +='{'
@@ -51,7 +51,7 @@
         }
         
       }
-      str += '}]';
+    
 
 
       console.log(str);
