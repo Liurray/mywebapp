@@ -46,23 +46,19 @@
                         							"zoom": 17.68
                                       },`
         if (data.getFormattedValue(r, 0) === '#')
-          str = str.substring(0, str.length - 1) +'}]'
-      
+          str = str.substring(0, str.length - 1) + '}]'
+
 
       }
 
 
 
       console.log(str);
+      var v = JSON.parse(str)
+      console.log(v)
+
 
       
-    // gsheetClass.outerHTML = str;
-
-
-
-    //}
-
-    }
   </script>
 
 </head>
