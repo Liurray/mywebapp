@@ -37,15 +37,17 @@
 
 
 
-        str += `'id': '` + data.getFormattedValue(r, 1) + `',
-                                      'title' : '` + data.getFormattedValue(r, 2) + `',
-                                      'desctiption' : '` + data.getFormattedValue(r, 3) + `',
-                                      'camera': {` + ` center: [` + data.getFormattedValue(r, 4) + `,` + data
+        str += `"id": "` + data.getFormattedValue(r, 1) + `",
+                                      "title" : "` + data.getFormattedValue(r, 2) + `",
+                                      "desctiption' : "` + data.getFormattedValue(r, 3) + `",
+                                      "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
           .getFormattedValue(r, 5) + `],
-                                      bearing: -8.9,
-                        							zoom: 17.68
+                                      "bearing": -8.9,
+                        							"zoom": 17.68
                                       },`
-        if (data.getFormattedValue(r, 0) === '#') str += '}';
+        if (data.getFormattedValue(r, 0) === '#') 
+        str = str.substring(0,str.length-1)
+        str += '}';
 
       }
 
