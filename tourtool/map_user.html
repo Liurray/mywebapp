@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>您的導覽地圖</title>
+     <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
@@ -399,39 +402,74 @@
                 }
             };
            
-            //地點簡介
-            var locations = [{
-                    'id': '2',
-                    'title': '社管大樓',
-                    'description': "社管大樓在這囉",
-                    'camera': {
-                        center: [120.67318466877342, 24.12098924526695],
-                        zoom: 16.21,
-                        pitch: 50
+            //地點簡介  讀取地圖簡介的試算表資料
+            console.log("讀取資料開始")
+            
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+            var locations = `[{
+                    "id": "2",
+                    "title": "社管大樓",
+                    "description": "社管大樓在這囉",
+                    "camera": {
+                        "center": [120.67318466877342, 24.12098924526695],
+                        "bearing": -8.9,
+                        "zoom": 17.68
                     }
                 },
                 {
-                    'id': '3',
-                    'title': '中興湖',
-                    'description': "中興湖有很多鵝",
-                    'camera': {
-                        center: [120.674204, 24.120940],
-                        bearing: -8.9,
-                        zoom: 17.68
+                    "id": "3",
+                    "title": "中興湖",
+                    "description": "中興湖有很多鵝",
+                    "camera": {
+                        "center": [120.674204, 24.120940],
+                        "bearing": -8.9,
+                        "zoom": 17.68
                     }
                 },
                 {
-                    'id': '1',
-                    'title': '綜合大樓',
-                    'description': '綜合大樓啦',
-                    'camera': {
-                        center: [120.67262676928165, 24.121792190234714],
-                        bearing: 25.3,
-                        zoom: 16.5
+                    "id": "1",
+                    "title": "綜合大樓",
+                    "description": "綜合大樓啦",
+                    "camera": {
+                        "center": [120.67262676928165, 24.121792190234714],
+                        "bearing": -8.9,
+                        "zoom": 17.68
                     }
                 }
-            ];
-
+            ]`;
+                var map_description = JSON.parse(locations)
 
 
 
@@ -453,13 +491,13 @@
             }
 
             function playback(index) {
-                title.textContent = locations[index].title;
-                description.textContent = locations[index].description;
+                title.textContent = map_description[index].title;
+                description.textContent = map_description[index].description;
                 var timeout;
-                highlightBorough(locations[index].id ? locations[index].id : '');
+                highlightBorough(map_description[index].id ? map_description[index].id : '');
 
                 // Animate the map position based on camera properties
-                map.flyTo(locations[index].camera);
+                map.flyTo(map_description[index].camera);
 
                 map.once('moveend', function () {
                     if (auto_play == 0) {
@@ -467,7 +505,7 @@
                         // Duration the slide is on screen after interaction
                         timeout = window.setTimeout(function () {
                             // Increment index
-                            index = index + 1 === locations.length ? 0 : index + 1;
+                            index = index + 1 === map_description.length ? 0 : index + 1;
                             playback(index);
                         }, 5000); // After callback, show the location for 3 seconds.
 
@@ -481,8 +519,8 @@
             }
 
             // Display the last title/description first
-            title.textContent = locations[locations.length - 1].title;
-            description.textContent = locations[locations.length - 1].description;
+            title.textContent = map_description[map_description.length - 1].title;
+            description.textContent = map_description[map_description.length - 1].description;
 
 
 
