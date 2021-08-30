@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>您的導覽地圖</title>
-     <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
-  <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
 
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
@@ -189,7 +189,7 @@
             }
             var lng;
             var lat;
-//取得你目前的位置
+            //取得你目前的位置
             function success(position) {
                 lat = position.coords.latitude;
                 lng = position.coords.longitude;
@@ -197,7 +197,7 @@
             }
 
 
-//初始化 mapbox地圖物件
+            //初始化 mapbox地圖物件
             var marker;
             mapboxgl.accessToken =
                 'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
@@ -238,7 +238,7 @@
                             ],
                             "type": "Point"
                         },
-                     
+
                     },
                     {
                         "type": "Feature",
@@ -252,7 +252,7 @@
                             ],
                             "type": "Point"
                         },
-                       
+
                     },
                     {
                         "type": "Feature",
@@ -266,7 +266,7 @@
                             ],
                             "type": "Point"
                         },
-                       
+
                     },
                     {
                         "type": "Feature",
@@ -280,7 +280,7 @@
                             ],
                             "type": "Point"
                         },
-                       
+
                     },
                     {
                         "type": "Feature",
@@ -294,7 +294,7 @@
                             ],
                             "type": "Point"
                         },
-                       
+
                     },
                     {
                         "type": "Feature",
@@ -308,7 +308,7 @@
                             ],
                             "type": "Point"
                         },
-                       
+
                     },
                     {
                         "type": "Feature",
@@ -322,11 +322,11 @@
                             ],
                             "type": "Point"
                         },
-                   
+
                     }
                 ],
                 "type": "FeatureCollection"
-             
+
             };
             var exampleGroup = document.getElementById('example-group');
 
@@ -401,12 +401,60 @@
                     return true;
                 }
             };
-           
+
             //地點簡介  讀取地圖簡介的試算表資料
             console.log("讀取資料開始")
-            
-            
-            
+            google.charts.load('current', {
+                packages: ['corechart', 'bar']
+            });
+            google.charts.setOnLoadCallback(init);
+            var url =
+                'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
+                'map_ Introduction2';
+            google.charts.setOnLoadCallback(init);
+            var target_gsheet_class_once = 'gsheet';
+
+            function init() {
+                // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+
+                var query = new google.visualization.Query(url);
+                query.setQuery('select *');
+                query.send(processSheetsData);
+            }
+
+            function processSheetsData(response) {
+                var data = response.getDataTable();
+                var columns = data.getNumberOfColumns();
+                var rows = data.getNumberOfRows();
+                var map_locations = "";
+                var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
+                // if (gsheetClass.outerHTML) {
+                for (var r = 0; r < rows; r++) {
+                    if (data.getFormattedValue(r, 0) === '@') map_locations += '[{';
+                    console.log("開頭")
+
+
+
+
+                    map_locations += `"id": "` + data.getFormattedValue(r, 1) + `",
+                                      "title" : "` + data.getFormattedValue(r, 2) + `",
+                                      "desctiption" : "` + data.getFormattedValue(r, 3) + `",
+                                      "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
+                        .getFormattedValue(r, 5) + `],
+                                      "bearing": -8.9,
+                        							"zoom": 17.68
+                                      }},{`
+                    if (data.getFormattedValue(r, 0) === '#')
+                        map_locations = map_locations.substring(0, map_locations.length - 2) + ']'
+
+
+                }
+
+
+
+                console.log(map_locations);
+                var v = JSON.parse(map_locations)
+                console.log(v)
 
 
 
@@ -432,12 +480,14 @@
 
 
 
+            }
 
 
 
 
 
-            
+
+
             var locations = `[{
                     "id": "2",
                     "title": "社管大樓",
@@ -469,7 +519,7 @@
                     }
                 }
             ]`;
-                var map_description = JSON.parse(locations)
+            var map_description = JSON.parse(locations)
 
 
 
@@ -718,7 +768,7 @@
                         }
 
                     });
-                
+
 
                 map.addSource('points', {
                     'type': 'geojson',
@@ -729,7 +779,7 @@
                             'geometry': {
                                 'type': 'Point',
                                 'coordinates': [120.6711612685317,
-                                24.12132596872964
+                                    24.12132596872964
 
                                 ] //抓導遊目前位置realtime data , 
                             }
@@ -750,7 +800,7 @@
             });
 
 
-          
+
 
             navigator.geolocation.getCurrentPosition(function (position) {
                 /*var Usermarker = new mapboxgl.Marker()
