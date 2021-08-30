@@ -6,9 +6,9 @@
   <script src="https://www.gstatic.com/charts/loader.js"></script>
 
   <script>
-    
+    var str = "";
     async function main() {
-      var str = "";
+      
       await getlocation()
       console.log("根據異步await後location已更新為" + str)
 
@@ -19,8 +19,7 @@
         packages: ['corechart', 'bar']
       });
       google.charts.setOnLoadCallback(init);
-      var url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
-        'map_ Introduction2';
+      var url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=map_ Introduction2'
       google.charts.setOnLoadCallback(init);
       var target_gsheet_class_once = 'gsheet';
 
@@ -63,7 +62,7 @@
 
 
         console.log(str);
-
+        var 
 
       }
    
