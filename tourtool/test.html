@@ -44,9 +44,9 @@
           .getFormattedValue(r, 5) + `],
                                       "bearing": -8.9,
                         							"zoom": 17.68
-                                      },`
+                                      }},{`
         if (data.getFormattedValue(r, 0) === '#')
-          str = str.substring(0, str.length - 1) + '}]'
+          str = str.substring(0, str.length - 2) + ']'
 
 
       }
@@ -55,8 +55,35 @@
 
       console.log(str);
       var v = JSON.parse(str)
-      console.log(v)
-
+      console.log(v)[{
+          "id": "1",
+          "title": "綜合大樓",
+          "desctiption": "綜合大樓啦",
+          "camera": {
+            "center": [120.6726268, 24.12179219],
+            "bearing": -8.9,
+            "zoom": 17.68
+          }
+        }, {
+          "id": "2",
+          "title": "社館大樓",
+          "desctiption": "社館大樓在這哦",
+          "camera": {
+            "center": [120.6731847, 24.12098925],
+            "bearing": -8.9,
+            "zoom": 17.68
+          }
+        }, {
+          "id": "3",
+          "title": "中興湖",
+          "desctiption": "中興湖很多鵝",
+          "camera": {
+            "center": [120.674204, 24.12094],
+            "bearing": -8.9,
+            "zoom": 17.68
+          }
+        }
+      ]
 
 
 
