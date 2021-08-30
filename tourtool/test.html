@@ -6,6 +6,13 @@
   <script src="https://www.gstatic.com/charts/loader.js"></script>
 
   <script>
+    var location ="";
+    async function main(){
+      await getlocation()
+      console.log("根據異步await後location已更新為"+location)
+
+    }
+    function getlocation(){
     google.charts.load('current', {
       packages: ['corechart', 'bar']
     });
@@ -54,9 +61,9 @@
 
 
       console.log(str);
-      var v = JSON.parse(str)
-      console.log(v)
+     
 
+    }
 
     }
   </script>
