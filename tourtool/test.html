@@ -28,7 +28,8 @@
 
         var query = new google.visualization.Query(url);
         query.setQuery('select *');
-        query.send(processSheetsData);
+        str = query.send(processSheetsData);
+        console.log(str)
       }
 
       function processSheetsData(response) {
@@ -61,7 +62,7 @@
 
 
 
-        console.log(str);
+        //console.log(str);
 
 
       }
