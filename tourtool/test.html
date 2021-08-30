@@ -37,7 +37,7 @@
           var data = response.getDataTable();
           var columns = data.getNumberOfColumns();
           var rows = data.getNumberOfRows();
-
+          var str =""
           var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
           // if (gsheetClass.outerHTML) {
           for (var r = 0; r < rows; r++) {
