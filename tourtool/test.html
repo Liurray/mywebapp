@@ -6,11 +6,13 @@
   <script src="https://www.gstatic.com/charts/loader.js"></script>
 
   <script>
-  
+    var str = ""
     async function main() {
 
-      let user = await getlocation()
-      console.log("根據異步await後location已更新為" + user)
+     await getlocation()
+      setTimeout(function () {
+        console.log("根據異步await後location已更新為" + str)
+      }, 3000)
 
     }
 
@@ -20,12 +22,12 @@
       });
       google.charts.setOnLoadCallback(init);
       var url =
-        'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=map_ Introduction2'
+        'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=map_Introduction2'
       google.charts.setOnLoadCallback(init);
       var target_gsheet_class_once = 'gsheet';
 
       function init() {
-      
+
 
         var query = new google.visualization.Query(url);
         query.setQuery('select *');
@@ -37,12 +39,12 @@
           var data = response.getDataTable();
           var columns = data.getNumberOfColumns();
           var rows = data.getNumberOfRows();
-          var str =""
+          var str = ""
           var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
           // if (gsheetClass.outerHTML) {
           for (var r = 0; r < rows; r++) {
             if (data.getFormattedValue(r, 0) === '@') str += '[{';
-       
+
 
 
 
@@ -63,7 +65,7 @@
 
 
           console.log(str);
-          resolve("111");
+
 
         })
 
