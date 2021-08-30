@@ -168,6 +168,83 @@
         liff.init({
             liffId: liffID
         }).then(function () {
+
+            console.log("讀取資料開始")
+            google.charts.load('current', {
+                packages: ['corechart', 'bar']
+            });
+            google.charts.setOnLoadCallback(init);
+            var url =
+                'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
+                'map_ Introduction2';
+            google.charts.setOnLoadCallback(init);
+            var target_gsheet_class_once = 'gsheet';
+
+            function init() {
+                // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+
+                var query = new google.visualization.Query(url);
+                query.setQuery('select *');
+                query.send(processSheetsData).then(function(){
+                    
+                });
+            }
+            var locations = "";
+            function processSheetsData(response) {
+                var data = response.getDataTable();
+                var columns = data.getNumberOfColumns();
+                var rows = data.getNumberOfRows();
+                
+                var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
+                // if (gsheetClass.outerHTML) {
+                for (var r = 0; r < rows; r++) {
+                    if (data.getFormattedValue(r, 0) === '@') locations += '[{';
+                    console.log("開頭")
+
+
+
+
+                    locations += `"id": "` + data.getFormattedValue(r, 1) + `",
+                                      "title" : "` + data.getFormattedValue(r, 2) + `",
+                                      "desctiption" : "` + data.getFormattedValue(r, 3) + `",
+                                      "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
+                        .getFormattedValue(r, 5) + `],
+                                      "bearing": -8.9,
+                        							"zoom": 17.68
+                                      }},{`
+                    if (data.getFormattedValue(r, 0) === '#')
+                        locations = locations.substring(0, locations.length - 2) + ']'
+
+
+                }
+
+
+
+                console.log(locations);
+                
+               
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             var lat = 0;
             var lng = 0;
             //開啟權限
@@ -403,85 +480,7 @@
             };
 
             //地點簡介  讀取地圖簡介的試算表資料
-            console.log("讀取資料開始")
-            google.charts.load('current', {
-                packages: ['corechart', 'bar']
-            });
-            google.charts.setOnLoadCallback(init);
-            var url =
-                'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
-                'map_ Introduction2';
-            google.charts.setOnLoadCallback(init);
-            var target_gsheet_class_once = 'gsheet';
-
-            function init() {
-                // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
-
-                var query = new google.visualization.Query(url);
-                query.setQuery('select *');
-                query.send(processSheetsData);
-            }
-
-            function processSheetsData(response) {
-                var data = response.getDataTable();
-                var columns = data.getNumberOfColumns();
-                var rows = data.getNumberOfRows();
-                var locations = "";
-                var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
-                // if (gsheetClass.outerHTML) {
-                for (var r = 0; r < rows; r++) {
-                    if (data.getFormattedValue(r, 0) === '@') locations += '[{';
-                    console.log("開頭")
-
-
-
-
-                    locations += `"id": "` + data.getFormattedValue(r, 1) + `",
-                                      "title" : "` + data.getFormattedValue(r, 2) + `",
-                                      "desctiption" : "` + data.getFormattedValue(r, 3) + `",
-                                      "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
-                        .getFormattedValue(r, 5) + `],
-                                      "bearing": -8.9,
-                        							"zoom": 17.68
-                                      }},{`
-                    if (data.getFormattedValue(r, 0) === '#')
-                        locations = locations.substring(0, locations.length - 2) + ']'
-
-
-                }
-
-
-
-                console.log(locations);
-                var v = JSON.parse(locations)
-                console.log(v)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            }
-
+     
 
 
 
@@ -519,7 +518,7 @@
                     }
                 }
             ]`;*/
-            var map_description = JSON.parse(locations)
+            
 
 
 
