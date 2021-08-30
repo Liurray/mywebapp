@@ -6,66 +6,68 @@
   <script src="https://www.gstatic.com/charts/loader.js"></script>
 
   <script>
-    var location ="";
-    async function main(){
+    var location = "";
+    async function main() {
       await getlocation()
-      console.log("根據異步await後location已更新為"+location)
+      console.log("根據異步await後location已更新為" + location)
 
     }
-    function getlocation(){
-    google.charts.load('current', {
-      packages: ['corechart', 'bar']
-    });
-    google.charts.setOnLoadCallback(init);
-    var url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
-      'map_ Introduction2';
-    google.charts.setOnLoadCallback(init);
-    var target_gsheet_class_once = 'gsheet';
 
-    function init() {
-      // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+    function getlocation() {
+      google.charts.load('current', {
+        packages: ['corechart', 'bar']
+      });
+      google.charts.setOnLoadCallback(init);
+      var url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
+        'map_ Introduction2';
+      google.charts.setOnLoadCallback(init);
+      var target_gsheet_class_once = 'gsheet';
 
-      var query = new google.visualization.Query(url);
-      query.setQuery('select *');
-      query.send(processSheetsData);
-    }
+      function init() {
+        // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
 
-    function processSheetsData(response) {
-      var data = response.getDataTable();
-      var columns = data.getNumberOfColumns();
-      var rows = data.getNumberOfRows();
-      var str = "";
-      var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
-      // if (gsheetClass.outerHTML) {
-      for (var r = 0; r < rows; r++) {
-        if (data.getFormattedValue(r, 0) === '@') str += '[{';
-        console.log("開頭")
+        var query = new google.visualization.Query(url);
+        query.setQuery('select *');
+        query.send(processSheetsData);
+      }
+
+      function processSheetsData(response) {
+        var data = response.getDataTable();
+        var columns = data.getNumberOfColumns();
+        var rows = data.getNumberOfRows();
+        var str = "";
+        var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
+        // if (gsheetClass.outerHTML) {
+        for (var r = 0; r < rows; r++) {
+          if (data.getFormattedValue(r, 0) === '@') str += '[{';
+          console.log("開頭")
 
 
 
 
-        str += `"id": "` + data.getFormattedValue(r, 1) + `",
+          str += `"id": "` + data.getFormattedValue(r, 1) + `",
                                       "title" : "` + data.getFormattedValue(r, 2) + `",
                                       "desctiption" : "` + data.getFormattedValue(r, 3) + `",
                                       "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
-          .getFormattedValue(r, 5) + `],
+            .getFormattedValue(r, 5) + `],
                                       "bearing": -8.9,
                         							"zoom": 17.68
                                       }},{`
-        if (data.getFormattedValue(r, 0) === '#')
-          str = str.substring(0, str.length - 2) + ']'
+          if (data.getFormattedValue(r, 0) === '#')
+            str = str.substring(0, str.length - 2) + ']'
+
+
+        }
+
+
+
+        console.log(str);
 
 
       }
 
-
-
-      console.log(str);
-     
-
     }
-
-    }
+    main()
   </script>
 
 </head>
