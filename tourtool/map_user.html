@@ -426,17 +426,17 @@
                 var data = response.getDataTable();
                 var columns = data.getNumberOfColumns();
                 var rows = data.getNumberOfRows();
-                var map_locations = "";
+                var locations = "";
                 var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
                 // if (gsheetClass.outerHTML) {
                 for (var r = 0; r < rows; r++) {
-                    if (data.getFormattedValue(r, 0) === '@') map_locations += '[{';
+                    if (data.getFormattedValue(r, 0) === '@') locations += '[{';
                     console.log("開頭")
 
 
 
 
-                    map_locations += `"id": "` + data.getFormattedValue(r, 1) + `",
+                    locations += `"id": "` + data.getFormattedValue(r, 1) + `",
                                       "title" : "` + data.getFormattedValue(r, 2) + `",
                                       "desctiption" : "` + data.getFormattedValue(r, 3) + `",
                                       "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
@@ -445,15 +445,15 @@
                         							"zoom": 17.68
                                       }},{`
                     if (data.getFormattedValue(r, 0) === '#')
-                        map_locations = map_locations.substring(0, map_locations.length - 2) + ']'
+                        locations = locations.substring(0, locations.length - 2) + ']'
 
 
                 }
 
 
 
-                console.log(map_locations);
-                var v = JSON.parse(map_locations)
+                console.log(locations);
+                var v = JSON.parse(locations)
                 console.log(v)
 
 
@@ -488,7 +488,7 @@
 
 
 
-            var locations = `[{
+            /*var locations = `[{
                     "id": "2",
                     "title": "社管大樓",
                     "description": "社管大樓在這囉",
@@ -518,7 +518,7 @@
                         "zoom": 17.68
                     }
                 }
-            ]`;
+            ]`;*/
             var map_description = JSON.parse(locations)
 
 
