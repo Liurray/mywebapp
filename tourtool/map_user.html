@@ -168,7 +168,7 @@
         liff.init({
             liffId: liffID
         }).then(function () {
-
+            var map_description ;
             console.log("讀取資料開始")
             google.charts.load('current', {
                 packages: ['corechart', 'bar']
@@ -221,8 +221,9 @@
                
                 
                 console.log(locations);
+                map_description = JSON.parse(locations)
             }
-            var map_description = JSON.parse(locations)
+            
 
 
 
