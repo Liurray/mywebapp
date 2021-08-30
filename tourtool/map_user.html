@@ -222,10 +222,9 @@
 
                 var query = new google.visualization.Query(url);
                 query.setQuery('select *');
-                query.send(processSheetsData).then(function(){
+                query.send(processSheetsData)
                     console.log("資料更新了?" + locations2)
-                })
-                
+               
             }
             google.charts.setOnLoadCallback(init).then(function () {
 
