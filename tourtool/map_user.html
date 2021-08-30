@@ -168,7 +168,7 @@
         liff.init({
             liffId: liffID
         }).then(function () {
-            var map_description ;
+            
             var locations = "";
             console.log("讀取資料開始")
             google.charts.load('current', {
@@ -226,26 +226,9 @@
             google.charts.setOnLoadCallback(init).then(function(){
 
             
-           
+                console.log(locations)
+                var map_description = JSON.parse(locations)
             
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             var lat = 0;
