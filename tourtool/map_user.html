@@ -169,70 +169,6 @@
             liffId: liffID
         }).then(function () {
 
-            var locations2 = "";
-            console.log("讀取資料開始")
-            google.charts.load('current', {
-                packages: ['corechart', 'bar']
-            });
-
-            var url =
-                'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
-                'map_ Introduction2';
-
-            var target_gsheet_class_once = 'gsheet';
-
-            function processSheetsData(response) {
-                var data = response.getDataTable();
-                var columns = data.getNumberOfColumns();
-                var rows = data.getNumberOfRows();
-
-                var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
-                // if (gsheetClass.outerHTML) {
-                for (var r = 0; r < rows; r++) {
-                    if (data.getFormattedValue(r, 0) === '@') locations2 += '[{';
-                   
-
-
-
-
-                    locations2 += `"id": "` + data.getFormattedValue(r, 1) + `",
-                                      "title" : "` + data.getFormattedValue(r, 2) + `",
-                                      "desctiption" : "` + data.getFormattedValue(r, 3) + `",
-                                      "camera": {` + ` "center": [` + data.getFormattedValue(r, 4) + `,` + data
-                        .getFormattedValue(r, 5) + `],
-                                      "bearing": -8.9,
-                        							"zoom": 17.68
-                                      }},{`
-                    if (data.getFormattedValue(r, 0) === '#')
-                        locations2 = locations2.substring(0, locations2.length - 2) + ']'
-
-
-                }
-
-
-
-
-                return locations2;
-                //console.log(locations2);
-
-            }
-
-            function init() {
-                // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
-
-                var query = new google.visualization.Query(url);
-                query.setQuery('select *');
-                query.send(processSheetsData)
-                    console.log("資料更新了?" + locations2)
-               
-            }
-            google.charts.setOnLoadCallback(init).then(function () {
-
-
-                
-                
-
-
 
                 var lat = 0;
                 var lng = 0;
@@ -826,7 +762,7 @@
                         });
                     }
                 }
-            });
+          
         }).catch(function (error) {
             console.log(error);
 
