@@ -185,9 +185,7 @@
 
                 var query = new google.visualization.Query(url);
                 query.setQuery('select *');
-                query.send(processSheetsData).then(function(){
-                    
-                });
+                query.send(processSheetsData)
             }
             var locations = "";
             function processSheetsData(response) {
@@ -220,11 +218,11 @@
 
 
 
-                console.log(locations);
-                
                
+                
+                console.log(locations);
             }
-
+            var map_description = JSON.parse(locations)
 
 
 
