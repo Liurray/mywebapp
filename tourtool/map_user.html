@@ -569,10 +569,10 @@
                                 // the style in Mapbox Studio and click the "Images" tab.
                                 // To add a new image to the style at runtime see
                                 // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
-                                'icon-image': symbol + '-15',
+                                'icon-image': feature.properties['icon'] + '-15',
                                 'icon-allow-overlap': true
                             },
-                            'filter': ['==', 'icon', symbol]
+                            'filter': ['==', 'icon', feature.properties['icon']]
                         });
 
                         // Add checkbox and label elements for the layer.
