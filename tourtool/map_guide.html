@@ -176,7 +176,7 @@
             liff.getProfile()
                 .then(profile => {
                     userId = profile.userId;
-                    firebase.database().ref('Guide/' + userId).once("value", function (snapshot) {
+                    firebase.database().ref('Guide/' + userId).on("value", function (snapshot) {
                         guide_TourId = snapshot.val().guide_now
                         console.log(guide_TourId);
                         var v = snapshot.child(guide_TourId+'/guide_Id').val()
