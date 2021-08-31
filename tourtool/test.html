@@ -20,12 +20,12 @@
     firebase.initializeApp(firebaseConfig);
   </script>
   <script>
-      var v =""
+    var v = ""
     async function main() {
-    
+
       await getlocation()
-     
-      console.log(v) 
+
+      console.log(v)
       //console.log(JSON.parse(v))
     }
 
@@ -33,7 +33,7 @@
       google.charts.load('current', {
         packages: ['corechart', 'bar']
       });
-    
+
       var url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
         'map_feature';
       google.charts.setOnLoadCallback(init);
@@ -53,8 +53,8 @@
         var columns = data.getNumberOfColumns();
         var rows = data.getNumberOfRows();
         var str = `{
-                'type': 'FeatureCollection',
-                "features": [{"`;
+                "type": "FeatureCollection",
+                "features": `;
         var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
         // if (gsheetClass.outerHTML) {
         for (var r = 0; r < rows; r++) {
@@ -64,7 +64,7 @@
                         "properties": {
                           "icon": "` + data.getFormattedValue(r, 1) + `"},
                           "geometry": { 
-                            "coordinates": [`+data.getFormattedValue(r, 2) + `,`+ data.getFormattedValue(r, 3) + `],
+                            "coordinates": [` + data.getFormattedValue(r, 2) + `,` + data.getFormattedValue(r, 3) + `],
                             "type": "Point" },}`
 
           if (data.getFormattedValue(r, 0) === '#')
@@ -88,6 +88,8 @@
 
     }
     main()
+
+
   </script>
 
 </head>
