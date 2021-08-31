@@ -20,15 +20,11 @@
     firebase.initializeApp(firebaseConfig);
   </script>
   <script>
-    var v =""
+    
     async function main() {
-      //await getlocation()
-      firebase.database().ref('Map/map_description').once("value", function (snapshot) {
-
-
-         v =snapshot.val()
-         
-      })
+      var v =""
+      await getlocation()
+     
       console.log(v) 
     }
 
@@ -80,7 +76,7 @@
         }
 
 
-
+        v =v.concat(str);
         console.log(str);
 
         firebase.database().ref('Map/').update({
