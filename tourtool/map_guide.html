@@ -179,7 +179,7 @@
                     firebase.database().ref('Guide/' + userId).once("value", function (snapshot) {
                         guide_TourId = snapshot.val().guide_now
                         console.log(guide_TourId);
-                        var v = snapshot.child(guide_TourId).val().sheet_url;
+                        var v = snapshot.child(guide_TourId).sheet_url.val();
                         console.log(v)
                          var sheet_url = "https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet="
                         console.log(sheet_url)
