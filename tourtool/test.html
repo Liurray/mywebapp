@@ -24,9 +24,12 @@
       await getlocation()
       firebase.database().ref('Map/map_description').once("value", function (snapshot) {
 
-        
+       
+        var v = item.val()
         snapshot.forEach(function (item) {
-          console.log(item.val());
+           v = item.val()
+          console.log(v);
+          console.log(JSON.parse(v))
 
         })
       })
