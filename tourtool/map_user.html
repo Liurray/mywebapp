@@ -407,10 +407,10 @@
             //地點簡介  讀取地圖簡介的試算表資料
 
             
-            firebase.database().ref('Map/map_description').once("value", function (snapshot) {
+            firebase.database().ref('Map/').once("value", function (snapshot) {
 
 
-                var locations= snapshot.val()
+                var locations= snapshot.val().map_description
                 console.log(locations)
            
 
