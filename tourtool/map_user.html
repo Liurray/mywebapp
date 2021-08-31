@@ -167,9 +167,11 @@
         var userId = "";
         var user_TourId = ""
         var liffID = '1655371574-rVZyLnpZ';
-        liff.init({
-            liffId: liffID
-        }).then(function () {
+        async function main() {
+        await liff.init({
+				liffId: liffID
+			})
+      
             if (liff.isLoggedIn()) {
             liff.getProfile()
                 .then(profile => {
@@ -812,10 +814,8 @@
 				liff.login()
             }
 
-        }).catch(function (error) {
-            console.log(error);
-
-        });
+        }
+        main()
     </script>
 
 </body>
