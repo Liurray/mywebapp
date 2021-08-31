@@ -33,7 +33,7 @@
       google.charts.load('current', {
         packages: ['corechart', 'bar']
       });
-      google.charts.setOnLoadCallback(init);
+    
       var url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
         'map_ Introduction2';
       google.charts.setOnLoadCallback(init);
@@ -44,7 +44,7 @@
 
         var query = new google.visualization.Query(url);
         query.setQuery('select *');
-        str = query.send(processSheetsData);
+        query.send(processSheetsData);
 
       }
 
@@ -57,10 +57,6 @@
         // if (gsheetClass.outerHTML) {
         for (var r = 0; r < rows; r++) {
           if (data.getFormattedValue(r, 0) === '@') str += '[{';
-          //console.log("開頭")
-
-
-
 
           str += `"id": "` + data.getFormattedValue(r, 1) + `",
                                       "title" : "` + data.getFormattedValue(r, 2) + `",
@@ -77,8 +73,7 @@
         }
 
 
-        v =v.concat(str);
-        //console.log(str);
+     
 
         firebase.database().ref('Map/').update({
           map_description: str,
