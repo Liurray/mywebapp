@@ -410,9 +410,9 @@
             firebase.database().ref('Map/map_description').once("value", function (snapshot) {
 
 
-                var v = snapshot.val()
-                console.log(v)
-            })
+                var locations= snapshot.val()
+                console.log(locations)
+           
 
 
 
@@ -505,7 +505,7 @@
 
 
 
-
+        })
 
 
 
