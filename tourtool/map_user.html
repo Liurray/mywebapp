@@ -170,249 +170,255 @@
         }).then(function () {
 
 
-                var lat = 0;
-                var lng = 0;
-                //開啟權限
-                if (navigator.geolocation) {
+            var lat = 0;
+            var lng = 0;
+            //開啟權限
+            if (navigator.geolocation) {
 
-                    // 使用者不提供權限，或是發生其它錯誤
-                    function error() {
-                        alert('無法取得你的位置');
-                    }
-
-
-
-                    // 跟使用者拿所在位置的權限
-                    navigator.geolocation.getCurrentPosition(success, error);
-
-                } else {
-                    alert('Sorry, 你的裝置不支援地理位置功能。')
-
-                }
-                var lng;
-                var lat;
-                //取得你目前的位置
-                function success(position) {
-                    lat = position.coords.latitude;
-                    lng = position.coords.longitude;
-                    console.log("經緯度座標為" + parseFloat(lat) + "跟" + parseFloat(lng));
+                // 使用者不提供權限，或是發生其它錯誤
+                function error() {
+                    alert('無法取得你的位置');
                 }
 
 
-                //初始化 mapbox地圖物件
-                var marker;
-                mapboxgl.accessToken =
-                    'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
-                var map = new mapboxgl.Map({
-                    container: 'map', // container id
-                    style: 'mapbox://styles/mapbox/streets-v11',
-                    center: [120.673195, 24.121166], // starting position
-                    zoom: 16, // starting zoom,
-                    pitch: 40,
-                    bearing: 20,
-                    antialias: true
 
-                });
-                var title = document.getElementById('location-title');
-                var description = document.getElementById('location-description');
+                // 跟使用者拿所在位置的權限
+                navigator.geolocation.getCurrentPosition(success, error);
 
-                //自動撥放控制變數
-                var auto_play = "0";
-                //導航變數
-                var direction = new MapboxDirections({
-                    accessToken: mapboxgl.accessToken
-                })
+            } else {
+                alert('Sorry, 你的裝置不支援地理位置功能。')
+
+            }
+            var lng;
+            var lat;
+            //取得你目前的位置
+            function success(position) {
+                lat = position.coords.latitude;
+                lng = position.coords.longitude;
+                console.log("經緯度座標為" + parseFloat(lat) + "跟" + parseFloat(lng));
+            }
 
 
+            //初始化 mapbox地圖物件
+            var marker;
+            mapboxgl.accessToken =
+                'pk.eyJ1IjoiczEwNDE3NDgiLCJhIjoiY2traTR3ajBqMDZwYjJucXMxb3dleDY3MiJ9.DXlwHSTcaYXvM1TQiFQH7Q';
+            var map = new mapboxgl.Map({
+                container: 'map', // container id
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [120.673195, 24.121166], // starting position
+                zoom: 16, // starting zoom,
+                pitch: 40,
+                bearing: 20,
+                antialias: true
 
-                //測資
-                var places = {
-                    'type': 'FeatureCollection',
-                    "features": [{
-                            "type": "Feature",
-                            "properties": {
-                                "icon": "restaurant"
-                            },
-                            "geometry": {
-                                "coordinates": [
-                                    120.67243,
-                                    24.122528
-                                ],
-                                "type": "Point"
-                            },
+            });
+            var title = document.getElementById('location-title');
+            var description = document.getElementById('location-description');
 
+            //自動撥放控制變數
+            var auto_play = "0";
+            //導航變數
+            var direction = new MapboxDirections({
+                accessToken: mapboxgl.accessToken
+            })
+
+
+
+            //測資
+            var places = {
+                'type': 'FeatureCollection',
+                "features": [{
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "restaurant"
                         },
-                        {
-                            "type": "Feature",
-                            "properties": {
-                                "icon": "commercial"
-                            },
-                            "geometry": {
-                                "coordinates": [
-                                    120.674749,
-                                    24.119994
-                                ],
-                                "type": "Point"
-                            },
-
+                        "geometry": {
+                            "coordinates": [
+                                120.67243,
+                                24.122528
+                            ],
+                            "type": "Point"
                         },
-                        {
-                            "type": "Feature",
-                            "properties": {
-                                "icon": "cafe"
-                            },
-                            "geometry": {
-                                "coordinates": [
-                                    120.674594,
-                                    24.119997
-                                ],
-                                "type": "Point"
-                            },
 
-                        },
-                        {
-                            "type": "Feature",
-                            "properties": {
-                                "icon": "attraction"
-                            },
-                            "geometry": {
-                                "coordinates": [
-                                    120.673871,
-                                    24.120747
-                                ],
-                                "type": "Point"
-                            },
-
-                        },
-                        {
-                            "type": "Feature",
-                            "properties": {
-                                "icon": "marker-15"
-                            },
-                            "geometry": {
-                                "coordinates": [
-                                    120.672587,
-                                    24.121843
-                                ],
-                                "type": "Point"
-                            },
-
-                        },
-                        {
-                            "type": "Feature",
-                            "properties": {
-                                "icon": "marker-15"
-                            },
-                            "geometry": {
-                                "coordinates": [
-                                    120.673347,
-                                    24.120834
-                                ],
-                                "type": "Point"
-                            },
-
-                        },
-                        {
-                            "type": "Feature",
-                            "properties": {
-                                "icon": "commercial"
-                            },
-                            "geometry": {
-                                "coordinates": [
-                                    120.673299,
-                                    24.121165
-                                ],
-                                "type": "Point"
-                            },
-
-                        }
-                    ],
-                    "type": "FeatureCollection"
-
-                };
-                var exampleGroup = document.getElementById('example-group');
-
-                var size = 200;
-
-                // implementation of CustomLayerInterface to draw a pulsing dot icon on the map
-                // see https://docs.mapbox.com/mapbox-gl-js/api/#customlayerinterface for more info
-
-                //動態點變數
-                var pulsingDot = {
-                    width: size,
-                    height: size,
-                    data: new Uint8Array(size * size * 4),
-
-                    // get rendering context for the map canvas when layer is added to the map
-                    onAdd: function () {
-                        var canvas = document.createElement('canvas');
-                        canvas.width = this.width;
-                        canvas.height = this.height;
-                        this.context = canvas.getContext('2d');
                     },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "commercial"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.674749,
+                                24.119994
+                            ],
+                            "type": "Point"
+                        },
 
-                    // called once before every frame where the icon will be used
-                    render: function () {
-                        var duration = 1000;
-                        var t = (performance.now() % duration) / duration;
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "cafe"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.674594,
+                                24.119997
+                            ],
+                            "type": "Point"
+                        },
 
-                        var radius = (size / 2) * 0.3;
-                        var outerRadius = (size / 2) * 0.7 * t + radius;
-                        var context = this.context;
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "attraction"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.673871,
+                                24.120747
+                            ],
+                            "type": "Point"
+                        },
 
-                        // draw outer circle
-                        context.clearRect(0, 0, this.width, this.height);
-                        context.beginPath();
-                        context.arc(
-                            this.width / 2,
-                            this.height / 2,
-                            outerRadius,
-                            0,
-                            Math.PI * 2
-                        );
-                        context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')';
-                        context.fill();
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "marker-15"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.672587,
+                                24.121843
+                            ],
+                            "type": "Point"
+                        },
 
-                        // draw inner circle
-                        context.beginPath();
-                        context.arc(
-                            this.width / 2,
-                            this.height / 2,
-                            radius,
-                            0,
-                            Math.PI * 2
-                        );
-                        context.fillStyle = 'rgba(255, 100, 100, 1)';
-                        context.strokeStyle = 'white';
-                        context.lineWidth = 2 + 4 * (1 - t);
-                        context.fill();
-                        context.stroke();
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "marker-15"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.673347,
+                                24.120834
+                            ],
+                            "type": "Point"
+                        },
 
-                        // update this image's data with data from the canvas
-                        this.data = context.getImageData(
-                            0,
-                            0,
-                            this.width,
-                            this.height
-                        ).data;
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "icon": "commercial"
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                120.673299,
+                                24.121165
+                            ],
+                            "type": "Point"
+                        },
 
-                        // continuously repaint the map, resulting in the smooth animation of the dot
-                        map.triggerRepaint();
-
-                        // return `true` to let the map know that the image was updated
-                        return true;
                     }
-                };
+                ],
+                "type": "FeatureCollection"
 
-                //地點簡介  讀取地圖簡介的試算表資料
+            };
+            var exampleGroup = document.getElementById('example-group');
+
+            var size = 200;
+
+            // implementation of CustomLayerInterface to draw a pulsing dot icon on the map
+            // see https://docs.mapbox.com/mapbox-gl-js/api/#customlayerinterface for more info
+
+            //動態點變數
+            var pulsingDot = {
+                width: size,
+                height: size,
+                data: new Uint8Array(size * size * 4),
+
+                // get rendering context for the map canvas when layer is added to the map
+                onAdd: function () {
+                    var canvas = document.createElement('canvas');
+                    canvas.width = this.width;
+                    canvas.height = this.height;
+                    this.context = canvas.getContext('2d');
+                },
+
+                // called once before every frame where the icon will be used
+                render: function () {
+                    var duration = 1000;
+                    var t = (performance.now() % duration) / duration;
+
+                    var radius = (size / 2) * 0.3;
+                    var outerRadius = (size / 2) * 0.7 * t + radius;
+                    var context = this.context;
+
+                    // draw outer circle
+                    context.clearRect(0, 0, this.width, this.height);
+                    context.beginPath();
+                    context.arc(
+                        this.width / 2,
+                        this.height / 2,
+                        outerRadius,
+                        0,
+                        Math.PI * 2
+                    );
+                    context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')';
+                    context.fill();
+
+                    // draw inner circle
+                    context.beginPath();
+                    context.arc(
+                        this.width / 2,
+                        this.height / 2,
+                        radius,
+                        0,
+                        Math.PI * 2
+                    );
+                    context.fillStyle = 'rgba(255, 100, 100, 1)';
+                    context.strokeStyle = 'white';
+                    context.lineWidth = 2 + 4 * (1 - t);
+                    context.fill();
+                    context.stroke();
+
+                    // update this image's data with data from the canvas
+                    this.data = context.getImageData(
+                        0,
+                        0,
+                        this.width,
+                        this.height
+                    ).data;
+
+                    // continuously repaint the map, resulting in the smooth animation of the dot
+                    map.triggerRepaint();
+
+                    // return `true` to let the map know that the image was updated
+                    return true;
+                }
+            };
+
+            //地點簡介  讀取地圖簡介的試算表資料
+
+            
+            firebase.database().ref('Map/map_description').once("value", function (snapshot) {
+
+
+                var v = snapshot.val()
+                console.log(v)
+            })
 
 
 
 
-
-
-
-                var locations = `[{
+            /*
+            var locations = `[{
                         "id": "2",
                         "title": "社管大樓",
                         "description": "社管大樓在這囉",
@@ -443,8 +449,9 @@
                         }
                     }
                 ]`;
+                    */
+            var map_description = JSON.parse(locations)
 
-                        var map_description = JSON.parse(locations)
 
 
 
@@ -457,312 +464,311 @@
 
 
 
+            //這裡開始為自 動 導 覽 功能
+            function highlightBorough(code) {
+                // Only show the polygon feature that cooresponds to `borocode` in the data
+                map.setFilter('highlight', ['==', 'borocode', code]);
+            }
 
-                //這裡開始為自 動 導 覽 功能
-                function highlightBorough(code) {
-                    // Only show the polygon feature that cooresponds to `borocode` in the data
-                    map.setFilter('highlight', ['==', 'borocode', code]);
-                }
+            function playback(index) {
+                title.textContent = map_description[index].title;
+                description.textContent = map_description[index].description;
+                var timeout;
+                highlightBorough(map_description[index].id ? map_description[index].id : '');
 
-                function playback(index) {
-                    title.textContent = map_description[index].title;
-                    description.textContent = map_description[index].description;
-                    var timeout;
-                    highlightBorough(map_description[index].id ? map_description[index].id : '');
+                // Animate the map position based on camera properties
+                map.flyTo(map_description[index].camera);
 
-                    // Animate the map position based on camera properties
-                    map.flyTo(map_description[index].camera);
+                map.once('moveend', function () {
+                    if (auto_play == 0) {
+                        //使用者要求自動撥放
+                        // Duration the slide is on screen after interaction
+                        timeout = window.setTimeout(function () {
+                            // Increment index
+                            index = index + 1 === map_description.length ? 0 :
+                                index + 1;
+                            playback(index);
+                        }, 5000); // After callback, show the location for 3 seconds.
 
-                    map.once('moveend', function () {
-                        if (auto_play == 0) {
-                            //使用者要求自動撥放
-                            // Duration the slide is on screen after interaction
-                            timeout = window.setTimeout(function () {
-                                // Increment index
-                                index = index + 1 === map_description.length ? 0 :
-                                    index + 1;
-                                playback(index);
-                            }, 5000); // After callback, show the location for 3 seconds.
-
-                        } else {
-                            clearTimeout(timeout);
-                            console.log("中斷播放");
-
-                        }
-
-                    });
-                }
-
-                // Display the last title/description first
-                title.textContent = map_description[map_description.length - 1].title;
-                description.textContent = map_description[map_description.length - 1].description;
-
-
-
-
-
-
-
-
-
-
-
-
-                map.on('load', function () {
-                    var Usermarker = new mapboxgl.Marker()
-                    map.addSource('places', {
-                        'type': 'geojson',
-                        'data': places
-                    });
-
-                    places.features.forEach(function (feature) {
-                        var symbol = feature.properties['icon'];
-                        var layerID = 'poi-' + symbol;
-
-                        // Add a layer for this symbol type if it hasn't been added already.
-                        if (!map.getLayer(layerID)) {
-                            map.addLayer({
-                                'id': layerID,
-                                'type': 'symbol',
-                                'source': 'places',
-                                'layout': {
-                                    // These icons are a part of the Mapbox Light style.
-                                    // To view all images available in a Mapbox style, open
-                                    // the style in Mapbox Studio and click the "Images" tab.
-                                    // To add a new image to the style at runtime see
-                                    // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
-                                    'icon-image': symbol + '-15',
-                                    'icon-allow-overlap': true
-                                },
-                                'filter': ['==', 'icon', symbol]
-                            });
-
-                            // Add checkbox and label elements for the layer.
-                            //加入css 控制因素
-                            var input = document.createElement('input');
-                            input.type = 'checkbox';
-                            input.id = layerID;
-                            input.style.display = 'none';
-                            input.checked = true;
-                            exampleGroup.appendChild(input);
-
-                            var label = document.createElement('label');
-                            label.setAttribute('for', layerID);
-                            label.textContent = symbol;
-                            exampleGroup.appendChild(label);
-
-                            // When the checkbox changes, update the visibility of the layer.
-                            input.addEventListener('change', function (e) {
-                                map.setLayoutProperty(
-                                    layerID,
-                                    'visibility',
-                                    e.target.checked ? 'visible' : 'none'
-                                );
-                            });
-
-                        }
-                    });
-
-
-
-
-
-
-                    //, position.coords.longitude
-                    map.addSource('floorplan', {
-                        // GeoJSON Data source used in vector tiles, documented at
-                        // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
-                        'type': 'geojson',
-                        'data': 'https://raw.githubusercontent.com/Liurray/mywebapp/main/mapbox/features.geojson'
-                    });
-                    map.addLayer({
-                        'id': 'room-extrusion',
-                        'type': 'fill-extrusion',
-                        'source': 'floorplan',
-                        'paint': {
-                            // See the Mapbox Style Specification for details on data expressions.
-                            // https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions
-
-                            // Get the fill-extrusion-color from the source 'color' property.
-                            'fill-extrusion-color': ['get', 'color'],
-
-                            // Get fill-extrusion-height from the source 'height' property.
-                            'fill-extrusion-height': ['get', 'height'],
-
-                            // Get fill-extrusion-base from the source 'base_height' property.
-                            'fill-extrusion-base': ['get', 'base_height'],
-
-                            // Make extrusions slightly opaque for see through indoor walls.
-                            'fill-extrusion-opacity': 0.5
-                        }
-                    });
-                    map.addSource('boroughs', {
-                        'type': 'vector',
-                        'url': 'mapbox://mapbox.8ibmsn6u'
-                    });
-                    map.addLayer({
-                            'id': 'highlight',
-                            'type': 'fill',
-                            'source': 'boroughs',
-                            'source-layer': 'original',
-                            'paint': {
-                                'fill-color': '#fd6b50',
-                                'fill-opacity': 0.25
-                            },
-                            'filter': ['==', 'borocode', '']
-                        },
-                        'settlement-subdivision-label'
-                    ); // Place polygon under the neighborhood labels.
-
-                    // Start the playback animation for each borough
-                    document
-                        .getElementById('listing-group')
-                        .addEventListener('change', function (e) {
-                            var handler = e.target.id;
-                            if (e.target.checked) {
-                                switch (handler) {
-                                    case 'user_location':
-                                        map.flyTo({
-                                            center: [
-                                                lng, lat
-                                            ],
-                                            zoom: 18,
-                                            essential: true // this animation is considered essential with respect to prefers-reduced-motion
-                                        });
-                                        Usermarker.setLngLat([lng, lat]).addTo(map);
-                                        //do_something(position.coords.latitude, position.coords.longitude);
-
-                                        console.log("目前位置啟用");
-                                        break;
-                                    case 'direction_check':
-                                        map.addControl(direction, 'top-left')
-
-                                        console.log("為我導航~");
-                                        break;
-                                    case 'tour_location':
-                                        map.addImage('pulsing-dot', pulsingDot, {
-                                            pixelRatio: 2
-                                        });
-                                        console.log("導遊團目前位置啟用");
-                                        break;
-                                    case 'autoplay_check':
-                                        playback(0);
-                                        $("#map-overlay-container").show()
-                                        auto_play = 0;
-                                        console.log("展區導覽自動撥放");
-                                        break;
-                                    case 'image_check':
-                                        $("#example").show();
-                                        console.log("展區導覽自動撥放");
-                                        break;
-
-
-                                }
-                            } else {
-                                switch (handler) {
-                                    case 'user_location':
-                                        Usermarker.remove()
-                                        map.flyTo({
-                                            center: [
-                                                120.673195, 24.121166
-                                            ],
-                                            zoom: 15,
-                                            essential: true // this animation is considered essential with respect to prefers-reduced-motion
-                                        });
-
-                                        console.log("【關閉】目前位置");
-                                        break;
-                                    case 'direction_check':
-                                        map.removeControl(direction)
-                                        console.log("【關閉】為我導航~");
-                                        break;
-                                    case 'tour_location':
-                                        map.removeImage("pulsing-dot")
-                                        console.log("【關閉】導遊團目前位置");
-                                        break;
-                                    case 'autoplay_check':
-                                        auto_play = 1;
-                                        console.log("【關閉】展區導覽自動撥放");
-                                        break;
-                                    case 'image_check':
-                                        $("#example").hide();
-                                        console.log("【關閉】展區導覽自動撥放");
-                                        break;
-
-                                }
-                            }
-
-                        });
-
-
-                    map.addSource('points', {
-                        'type': 'geojson',
-                        'data': {
-                            'type': 'FeatureCollection',
-                            'features': [{
-                                'type': 'Feature',
-                                'geometry': {
-                                    'type': 'Point',
-                                    'coordinates': [120.6711612685317,
-                                        24.12132596872964
-
-                                    ] //抓導遊目前位置realtime data , 
-                                }
-                            }]
-                        }
-                    });
-                    map.addLayer({
-                        'id': 'tour_dot',
-                        'type': 'symbol',
-                        'source': 'points',
-                        'layout': {
-                            'icon-image': 'pulsing-dot'
-                        }
-                    });
-
-
-
-                });
-
-
-
-
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    /*var Usermarker = new mapboxgl.Marker()
-                                                .setLngLat([120.67325708814289,24.1209574211248
-                                                ])*/
-                    console.log("已經取得座標");
-                    //do_something(position.coords.latitude, position.coords.longitude);
-                });
-
-
-                var compass = document.querySelector('.js-compass');
-                window.addEventListener('deviceorientation', function (event) {
-                    var alpha = event.alpha;
-                    var rotate = 'rotate(' + alpha + 'deg)';
-                    move(0 - alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
-                    compass.style.transform = rotate;
-                    //console.log(alpha);
-                })
-
-                function easeTo(t) {
-                    if (marker && t === 1) marker.remove();
-                    return t * (2 - t);
-                }
-
-                function move(pos, bearing) {
-                    if (bearing) {
-                        map.easeTo({
-                            bearing: pos,
-                            easing: easeTo
-                        });
                     } else {
-                        map.panBy(pos, {
-                            easing: easeTo
-                        });
+                        clearTimeout(timeout);
+                        console.log("中斷播放");
+
                     }
+
+                });
+            }
+
+            // Display the last title/description first
+            title.textContent = map_description[map_description.length - 1].title;
+            description.textContent = map_description[map_description.length - 1].description;
+
+
+
+
+
+
+
+
+
+
+
+
+            map.on('load', function () {
+                var Usermarker = new mapboxgl.Marker()
+                map.addSource('places', {
+                    'type': 'geojson',
+                    'data': places
+                });
+
+                places.features.forEach(function (feature) {
+                    var symbol = feature.properties['icon'];
+                    var layerID = 'poi-' + symbol;
+
+                    // Add a layer for this symbol type if it hasn't been added already.
+                    if (!map.getLayer(layerID)) {
+                        map.addLayer({
+                            'id': layerID,
+                            'type': 'symbol',
+                            'source': 'places',
+                            'layout': {
+                                // These icons are a part of the Mapbox Light style.
+                                // To view all images available in a Mapbox style, open
+                                // the style in Mapbox Studio and click the "Images" tab.
+                                // To add a new image to the style at runtime see
+                                // https://docs.mapbox.com/mapbox-gl-js/example/add-image/
+                                'icon-image': symbol + '-15',
+                                'icon-allow-overlap': true
+                            },
+                            'filter': ['==', 'icon', symbol]
+                        });
+
+                        // Add checkbox and label elements for the layer.
+                        //加入css 控制因素
+                        var input = document.createElement('input');
+                        input.type = 'checkbox';
+                        input.id = layerID;
+                        input.style.display = 'none';
+                        input.checked = true;
+                        exampleGroup.appendChild(input);
+
+                        var label = document.createElement('label');
+                        label.setAttribute('for', layerID);
+                        label.textContent = symbol;
+                        exampleGroup.appendChild(label);
+
+                        // When the checkbox changes, update the visibility of the layer.
+                        input.addEventListener('change', function (e) {
+                            map.setLayoutProperty(
+                                layerID,
+                                'visibility',
+                                e.target.checked ? 'visible' : 'none'
+                            );
+                        });
+
+                    }
+                });
+
+
+
+
+
+
+                //, position.coords.longitude
+                map.addSource('floorplan', {
+                    // GeoJSON Data source used in vector tiles, documented at
+                    // https://gist.github.com/ryanbaumann/a7d970386ce59d11c16278b90dde094d
+                    'type': 'geojson',
+                    'data': 'https://raw.githubusercontent.com/Liurray/mywebapp/main/mapbox/features.geojson'
+                });
+                map.addLayer({
+                    'id': 'room-extrusion',
+                    'type': 'fill-extrusion',
+                    'source': 'floorplan',
+                    'paint': {
+                        // See the Mapbox Style Specification for details on data expressions.
+                        // https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions
+
+                        // Get the fill-extrusion-color from the source 'color' property.
+                        'fill-extrusion-color': ['get', 'color'],
+
+                        // Get fill-extrusion-height from the source 'height' property.
+                        'fill-extrusion-height': ['get', 'height'],
+
+                        // Get fill-extrusion-base from the source 'base_height' property.
+                        'fill-extrusion-base': ['get', 'base_height'],
+
+                        // Make extrusions slightly opaque for see through indoor walls.
+                        'fill-extrusion-opacity': 0.5
+                    }
+                });
+                map.addSource('boroughs', {
+                    'type': 'vector',
+                    'url': 'mapbox://mapbox.8ibmsn6u'
+                });
+                map.addLayer({
+                        'id': 'highlight',
+                        'type': 'fill',
+                        'source': 'boroughs',
+                        'source-layer': 'original',
+                        'paint': {
+                            'fill-color': '#fd6b50',
+                            'fill-opacity': 0.25
+                        },
+                        'filter': ['==', 'borocode', '']
+                    },
+                    'settlement-subdivision-label'
+                ); // Place polygon under the neighborhood labels.
+
+                // Start the playback animation for each borough
+                document
+                    .getElementById('listing-group')
+                    .addEventListener('change', function (e) {
+                        var handler = e.target.id;
+                        if (e.target.checked) {
+                            switch (handler) {
+                                case 'user_location':
+                                    map.flyTo({
+                                        center: [
+                                            lng, lat
+                                        ],
+                                        zoom: 18,
+                                        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                                    });
+                                    Usermarker.setLngLat([lng, lat]).addTo(map);
+                                    //do_something(position.coords.latitude, position.coords.longitude);
+
+                                    console.log("目前位置啟用");
+                                    break;
+                                case 'direction_check':
+                                    map.addControl(direction, 'top-left')
+
+                                    console.log("為我導航~");
+                                    break;
+                                case 'tour_location':
+                                    map.addImage('pulsing-dot', pulsingDot, {
+                                        pixelRatio: 2
+                                    });
+                                    console.log("導遊團目前位置啟用");
+                                    break;
+                                case 'autoplay_check':
+                                    playback(0);
+                                    $("#map-overlay-container").show()
+                                    auto_play = 0;
+                                    console.log("展區導覽自動撥放");
+                                    break;
+                                case 'image_check':
+                                    $("#example").show();
+                                    console.log("展區導覽自動撥放");
+                                    break;
+
+
+                            }
+                        } else {
+                            switch (handler) {
+                                case 'user_location':
+                                    Usermarker.remove()
+                                    map.flyTo({
+                                        center: [
+                                            120.673195, 24.121166
+                                        ],
+                                        zoom: 15,
+                                        essential: true // this animation is considered essential with respect to prefers-reduced-motion
+                                    });
+
+                                    console.log("【關閉】目前位置");
+                                    break;
+                                case 'direction_check':
+                                    map.removeControl(direction)
+                                    console.log("【關閉】為我導航~");
+                                    break;
+                                case 'tour_location':
+                                    map.removeImage("pulsing-dot")
+                                    console.log("【關閉】導遊團目前位置");
+                                    break;
+                                case 'autoplay_check':
+                                    auto_play = 1;
+                                    console.log("【關閉】展區導覽自動撥放");
+                                    break;
+                                case 'image_check':
+                                    $("#example").hide();
+                                    console.log("【關閉】展區導覽自動撥放");
+                                    break;
+
+                            }
+                        }
+
+                    });
+
+
+                map.addSource('points', {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'FeatureCollection',
+                        'features': [{
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [120.6711612685317,
+                                    24.12132596872964
+
+                                ] //抓導遊目前位置realtime data , 
+                            }
+                        }]
+                    }
+                });
+                map.addLayer({
+                    'id': 'tour_dot',
+                    'type': 'symbol',
+                    'source': 'points',
+                    'layout': {
+                        'icon-image': 'pulsing-dot'
+                    }
+                });
+
+
+
+            });
+
+
+
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                /*var Usermarker = new mapboxgl.Marker()
+                                            .setLngLat([120.67325708814289,24.1209574211248
+                                            ])*/
+                console.log("已經取得座標");
+                //do_something(position.coords.latitude, position.coords.longitude);
+            });
+
+
+            var compass = document.querySelector('.js-compass');
+            window.addEventListener('deviceorientation', function (event) {
+                var alpha = event.alpha;
+                var rotate = 'rotate(' + alpha + 'deg)';
+                move(0 - alpha, true); //根據指向方向 0- 指北針的方向 = 目前面向
+                compass.style.transform = rotate;
+                //console.log(alpha);
+            })
+
+            function easeTo(t) {
+                if (marker && t === 1) marker.remove();
+                return t * (2 - t);
+            }
+
+            function move(pos, bearing) {
+                if (bearing) {
+                    map.easeTo({
+                        bearing: pos,
+                        easing: easeTo
+                    });
+                } else {
+                    map.panBy(pos, {
+                        easing: easeTo
+                    });
                 }
-          
+            }
+
         }).catch(function (error) {
             console.log(error);
 
