@@ -178,8 +178,9 @@
                     userId = profile.userId;
                     firebase.database().ref('Guide/' + userId).once("value", function (snapshot) {
                         guide_TourId = snapshot.val().guide_now
+                        console.log(guide_TourId);
                          var sheet_url = snapshot.child(guide_TourId).sheet_url
-                       
+                        console.log(sheet_url)
 
 
 
