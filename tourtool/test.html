@@ -22,7 +22,12 @@
   <script>
     async function main() {
       //await getlocation()
-      
+      firebase.database().ref('Map/map_description').once("value", function (snapshot) {
+
+
+        var v=snapshot.val().map_description
+        console.log(v)  
+      })
 
     }
 
@@ -95,9 +100,3 @@
 </body>
 
 </html>
-
-[{\"id\": \"1\",\n \"title\" : \"綜合大樓\",\n \"desctiption\" : \"綜合大樓啦\",\n \"camera\": { \"center\":
-[120.6726268,24.12179219],\n \"bearing\": -8.9,\n \t\t\t\t\t\t\t\"zoom\": 17.68\n }},{\"id\": \"2\",\n \"title\" :
-\"社館大樓\",\n \"desctiption\" : \"社館大樓在這哦\",\n \"camera\": { \"center\": [120.6731847,24.12098925],\n \"bearing\": -8.9,\n
-\t\t\t\t\t\t\t\"zoom\": 17.68\n }},{\"id\": \"3\",\n \"title\" : \"中興湖\",\n \"desctiption\" : \"中興湖很多鵝\",\n \"camera\":
-{ \"center\": [120.674204,24.12094],\n \"bearing\": -8.9,\n \t\t\t\t\t\t\t\"zoom\": 17.68\n }}]
