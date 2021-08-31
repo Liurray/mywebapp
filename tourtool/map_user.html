@@ -172,15 +172,15 @@
         packages: ['corechart', 'bar']
       });
     
-      var url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
-        'map_ Introduction2';
+      var map_introduction_url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
+        'map_ Introduction';
       google.charts.setOnLoadCallback(init);
       var target_gsheet_class_once = 'gsheet';
 
       function init() {
         // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
 
-        var query = new google.visualization.Query(url);
+        var query = new google.visualization.Query(map_introduction_url);
         query.setQuery('select *');
         query.send(processSheetsData);
 
