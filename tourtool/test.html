@@ -25,7 +25,7 @@
       firebase.database().ref('Map/map_description').once("value", function (snapshot) {
 
        
-        var v = item.val()
+        var v 
         snapshot.forEach(function (item) {
            v = item.val()
           console.log(v);
