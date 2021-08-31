@@ -170,6 +170,7 @@
         liff.init({
             liffId: liffID
         }).then(function () {
+            if (liff.isLoggedIn()) {
             liff.getProfile()
                 .then(profile => {
                     document.getElementById("profile_img").src = profile.pictureUrl
@@ -806,6 +807,10 @@
                     })
                 })
 
+            }
+            else {
+				liff.login()
+            }
 
         }).catch(function (error) {
             console.log(error);
