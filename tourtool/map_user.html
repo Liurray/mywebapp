@@ -171,22 +171,23 @@
             google.charts.load('current', {
         packages: ['corechart', 'bar']
       });
-    
+      //導覽簡介播放
       var map_introduction_url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
         'map_ Introduction';
-      google.charts.setOnLoadCallback(init);
+      google.charts.setOnLoadCallback(introduction_init);
       var target_gsheet_class_once = 'gsheet';
+     
 
-      function init() {
+      function introduction_init() {
         // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
 
         var query = new google.visualization.Query(map_introduction_url);
         query.setQuery('select *');
-        query.send(processSheetsData);
+        query.send(introduction_processSheetsData);
 
       }
 
-      function processSheetsData(response) {
+      function introduction_processSheetsData(response) {
         var data = response.getDataTable();
         var columns = data.getNumberOfColumns();
         var rows = data.getNumberOfRows();
@@ -210,15 +211,59 @@
 
         }
 
-
-     
-
         firebase.database().ref('Map/').update({
           map_description: str,
         })
+      }
 
+       //導覽圖例更新
+       var map_feature_url = 'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8/gviz/tq?sheet=' +
+        'map_feature';
+        google.charts.setOnLoadCallback(feature_init);
+      var target_gsheet_class_once = 'gsheet';
+     
+
+      function introduction_init() {
+        // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+
+        var query = new google.visualization.Query(map_feature_url);
+        query.setQuery('select *');
+        query.send(feature_processSheetsData);
 
       }
+      function feature_processSheetsData(response) {
+        var data = response.getDataTable();
+        var columns = data.getNumberOfColumns();
+        var rows = data.getNumberOfRows();
+        var str = `{
+                "type": "FeatureCollection",
+                "features": `;
+        var gsheetClass = document.getElementsByClassName(target_gsheet_class_once)[0];
+        // if (gsheetClass.outerHTML) {
+        for (var r = 0; r < rows; r++) {
+          if (data.getFormattedValue(r, 0) === '@') str += '[{';
+
+          str += `"type": "Feature",
+                        "properties": {
+                          "icon": "` + data.getFormattedValue(r, 1) + `"},
+                          "geometry": { 
+                            "coordinates": [` + data.getFormattedValue(r, 2) + `,` + data.getFormattedValue(r, 3) + `],
+                            "type": "Point" }},{`
+
+          if (data.getFormattedValue(r, 0) === '#')
+            str = str.substring(0, str.length - 2) + `]}`
+
+
+        }
+
+
+        console.log(str)
+
+        firebase.database().ref('Map/').update({
+          map_feature: str,
+        })
+      }
+
 
 
             var lat = 0;
@@ -467,8 +512,15 @@
 
 
 
-            var map_description = JSON.parse(locations)
+                var map_description = JSON.parse(locations)
+                var features= snapshot.val().map_feature
+                console.log(features)
+           
 
+
+
+
+                var places = JSON.parse(features)
 
 
 
