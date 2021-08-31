@@ -26,6 +26,7 @@
       await getlocation()
      
       console.log(v) 
+      console.log(JSON.parse(v))
     }
 
     function getlocation() {
@@ -56,7 +57,7 @@
         // if (gsheetClass.outerHTML) {
         for (var r = 0; r < rows; r++) {
           if (data.getFormattedValue(r, 0) === '@') str += '[{';
-          console.log("開頭")
+          //console.log("開頭")
 
 
 
@@ -77,7 +78,7 @@
 
 
         v =v.concat(str);
-        console.log(str);
+        //console.log(str);
 
         firebase.database().ref('Map/').update({
           map_description: str,
