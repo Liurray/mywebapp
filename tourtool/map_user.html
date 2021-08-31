@@ -468,39 +468,6 @@
 
 
 
-            /*
-            var locations = `[{
-                        "id": "2",
-                        "title": "社管大樓",
-                        "description": "社管大樓在這囉",
-                        "camera": {
-                            "center": [120.67318466877342, 24.12098924526695],
-                            "bearing": -8.9,
-                            "zoom": 17.68
-                        }
-                    },
-                    {
-                        "id": "3",
-                        "title": "中興湖",
-                        "description": "中興湖有很多鵝",
-                        "camera": {
-                            "center": [120.674204, 24.120940],
-                            "bearing": -8.9,
-                            "zoom": 17.68
-                        }
-                    },
-                    {
-                        "id": "1",
-                        "title": "綜合大樓",
-                        "description": "綜合大樓啦",
-                        "camera": {
-                            "center": [120.67262676928165, 24.121792190234714],
-                            "bearing": -8.9,
-                            "zoom": 17.68
-                        }
-                    }
-                ]`;
-                    */
             var map_description = JSON.parse(locations)
 
 
@@ -574,6 +541,20 @@
 
                 places.features.forEach(function (feature) {
                     var symbol = feature.properties['icon'];
+                    switch(symbol){
+                        case 'restaurant':
+                            symbol = "餐廳"
+                            break;
+                        case 'commercial' :
+                            symbol = "商店"
+                            break;
+                        case "cafe":
+                            symbol ="咖啡廳";
+                            break;
+                        case "attraction" :
+                            symbol ="景點"
+                            break;
+                    }
                     var layerID = 'poi-' + symbol;
 
                     // Add a layer for this symbol type if it hasn't been added already.
