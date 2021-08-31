@@ -175,9 +175,6 @@
             if (liff.isLoggedIn()) {
             liff.getProfile()
                 .then(profile => {
-                    document.getElementById("profile_img").src = profile.pictureUrl
-                    document.getElementById("username").append(profile.displayName)
-                    document.getElementById("UID").append(profile.userId)
                     userId = profile.userId;
                     firebase.database().ref('User/' + userId).once("value", function (snapshot) {
                         user_TourId = snapshot.val().Tour_ID
