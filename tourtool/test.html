@@ -4,12 +4,26 @@
 <head>
   <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
   <script src="https://www.gstatic.com/charts/loader.js"></script>
-
+  
+	<!--//////init firebase-->
+	<script src="/firebase-app.js"></script>
+	<script src="/firebase-analytics.js"></script>
+	<script src="/firebase-database.js"></script>
+	<script>
+		//firebase init app
+		var firebaseConfig = {
+			apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+			authDomain: "forchartjs.firebaseapp.com",
+			databaseURL: "https://forchartjs.firebaseio.com"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+	</script>
   <script>
     
     async function main() {
       await getlocation()
-      console.log("根據異步await後location已更新為" + str)
+      
 
     }
 
@@ -63,6 +77,10 @@
 
 
         console.log(str);
+        
+					firebase.database().ref('Map/').update({
+						map_description: str,
+					})
 
 
       }
