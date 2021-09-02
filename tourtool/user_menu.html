@@ -62,7 +62,14 @@
                         console.log(Tour_ID);
                         var user_dict ={} //user的查詢暫存
                         var slide_key = 0;
-                   
+                        firebase.database().ref('User/' + userId).once(
+                            "value",
+                            function (snapshot) {
+                                user_dict[userId] =snapshot.val().Tour_ID
+                            })
+
+
+                        
                    
                         var userID_setting = {
                             "url": "https://forchartjs.firebaseio.com/User.json",
