@@ -13,9 +13,9 @@
     
         //vconsole
     </script>
-    <script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js">//LIFF初始化 SDK.JS</script>
 
-        //LIFF初始化 SDK.JS
+        
     </script>
 
     <!--firebase用套件-->
@@ -42,9 +42,11 @@
     <script>
         //liff init 
         var liffID = "1655371574-MzZr1K3Z";
-        liff.init({
-            liffId: liffID
-        }).then(function () {
+        async function main() {
+			await liff.init({
+				liffId: liffID
+			})
+  
             if (liff.isLoggedIn()) {
                 liff.getProfile()
                     .then(profile => {
@@ -181,10 +183,10 @@
                     })
             }
 
-        }).catch(function (error) {
-            console.log(error);
+       
 
-        }); //liff結尾
+        }; //liff結尾
+        main()
     </script>
 
     <!-- Dropdown Trigger -->
