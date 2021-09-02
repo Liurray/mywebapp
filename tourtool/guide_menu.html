@@ -87,7 +87,7 @@
                         $.ajax(TourID_setting).done(function (response) {
                             //console.log(response);
                             var guide_now = userId + "_" + Tour_ID
-                            document.title = "正在進行" + response[Tour_ID].Tour_Title +
+                            document.title = "正在進行" + response["Ufd5cb3fda562012352eff577e4f40185_0"].Tour_Title +
                                 "導覽";
                             console.log(`已完成標題更新:` + response[userId + "_" + Tour_ID].Tour_Title);
                             slidekey = response[userId + "_" + Tour_ID].slide_key;
