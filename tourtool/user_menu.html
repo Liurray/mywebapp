@@ -65,7 +65,8 @@
                         firebase.database().ref('User/' + userId).once(
                             "value",
                             function (snapshot) {
-                                user_dict[userId] =snapshot.val().Tour_ID
+                                user_dict[userId] = snapshot.val().Tour_ID
+                                console.log("您的旅團為"+user_dict[userId])
                             })
 
 
