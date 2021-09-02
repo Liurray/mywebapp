@@ -157,7 +157,8 @@
         inputkey = function () {
             var key = document.getElementById("key").value;
             console.log("金鑰匙" + key)
-            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).once("value",
+            //這邊因為沒辦法使用liff獨到userid 所以要想另一種方式 能夠查詢到userid資料庫的方式
+            firebase.database().ref('Guide/Ufd5cb3fda562012352eff577e4f40185/Tour/Ufd5cb3fda562012352eff577e4f40185_'+Tour_ID).once("value",
                 function (snapshot) {
                     console.log(snapshot.val().slide_key)
                     if (key !== snapshot.val().slide_key) {
