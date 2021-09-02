@@ -524,7 +524,7 @@
                                 refresh = function () {
                                     var new_key = Math.random().toString(36).substr(4, 5);
                                     //alert("哈囉");
-                                    firebase.database().ref('Guide/G123/Tour/' + Tour_ID).update({
+                                    firebase.database().ref('Guide/Ufd5cb3fda562012352eff577e4f40185/Tour/Ufd5cb3fda562012352eff577e4f40185_' + Tour_ID).update({
                                         slide_key: new_key
                                     }).then(function () {
                                         var update_time = new Date().getFullYear() + "年" +
@@ -548,7 +548,7 @@
                                 Reveal.sync();
                                 console.log("初始完成!!")
                                 Reveal.addEventListener('slidechanged', function (event) {
-                                    firebase.database().ref('Guide/G123/Tour/' + Tour_ID)
+                                    firebase.database().ref('Guide/Ufd5cb3fda562012352eff577e4f40185/Tour/Ufd5cb3fda562012352eff577e4f40185_'+ Tour_ID)
                                         .update({
                                             currentslideX: Reveal.getState().indexh,
                                             currentslideY: Reveal.getState().indexv
