@@ -49,6 +49,7 @@
                         var userId = profile.userId;
                         var user_dict = {}
                         user_dict[userId] = ""
+                        console.log(user_dict)
 
 
 
@@ -61,127 +62,120 @@
                         let Tour_ID = tourid_params.toString().substr(7);
                         console.log(Tour_ID);
                         var slide_key = 0;
-                        firebase.database().ref('Guide/' + userId).once("value",
+                        firebase.database().ref('Guide/' + userId + "/Tour/" + userId + "_" + Tour_ID).once(
+                            "value",
                             function (snapshot) {
-                                user_dict[userId] = snapshot.val().guide_now //取得usertourid
-                            }).then(function () {
-
-
-                            firebase.database().ref('Guide/' + userId + '/Tour/' + user_dict[
-                                userId]).once("value",
-                                function (snapshot) {
-                                    $('#update_time').text(snapshot.val().update_time);
-                                });
-                            firebase.database().ref('Guide/' + userId + '/Tour/' + user_dict[
-                                userId]).once("value",
-                                function (snapshot) {
-                                    $('#password').text(snapshot.val().slide_key);
-                                });
-                            var TourID_setting = {
-                                "url": "https://forchartjs.firebaseio.com/Guide/" + userId +
-                                    "/Tour/" + user_dict[userId] + ".json",
-                                "method": "GET",
-                                "timeout": 0,
-                            };
-
-
-                            //--改標題--
-                            $.ajax(TourID_setting).done(function (response) {
-                                //console.log(response);
-                                document.title = "正在進行" + response[Tour_ID].Tour_Title +
-                                    "導覽";
-                                console.log(`已完成標題更新:` + response[Tour_ID].Tour_Title);
-                                slidekey = response[Tour_ID].slide_key;
-                                console.log(slidekey);
+                                $('#update_time').text(snapshot.val().update_time);
+                                $('#password').text(snapshot.val().slide_key);
                             })
 
-                            $(document).ready(function () {
-                                if (Tour_ID === "") {
-                                    alert(`您並沒有權限哦`);
-
-                                } else {
 
 
-                                    //slide function btn操作
-                                    $("#slidefunctions").click(function () {
-
-                                        $("#openslide").slideToggle();
-
-                                    });
-                                    //WebRTC function btn操作
-                                    $("#openRTC").click(function () {
-
-                                        console.log("進入語音導覽")
-
-                                    });
-
-                                    $('#done').click(function () {
-                                        var keyRandom = confirm("您確定要完成並刷新您的金鑰嗎 ?");
-                                        if (keyRandom == true) {
-                                            var new_key = Math.random().toString(36)
-                                                .substr(4,
-                                                    5);
-                                            //更新db資料
-
-                                            firebase.database().ref(
-                                                    "Guide/" + userId + "/Tour/"+
-                                                    user_dict[userId]).update({
-                                                    slide_key: new_key
-                                                })
-                                                .then(function () {
-                                                    var update_time = new Date()
-                                                        .getFullYear() + "年" +
-                                                        new Date().getMonth() +
-                                                        "月" +
-                                                        new Date().getDate() +
-                                                        "日" + new Date()
-                                                        .getHours() + "時" +
-                                                        new Date()
-                                                        .getMinutes() + "分"
-                                                    firebase.database().ref(
-                                                            "Guide/"+userId+"/Tour/" +
-                                                            user_dict[userId])
-                                                        .update({
-                                                            update_time: update_time
-                                                        }).then(function () {
-                                                            alert(`您已經更新此團金鑰為 :` +
-                                                                    new_key)
-                                                                .then(
-                                                                    function () {
-
-                                                                        location
-                                                                            .reload();
-                                                                    })
-                                                        })
+                        var TourID_setting = {
+                            "url": "https://forchartjs.firebaseio.com/Guide/" + userId +
+                                "/Tour.json",
+                            "method": "GET",
+                            "timeout": 0,
+                        };
 
 
-                                                });
-
-
-
-                                            //delete
-                                        } else {
-                                            //don't delete
-                                        }
-                                    })
-                                    //--小功能按鈕呼叫
-
-                                    $('#openslide').click(function () {
-                                        liff.openWindow({
-                                            url: "https://sideprojectslide.netlify.app/googlechart_slidertc_guide?tourid=" +
-                                                Tour_ID,
-                                            external: true
-                                        })
-                                        console.log("開簡報")
-
-                                    })
-
-
-
-                                }
-                            });
-
+                        //--改標題--
+                        $.ajax(TourID_setting).done(function (response) {
+                            //console.log(response);
+                            document.title = "正在進行" + response[userId + "_" + Tour_ID].Tour_Title +
+                                "導覽";
+                            console.log(`已完成標題更新:` + response[userId + "_" + Tour_ID].Tour_Title);
+                            slidekey = response[userId + "_" + Tour_ID].slide_key;
+                            console.log(slidekey);
                         })
+
+                        $(document).ready(function () {
+                            if (Tour_ID === "") {
+                                alert(`您並沒有權限哦`);
+
+                            } else {
+
+
+                                //slide function btn操作
+                                $("#slidefunctions").click(function () {
+
+                                    $("#openslide").slideToggle();
+
+                                });
+                                //WebRTC function btn操作
+                                $("#openRTC").click(function () {
+
+                                    console.log("進入語音導覽")
+
+                                });
+
+                                $('#done').click(function () {
+                                    var keyRandom = confirm("您確定要完成並刷新您的金鑰嗎 ?");
+                                    if (keyRandom == true) {
+                                        var new_key = Math.random().toString(36)
+                                            .substr(4,
+                                                5);
+                                        //更新db資料
+
+                                        firebase.database().ref(
+                                                "Guide/" + userId + "/Tour/" +
+                                                userId + "_" + Tour_ID).update({
+                                                slide_key: new_key
+                                            })
+                                            .then(function () {
+                                                var update_time = new Date()
+                                                    .getFullYear() + "年" +
+                                                    new Date().getMonth() +
+                                                    "月" +
+                                                    new Date().getDate() +
+                                                    "日" + new Date()
+                                                    .getHours() + "時" +
+                                                    new Date()
+                                                    .getMinutes() + "分"
+                                                firebase.database().ref(
+                                                        "Guide/" + userId + "/Tour/" +
+                                                        userId + "_" + Tour_ID)
+                                                    .update({
+                                                        update_time: update_time
+                                                    }).then(function () {
+                                                        alert(`您已經更新此團金鑰為 :` +
+                                                                new_key)
+                                                            .then(
+                                                                function () {
+
+                                                                    location
+                                                                        .reload();
+                                                                })
+                                                    })
+
+
+                                            });
+
+
+
+                                        //delete
+                                    } else {
+                                        //don't delete
+                                    }
+                                })
+                                //--小功能按鈕呼叫
+
+                                $('#openslide').click(function () {
+                                    liff.openWindow({
+                                        url: "https://sideprojectslide.netlify.app/googlechart_slidertc_guide?tourid=" +
+                                            Tour_ID,
+                                        external: true
+                                    })
+                                    console.log("開簡報")
+
+                                })
+
+
+
+                            }
+                        });
+
+
                     })
             }
 
