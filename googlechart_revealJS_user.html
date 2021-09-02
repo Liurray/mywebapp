@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 利用Google Visualization讀取Google Sheet https://www.labnol.org/code/google-sheet-d3js-visualization-200608 -->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="reveal.js-master/css/reveal.css">
+    <link rel="stylesheet" href="reveal.js-master/css/theme/white.css" id="theme">
+    <script src="reveal.js-master/lib/js/head.min.js"></script>
+    <script src="reveal.js-master/js/reveal.js"></script>
+    <!--firebase用套件-->
+    <script src="firebase-app.js"></script>
+    <script src="firebase-analytics.js"></script>
+    <script src="firebase-database.js"></script>
+    <script>
+        //firebase init app
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal.js-master/lib/css/zenburn.css">
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        #navbar {
+            height: 40px;
+            margin: 0;
+            padding-top: 5px;
+            padding-left: 5px;
+            font-size: 24px;
+            color: white;
+            background-color: #26c6da;
+        }
+    </style>
+    <script charset="utf-8" src="sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
+    <script>
+        var vConsole = new VConsole();
+    </script>
+</head>
+
+<body>
+    <div class="container" valign="center"
+        style="margin-right: auto;margin-left: auto;padding-right: 15px;padding-left: 15px;width: 100%;max-width: 1140px;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+        <div class="center" id="form" style="text-align:center">
+
+            <form class="col s12">
+                <div class="col center">
+                    <div class="input-field" style="text-align:center">
+                        <i class="material-icons prefix"></i>
+                        <input placeholder="請輸入此旅團之金鑰匙" id="key" type="text" name=text1 class="validate">
+                        <div class="input-field center">
+                            <input type=button value="確認金鑰" onClick="inputkey();" button class="btn">
+                        </div>
+                        <label for="first_name" style="color : #005AB5">旅團導覽金鑰</label>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+    <div class="reveal" id="slide" style="display:none">
+
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+
+            <section class="gsheet">
+            </section>
+
+        </div>
+
+    </div>
+
+
+    <script src="reveal.js-master/lib/js/head.min.js"></script>
+    <script src="reveal.js-master/js/reveal.js"></script>
+    <script>
+        //liff init 
+        var liffID = "1655371574-0rNXV4GN";
+        liff.init({
+            liffId: liffID
+        }).then(function () {
+            if (liff.isLoggedIn()) {
+                liff.getProfile()
+                    .then(profile => {
+
+                        var userId = profile.userId;
+                        var user_dict = {}
+                        user_dict[userId] = ""
+                        let location_url = new URL(location.href);
+                        console.log(location_url.toString());
+                        let tourid_params = location_url.searchParams;
+                        console.log(tourid_params.toString())
+                        let Tour_ID = tourid_params.toString().substr(7);
+                        console.log(Tour_ID);
+                        inputkey = function () {
+                            var key = document.getElementById("key").value;
+                            console.log("金鑰匙" + key)
+                            //查找使用者的資料
+                            firebase.database().ref('User/' + userId).once("value",
+                                function (snapshot) {
+                                    user_dict[userId] = snapshot.val().Tour_ID //取得usertourid
+                                }).then(function () {
+
+
+
+                                firebase.database().ref('Guide/'+user_dict[userId].split("_")[0]+'/Tour/' + user_dict[userId]).once(
+                                    "value",
+                                    function (snapshot) {
+
+                                        if (key !== snapshot.val().slide_key) {
+                                            alert("密碼錯誤 即將進入演示版簡報.......")
+                                            document.getElementById("form").style.display =
+                                                "none";
+                                            document.getElementById("slide").style.display =
+                                                "block";
+                                            google.charts.load('current', {
+                                                packages: ['corechart', 'bar']
+                                            });
+                                            /*演示版**---*/
+                                            function GetUrlVar(VarName) {
+                                                name = name.replace(/[\[]/, "\\\[").replace(
+                                                    /[\]]/,
+                                                    "\\\]");
+                                                var regexS = "[\\?&]" + VarName +
+                                                    "=([^&#]*)";
+                                                var regex = new RegExp(regexS);
+                                                var results = regex.exec(window.location
+                                                    .href);
+                                                if (results == null)
+                                                    return "";
+                                                else
+                                                    return results[1];
+                                            }
+                                            console.log(GetUrlVar("tourid"))
+                                            console.log(window.location.href)
+                                            //window.onload = function() { init() };
+                                            Reveal.initialize({
+                                                width: "100%", // our own scaling 
+                                                height: "100%", // our own scaling 
+                                                margin: 0, // our own scaling 
+                                                minScale: 1, // our own scaling 
+                                                maxScale: 1, // our own scaling 
+                                                controls: true,
+                                                progress: true,
+                                                history: false, // 團體導覽要退回APP時，按一下退回鍵就好(所以瀏覽slide不存history)
+                                                hideAddressBar: false,
+                                                autoPlayMedia: true,
+                                                previewLinks: true,
+
+                                                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                                                // More info https://github.com/hakimel/reveal.js#dependencies
+                                                dependencies: [{
+                                                        src: 'lib/js/classList.js',
+                                                        condition: function () {
+                                                            return !document
+                                                                .body
+                                                                .classList;
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/markdown/marked.js',
+                                                        condition: function () {
+                                                            return !!
+                                                                document
+                                                                .querySelector(
+                                                                    '[data-markdown]'
+                                                                    );
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/markdown/markdown.js',
+                                                        condition: function () {
+                                                            return !!
+                                                                document
+                                                                .querySelector(
+                                                                    '[data-markdown]'
+                                                                    );
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/highlight/highlight.js',
+                                                        async: true,
+                                                        callback: function () {
+                                                            hljs
+                                                                .initHighlightingOnLoad();
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/zoom-js/zoom.js',
+                                                        async: true
+                                                    },
+                                                    {
+                                                        src: 'plugin/notes/notes.js',
+                                                        async: true
+                                                    }
+                                                ]
+                                            });
+                                            var public_url =
+                                                'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
+                                                '/gviz/tq?sheet=' + 'demo';
+                                            google.charts.setOnLoadCallback(init);
+                                            var target_gsheet_class_once = 'gsheet';
+
+                                            function init() {
+                                                // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+                                                //var url =
+                                                //'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
+                                                var query = new google.visualization.Query(
+                                                    public_url);
+                                                query.setQuery('select *');
+                                                query.send(processSheetsData);
+                                            }
+
+                                            function processSheetsData(response) {
+                                                var data = response.getDataTable();
+                                                var columns = data.getNumberOfColumns();
+                                                var rows = data.getNumberOfRows();
+                                                var str = "";
+                                                var gsheetClass = document
+                                                    .getElementsByClassName(
+                                                        target_gsheet_class_once)[0];
+                                                // Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
+                                                if (gsheetClass.outerHTML) {
+                                                    for (var r = 1; r < rows; r++) {
+                                                        if (data.getFormattedValue(r, 0) ===
+                                                            '@') str +=
+                                                            '<section>';
+                                                        str +=
+                                                            '<section data-background="' +
+                                                            data
+                                                            .getFormattedValue(r,
+                                                                6) +
+                                                            '">';
+                                                        str +=
+                                                            '<p style="font-size: x-large; font-weight: bold;">' +
+                                                            data
+                                                            .getFormattedValue(r, 1) +
+                                                            '</p>';
+                                                        if (data.getFormattedValue(r, 3)
+                                                            .search(
+                                                                'http') ==
+                                                            0) { // Media欄位內容若以'http'開頭就是圖檔
+                                                            str += '<img data-src="' + data
+                                                                .getFormattedValue(r,
+                                                                    3) +
+                                                                '" style="width: 100%; border-style: none;">';
+                                                        } else { // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
+                                                            str += data.getFormattedValue(r,
+                                                                3);
+                                                        } // https://github.com/hakimel/reveal.js/#lazy-loading
+
+                                                        if (data.getFormattedValue(r, 2) !=
+                                                            null) {
+                                                            str +=
+                                                                '<p style="font-size: large; font-weight: bold;">' +
+                                                                data
+                                                                .getFormattedValue(r, 2) +
+                                                                '</p>';
+                                                        }
+
+                                                        str += '</section>';
+
+                                                        // 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
+                                                        if (data.getFormattedValue(r, 0) ===
+                                                            '#') str +=
+                                                            '</section>';
+                                                        // it's simple replacement of whole element with contents of str var
+
+
+
+
+                                                    }
+                                                    console.log(str);
+                                                    gsheetClass.outerHTML = str;
+                                                    Reveal.sync();
+                                                }
+                                            }
+
+                                        } else {
+                                            document.getElementById("form").style.display =
+                                                "none";
+                                            document.getElementById("slide").style.display =
+                                                "block";
+                                            google.charts.load('current', {
+                                                packages: ['corechart', 'bar']
+                                            });
+                                            //****正式版***
+                                            // 取得網址裡的參數   
+
+                                            function GetUrlVar(VarName) {
+                                                name = name.replace(/[\[]/, "\\\[").replace(
+                                                    /[\]]/,
+                                                    "\\\]");
+                                                var regexS = "[\\?&]" + VarName +
+                                                    "=([^&#]*)";
+                                                var regex = new RegExp(regexS);
+                                                var results = regex.exec(window.location
+                                                    .href);
+                                                if (results == null)
+                                                    return "";
+                                                else
+                                                    return results[1];
+                                            }
+
+                                            console.log(GetUrlVar("tourid"))
+                                            console.log(window.location.href)
+
+                                            //window.onload = function() { init() };
+                                            Reveal.initialize({
+                                                width: "100%", // our own scaling 
+                                                height: "100%", // our own scaling 
+                                                margin: 0, // our own scaling 
+                                                minScale: 1, // our own scaling 
+                                                maxScale: 1, // our own scaling 
+                                                controls: true,
+                                                progress: true,
+                                                history: false, // 團體導覽要退回APP時，按一下退回鍵就好(所以瀏覽slide不存history)
+                                                hideAddressBar: false,
+                                                autoPlayMedia: true,
+                                                previewLinks: true,
+
+                                                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                                                // More info https://github.com/hakimel/reveal.js#dependencies
+                                                dependencies: [{
+                                                        src: 'lib/js/classList.js',
+                                                        condition: function () {
+                                                            return !document
+                                                                .body
+                                                                .classList;
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/markdown/marked.js',
+                                                        condition: function () {
+                                                            return !!
+                                                                document
+                                                                .querySelector(
+                                                                    '[data-markdown]'
+                                                                    );
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/markdown/markdown.js',
+                                                        condition: function () {
+                                                            return !!
+                                                                document
+                                                                .querySelector(
+                                                                    '[data-markdown]'
+                                                                    );
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/highlight/highlight.js',
+                                                        async: true,
+                                                        callback: function () {
+                                                            hljs
+                                                                .initHighlightingOnLoad();
+                                                        }
+                                                    },
+                                                    {
+                                                        src: 'plugin/zoom-js/zoom.js',
+                                                        async: true
+                                                    },
+                                                    {
+                                                        src: 'plugin/notes/notes.js',
+                                                        async: true
+                                                    }
+                                                ]
+                                            });
+
+                                            var public_url =
+                                                'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8' +
+                                                '/gviz/tq?sheet=' + 'complete';
+                                            google.charts.setOnLoadCallback(init);
+                                            var target_gsheet_class_once = 'gsheet';
+
+
+                                            function init() {
+                                                // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+                                                //var url =
+                                                //'https://docs.google.com/spreadsheets/d/1MGvhSlXbOvM7Uoe3hxNcF261gdCJ4lOsZybCL8UD5R8'/gviz/tq?sheet=工作表名稱;
+                                                var query = new google.visualization.Query(
+                                                    public_url);
+                                                query.setQuery('select *');
+                                                query.send(processSheetsData);
+                                            }
+
+                                            function processSheetsData(response) {
+                                                var data = response.getDataTable();
+                                                var columns = data.getNumberOfColumns();
+                                                var rows = data.getNumberOfRows();
+                                                var str =
+                                                    `<section id="WebRTC">
+										 <h5> 使用語音導覽 </h5> 
+										 <button class="btn-large" style="text-align:centr ; background-color : #469df5" onclick="openRTC();"><i class="material-icons left">mic</i>打開語音</button></section>`;
+                                                var gsheetClass = document
+                                                    .getElementsByClassName(
+                                                        target_gsheet_class_once)[0];
+                                                // Visualization: Bubble Chart 參閱  https://developers.google.com/chart/interactive/docs/gallery/barchart
+                                                if (gsheetClass.outerHTML) {
+                                                    for (var r = 1; r < rows; r++) {
+                                                        if (data.getFormattedValue(r, 0) ===
+                                                            '@') str +=
+                                                            '<section>';
+                                                        str +=
+                                                            '<section data-background="' +
+                                                            data
+                                                            .getFormattedValue(r,
+                                                                6) +
+                                                            '">';
+                                                        str +=
+                                                            '<p style="font-size: x-large; font-weight: bold;">' +
+                                                            data
+                                                            .getFormattedValue(r, 1) +
+                                                            '</p>';
+                                                        if (data.getFormattedValue(r, 3)
+                                                            .search(
+                                                                'http') ==
+                                                            0) { // Media欄位內容若以'http'開頭就是圖檔
+                                                            str += '<img data-src="' + data
+                                                                .getFormattedValue(r,
+                                                                    3) +
+                                                                '" style="width: 100%; border-style: none;">';
+                                                        } else { // 不然就是iframe的，注意Sheet裡面iframe語法應改為data-src="…"
+                                                            str += data.getFormattedValue(r,
+                                                                3);
+                                                        } // https://github.com/hakimel/reveal.js/#lazy-loading
+
+                                                        if (data.getFormattedValue(r, 2) !=
+                                                            null) {
+                                                            str +=
+                                                                '<p style="font-size: large; font-weight: bold;">' +
+                                                                data
+                                                                .getFormattedValue(r, 2) +
+                                                                '</p>';
+                                                        }
+
+                                                        str += '</section>';
+
+                                                        // 若Tag欄位標註為'#'，就是Nested Vertical Slides的最後一筆，要補上最後的</section>做結尾
+                                                        if (data.getFormattedValue(r, 0) ===
+                                                            '#') str +=
+                                                            '</section>';
+                                                        // it's simple replacement of whole element with contents of str var
+                                                        openRTC = function () {
+                                                            liff.openWindow({
+                                                                // uri：要開啟的網址
+                                                                url: "https://sideprojectslide.netlify.app/user_rtc.html?key=" +
+                                                                    snapshot
+                                                                    .val()
+                                                                    .slide_key,
+                                                                external: true
+                                                            })
+                                                        }
+
+
+
+
+                                                    }
+                                                    console.log(str);
+                                                    gsheetClass.outerHTML = str;
+                                                    Reveal.sync();
+
+                                                    /**listener控制簡報**/
+                                                    firebase.database().ref(
+                                                        'Guide/G123/Tour/' +
+                                                        Tour_ID).on(
+                                                        "value",
+                                                        function (snapshot) {
+                                                            Reveal.slide(snapshot.val()
+                                                                .currentslideX,
+                                                                snapshot
+                                                                .val()
+                                                                .currentslideY);
+                                                        });
+                                                }
+                                            }
+                                        }
+
+
+                                    });
+                            })
+                        }
+
+
+                        document.title = "正在進行" + GetUrlVar("tourid") + "的簡報導覽";
+
+                    })
+                //網址分析 處理網頁傳值
+            } else {
+                liff.login()
+            }
+        }).catch(function (error) {
+            console.log(error);
+
+        }); //liff結尾
+    </script>
+
+</body>
+
+</html>
