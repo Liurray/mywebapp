@@ -60,77 +60,81 @@
                         console.log(tourid_params.toString());
                         let Tour_ID = tourid_params.toString().substr(7);
                         console.log(Tour_ID);
-                        var user_dict ={} //user的查詢暫存
+                        var user_dict = {} //user的查詢暫存
                         var slide_key = 0;
                         firebase.database().ref('User/' + userId).once(
                             "value",
                             function (snapshot) {
                                 user_dict[userId] = snapshot.val().Tour_ID
-                                console.log("您的旅團為"+user_dict[userId])
+                                console.log("您的旅團為" + user_dict[userId])
+
+
+
+
+
+                                var userID_setting = {
+                                    "url": "https://forchartjs.firebaseio.com/User.json",
+                                    "method": "GET",
+                                    "timeout": 0,
+                                };
+
+                                var TourID_setting = {
+                                    "url": "https://forchartjs.firebaseio.com/Guide/" + user_dict[
+                                        userId].split("_")[0] + "/Tour.json",
+                                    "method": "GET",
+                                    "timeout": 0,
+                                };
+                                //--改標題--
+                                $.ajax(TourID_setting).done(function (response) {
+                                    //console.log(response);
+                                    document.title = "正在進行" + response[user_dict[userId]]
+                                        .tour_Title + "導覽";
+                                    console.log(`已完成標題更新:` + response[user_dict[userId]]
+                                    .tour_Title);
+                                    slidekey = response[user_dict[userId]].slide_key;
+                                    console.log(slidekey);
+                                })
+                                // 匹配
+                                $.ajax(userID_setting).done(function (response_user) {
+                                    user_dict[userId] = response_user[userId].Tour_ID
+                                    console.log(user_dict)
+                                }).then(function () {
+                                    $(document).ready(function () {
+                                        console.log(find);
+                                        if (Tour_ID != "" && user_dict[userId] ==
+                                            undefined) {
+                                            $('#done').click(function () {
+
+                                            })
+                                            //--小功能按鈕呼叫
+
+                                            $('#openslide').click(function () {
+                                                liff.openWindow({
+                                                    url: "https://sideprojectslide.netlify.app/googlechart_slidertc_user?tourid=" +
+                                                        Tour_ID,
+                                                    external: true
+                                                })
+                                                console.log("開簡報")
+
+                                            })
+
+                                        } else {
+
+                                            alert(`您並沒有權限哦`);
+
+
+
+
+                                        }
+                                    });
+                                })
+
+
+
+
+
+
                             })
-
-
-                        
-                   
-                        var userID_setting = {
-                            "url": "https://forchartjs.firebaseio.com/User.json",
-                            "method": "GET",
-                            "timeout": 0,
-                        };
-                           
-                        var TourID_setting = {
-                            "url": "https://forchartjs.firebaseio.com/Guide/"+user_dict[userId].split("_")[0]+"/Tour.json",
-                            "method": "GET",
-                            "timeout": 0,
-                        };
-                        //--改標題--
-                        $.ajax(TourID_setting).done(function (response) {
-                            //console.log(response);
-                            document.title = "正在進行" + response[user_dict[userId]].tour_Title + "導覽";
-                            console.log(`已完成標題更新:` + response[user_dict[userId]].tour_Title);
-                            slidekey = response[user_dict[userId]].slide_key;
-                            console.log(slidekey);
-                        })
-                        // 匹配
-                        $.ajax(userID_setting).done(function (response_user) {
-                            user_dict[userId] = response_user[userId].Tour_ID
-                            console.log(user_dict)
-                        }).then(function () {
-                            $(document).ready(function () {
-                                console.log(find);
-                                if (Tour_ID != "" && user_dict[userId] ==undefined) {
-                                    $('#done').click(function () {
-
-                                    })
-                                    //--小功能按鈕呼叫
-
-                                    $('#openslide').click(function () {
-                                        liff.openWindow({
-                                            url: "https://sideprojectslide.netlify.app/googlechart_slidertc_user?tourid=" +
-                                                Tour_ID,
-                                            external: true
-                                        })
-                                        console.log("開簡報")
-
-                                    })
-
-                                } else {
-
-                                    alert(`您並沒有權限哦`);
-
-
-
-
-                                }
-                            });
-                        })
-
-
-
-
-
-
-
                     })
             }
         }; //liff結尾
