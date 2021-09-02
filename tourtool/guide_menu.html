@@ -128,8 +128,7 @@
                                                 "Guide/" + userId + "/Tour/" +
                                                 guide_now).update({
                                                 slide_key: new_key
-                                            })
-                                            .then(function () {
+                                            }).then(function () {
                                                 var update_time = new Date()
                                                     .getFullYear() + "年" +
                                                     new Date().getMonth() +
@@ -147,8 +146,7 @@
                                                     }).then(function () {
                                                         alert(`您已經更新此團金鑰為 :` +
                                                                 new_key)
-                                                            .then(
-                                                                function () {
+                                                            .then(function () {
 
                                                                     location
                                                                         .reload();
