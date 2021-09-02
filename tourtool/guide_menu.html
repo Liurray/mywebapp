@@ -88,9 +88,9 @@
                             //console.log(response);
                             var guide_now = userId + "_" + Tour_ID
                             console.log(guide_now)
-                            document.title = "正在進行" + response["Ufd5cb3fda562012352eff577e4f40185_0"].tour_Title +
+                            document.title = "正在進行" + response[guide_now].tour_Title +
                                 "導覽";
-                            console.log(`已完成標題更新:` + response[userId + "_" + Tour_ID].Tour_Title);
+                            console.log(`已完成標題更新:` + response[guide_now].tour_Title);
                             slidekey = response[userId + "_" + Tour_ID].slide_key;
                             console.log(slidekey);
                         })
