@@ -104,7 +104,12 @@
                                         if (Tour_ID != "" && user_dict[userId] !=""
                                         ) {
                                             $('#done').click(function () {
-                                                liff.closewindow()
+                                                //完成的功能
+                                                firebase.database.ref('User/'+userId).update({
+                                                    guide_Id : ""
+                                                })
+                                                alert("已完成導覽，成功註銷您的導覽資訊")
+                                                liff.closeWindow();
 
                                             })
                                             //--小功能按鈕呼叫
