@@ -125,7 +125,7 @@
 
                                         firebase.database().ref(
                                                 "Guide/" + userId + "/Tour/" +
-                                                userId + "_" + Tour_ID).update({
+                                                guide_now).update({
                                                 slide_key: new_key
                                             })
                                             .then(function () {
@@ -140,7 +140,7 @@
                                                     .getMinutes() + "分"
                                                 firebase.database().ref(
                                                         "Guide/" + userId + "/Tour/" +
-                                                        userId + "_" + Tour_ID)
+                                                        guide_now)
                                                     .update({
                                                         update_time: update_time
                                                     }).then(function () {
