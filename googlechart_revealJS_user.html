@@ -128,7 +128,7 @@
                                     user_dict[userId] = snapshot.val().Tour_ID //取得usertourid
                                 }).then(function () {
 
-
+                                    console.log(user_dict)
 
                                 firebase.database().ref('Guide/'+user_dict[userId].split("_")[0]+'/Tour/' + user_dict[userId]).once(
                                     "value",
