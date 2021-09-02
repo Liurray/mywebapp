@@ -54,7 +54,7 @@
                         var user_dict = {}
                         user_dict[userId] = ""
                         console.log(user_dict)
-
+                        var guide_now = userId + "_" + Tour_ID
 
 
 
@@ -86,7 +86,7 @@
                         //--改標題--
                         $.ajax(TourID_setting).done(function (response) {
                             //console.log(response);
-                            var guide_now = userId + "_" + Tour_ID
+                            
                             console.log(guide_now)
                             document.title = "正在進行" + response[guide_now].tour_Title +
                                 "導覽";
