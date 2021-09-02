@@ -12,10 +12,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js">
         //vconsole
     </script>
-    <script charset="utf-8" src="sdk.js">
+    <script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js">
         //LIFF初始化 SDK.JS
     </script>
-
     <!--firebase用套件-->
     <script src="firebase-app.js"></script>
     <script src="firebase-analytics.js"></script>
@@ -40,105 +39,94 @@
     <script>
         //liff init 
         var liffID = "1655371574-682NGAv2";
-        liff.init({
-            liffId: liffID
-        }).then(function () {
-
-
-            //取得參數  哪一團的id
-            let location_url = new URL(location.href);
-            console.log(location_url.toString());
-            let tourid_params = location_url.searchParams;
-            console.log(tourid_params.toString());
-            let Tour_ID = tourid_params.toString().substr(7);
-            console.log(Tour_ID);
-            var slide_key = 0;
-            var find = 0;
-            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
-                function (snapshot) {
-                    $('#update_time').text(snapshot.val().update_time);
-                });
-            firebase.database().ref('Guide/G123/Tour/' + Tour_ID).on("value",
-                function (snapshot) {
-                    $('#password').text(snapshot.val().slide_key);
-                });
-            var TourID_setting = {
-                "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
-                "method": "GET",
-                "timeout": 0,
-            };
-            var userID_setting = {
-                "url": "https://forchartjs.firebaseio.com/User.json",
-                "method": "GET",
-                "timeout": 0,
-            };
-
-            //--改標題--
-            $.ajax(TourID_setting).done(function (response) {
-                //console.log(response);
-                document.title = "正在進行" + response[Tour_ID].Tour_Title + "導覽";
-                console.log(`已完成標題更新:` + response[Tour_ID].Tour_Title);
-                slidekey = response[Tour_ID].slide_key;
-                console.log(slidekey);
+        async function main() {
+            await liff.init({
+                liffId: liffID
             })
-            // 匹配
-            $.ajax(userID_setting).done(function (response_user) {
-                for (var i = 1 in response_user) {
-                    if (i == Tour_ID && response_user[i].userID === "Uxx5567") {
-                        console.log("找到")
-                        console.log(i + response_user[i].userID)
-                        find = 1;
-                        break;
-                    }
-                }
-            }).then(function () {
-                $(document).ready(function () {
-                    console.log(find);
-                    if (Tour_ID != "" && find == 0) {
-                        //slide function btn操作
+            if (liff.isLoggedIn()) {
+                liff.getProfile()
+                    .then(profile => {
+                        var userId = profile.userId;
+                        var user_dict = {}
+                        user_dict[userId] = ""
+                        console.log(user_dict)
 
-                        //WebRTC function btn操作
-                        /*$("#openRTC").click(function () {
 
-                            console.log("進入語音導覽")
 
-                        });*/
-
-                        $('#done').click(function () {
-
+                        //取得參數  哪一團的id
+                        let location_url = new URL(location.href);
+                        console.log(location_url.toString());
+                        let tourid_params = location_url.searchParams;
+                        console.log(tourid_params.toString());
+                        let Tour_ID = tourid_params.toString().substr(7);
+                        console.log(Tour_ID);
+                        var user_dict ={} //user的查詢暫存
+                        var slide_key = 0;
+                   
+                   
+                        var userID_setting = {
+                            "url": "https://forchartjs.firebaseio.com/User.json",
+                            "method": "GET",
+                            "timeout": 0,
+                        };
+                           
+                        var TourID_setting = {
+                            "url": "https://forchartjs.firebaseio.com/Guide/"+user_dict[userId].split("_")[0]+"/Tour.json",
+                            "method": "GET",
+                            "timeout": 0,
+                        };
+                        //--改標題--
+                        $.ajax(TourID_setting).done(function (response) {
+                            //console.log(response);
+                            document.title = "正在進行" + response[user_dict[userId]].tour_Title + "導覽";
+                            console.log(`已完成標題更新:` + response[user_dict[userId]].tour_Title);
+                            slidekey = response[user_dict[userId]].slide_key;
+                            console.log(slidekey);
                         })
-                        //--小功能按鈕呼叫
+                        // 匹配
+                        $.ajax(userID_setting).done(function (response_user) {
+                            user_dict[userId] = response_user[userId].Tour_ID
+                            console.log(user_dict)
+                        }).then(function () {
+                            $(document).ready(function () {
+                                console.log(find);
+                                if (Tour_ID != "" && user_dict[userId] ==undefined) {
+                                    $('#done').click(function () {
 
-                        $('#openslide').click(function () {
-                            liff.openWindow({
-                                url: "https://sideprojectslide.netlify.app/googlechart_slidertc_user?tourid=" +
-                                    Tour_ID,
-                                external: true
-                            })
-                            console.log("開簡報")
+                                    })
+                                    //--小功能按鈕呼叫
 
+                                    $('#openslide').click(function () {
+                                        liff.openWindow({
+                                            url: "https://sideprojectslide.netlify.app/googlechart_slidertc_user?tourid=" +
+                                                Tour_ID,
+                                            external: true
+                                        })
+                                        console.log("開簡報")
+
+                                    })
+
+                                } else {
+
+                                    alert(`您並沒有權限哦`);
+
+
+
+
+                                }
+                            });
                         })
 
-                    } else {
-
-                        alert(`您並沒有權限哦`);
-
-
-
-
-                    }
-                });
-            })
 
 
 
 
 
 
-        }).catch(function (error) {
-            console.log(error);
-
-        }); //liff結尾
+                    })
+            }
+        }; //liff結尾
+        main()
     </script>
 
     <!-- Dropdown Trigger -->
