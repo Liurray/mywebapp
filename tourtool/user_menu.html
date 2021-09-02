@@ -105,7 +105,7 @@
                                         ) {
                                             $('#done').click(function () {
                                                 //完成的功能
-                                                firebase.database.ref('User/'+userId).update({
+                                                firebase.database().ref('User/'+userId).update({
                                                     guide_Id : ""
                                                 })
                                                 alert("已完成導覽，成功註銷您的導覽資訊")
