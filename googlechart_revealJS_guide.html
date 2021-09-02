@@ -134,7 +134,7 @@
 								}).then(function () {
 
 
-
+									console.log(user_dict)
 								firebase.database().ref('Guide/' + userId +'/Tour/' + user_dict[userId]).once("value",function (snapshot) {
 										console.log(snapshot.val().slide_key)
 										if (key !== snapshot.val().slide_key) {
