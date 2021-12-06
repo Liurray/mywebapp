@@ -183,7 +183,9 @@
                             var sheet_url = snapshot.child("Tour").child(guide_TourId).child(
                                 "sheet_url").val()
                             console.log(sheet_url)
-
+                            firebase.database().ref('Map/' + guide_TourId).update({
+                                    map_test: "這是測試讀寫"
+                                })
 
 
                             google.charts.load('current', {
