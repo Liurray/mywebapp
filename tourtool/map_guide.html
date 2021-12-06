@@ -262,10 +262,11 @@
                                     if (data.getFormattedValue(r, 0) === '@') str += '[';
 
                                     str += `[`+data.getFormattedValue(r, 4) + `,` + data
-                                        .getFormattedValue(r, 5) + `]`
+                                        .getFormattedValue(r, 5) + `],`
 
                                     if (data.getFormattedValue(r, 0) === '#')
                                         str = str.substring(0, str.length - 2) + ']'
+                                     
 
 
                                 }
