@@ -234,6 +234,50 @@
                                 })
                             }
 
+                            //動線資料安排(使用展區導覽的介紹點資料來做)
+                            var map_introduction_url = sheet_url + 'map_Introduction';
+                            google.charts.setOnLoadCallback(introduction_init);
+                            var target_gsheet_class_once = 'gsheet';
+
+
+                            function introduction_init() {
+                                // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
+
+                                var query = new google.visualization.Query(map_introduction_url);
+                                query.setQuery('select *');
+                                query.send(introduction_processSheetsData);
+
+                            }
+
+                            function introduction_processSheetsData(response) {
+                                var data = response.getDataTable();
+                                var columns = data.getNumberOfColumns();
+                                var rows = data.getNumberOfRows();
+                                var str = "";
+                                var gsheetClass = document.getElementsByClassName(
+                                    target_gsheet_class_once)[0];
+                                // if (gsheetClass.outerHTML) {
+                                for (var r = 0; r < rows; r++) {
+                                    if (data.getFormattedValue(r, 0) === '@') str += '[';
+
+                                    str += `[`+data.getFormattedValue(r, 4) + `,` + data
+                                        .getFormattedValue(r, 5) + `]`
+                                        
+                                    if (data.getFormattedValue(r, 0) === '#')
+                                        str = str.substring(0, str.length - 2) + ']'
+
+
+                                }
+
+                                firebase.database().ref('Map/' + userId).update({
+                                    map_lineJson: str,
+                                })
+                            }
+
+
+
+
+
                             //導覽圖例更新
                             var map_feature_url = sheet_url + 'map_feature';
                             google.charts.setOnLoadCallback(feature_init);
@@ -783,7 +827,7 @@
                                             'line-cap': 'round'
                                         },
                                         'paint': {
-                                            'line-color': '#888',
+                                            'line-color': '#A8FF24',
                                             'line-width': 8
                                         }
                                     });
