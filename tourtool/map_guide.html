@@ -265,7 +265,7 @@
                                         .getFormattedValue(r, 5) + `],`
 
                                     if (data.getFormattedValue(r, 0) === '#')
-                                        str = str.substring(0, str.length - 2) + ']'
+                                        str = str.substring(0, str.length - 1) + ']'
                                      
 
 
@@ -464,26 +464,20 @@
                             //地點簡介  讀取地圖簡介的試算表資料
 
 
-                            firebase.database().ref('Map/' + userId).once("value", function (snapshot) {
+                            firebase.database().ref('Map/' + guide_TourId).once("value", function (snapshot) {
 
-
+                                //景點介紹
                                 var locations = snapshot.val().map_description
                                 console.log(locations)
-
-
-
-
-
                                 var map_description = JSON.parse(locations)
+                                //地點圖例
                                 var features = snapshot.val().map_feature
                                 console.log(features)
-
-
-
-
-
                                 var places = JSON.parse(features)
-
+                                //動線安排(點)
+                                var linepoint = snapshot.val().map_lineJson
+                                console.log(linepoint)
+                                var map_lineJson = JSON.parse(linepoint)
 
 
 
@@ -812,11 +806,7 @@
                                             'properties': {},
                                             'geometry': {
                                                 'type': 'LineString',
-                                                'coordinates': [
-                                                [120.6726268,24.12179219],
-                                                [120.6731847,24.12098925],
-                                                [120.674204,24.12094]
-                                                ]
+                                                'coordinates': map_lineJson
                                             }
                                         }
                                     });
