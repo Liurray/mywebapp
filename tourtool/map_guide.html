@@ -183,9 +183,7 @@
                             var sheet_url = snapshot.child("Tour").child(guide_TourId).child(
                                 "sheet_url").val()
                             console.log(sheet_url)
-                            firebase.database().ref('Map/' + guide_TourId).update({
-                                    map_test: "這是測試讀寫"
-                                })
+                           
 
 
                             google.charts.load('current', {
@@ -193,6 +191,7 @@
                             });
                             //導覽簡介播放
                             var map_introduction_url = sheet_url + 'map_Introduction';
+                            console.log(map_introduction_url)
                             google.charts.setOnLoadCallback(introduction_init);
                             var target_gsheet_class_once = 'gsheet';
 
