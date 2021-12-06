@@ -241,16 +241,16 @@
                             var target_gsheet_class_once = 'gsheet';
 
 
-                            function introduction_init() {
+                            function linepoint_init() {
                                 // 要讀取的試算表，必須在雲端硬碟設定知道連結的使用者都能查看，然後在開啟該試算表的瀏覽器網址列之網址複製於此。
 
                                 var query = new google.visualization.Query(map_introduction_url);
                                 query.setQuery('select *');
-                                query.send(introduction_processSheetsData);
+                                query.send(linepoint_processSheetsData);
 
                             }
 
-                            function introduction_processSheetsData(response) {
+                            function linepoint_processSheetsData(response) {
                                 var data = response.getDataTable();
                                 var columns = data.getNumberOfColumns();
                                 var rows = data.getNumberOfRows();
