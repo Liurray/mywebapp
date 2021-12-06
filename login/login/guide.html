@@ -122,7 +122,7 @@
 						document.getElementById("username").append(profile.displayName)
 						document.getElementById("UID").append(profile.userId)
 						userId = profile.userId;
-						firebase.database().ref('User/').once("value", function (snapshot) {
+						firebase.database().ref('Guide/').once("value", function (snapshot) {
 
 							console.log(userId);
 							snapshot.forEach(function (item) {
