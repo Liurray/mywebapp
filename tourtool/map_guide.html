@@ -229,7 +229,7 @@
 
                                 }
 
-                                firebase.database().ref('Map/' + userId).update({
+                                firebase.database().ref('Map/' + guide_TourId).update({
                                     map_description: str
                                 })
                             }
@@ -269,7 +269,7 @@
 
                                 }
 
-                                firebase.database().ref('Map/' + userId).update({
+                                firebase.database().ref('Map/' + guide_TourId).update({
                                     map_lineJson: str
                                 })
                             }
@@ -322,7 +322,7 @@
 
                                 console.log(str)
 
-                                firebase.database().ref('Map/' + userId).update({
+                                firebase.database().ref('Map/' + guide_TourId).update({
                                     map_feature: str
                                 })
                             }
