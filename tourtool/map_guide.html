@@ -183,7 +183,7 @@
                             var sheet_url = snapshot.child("Tour").child(guide_TourId).child(
                                 "sheet_url").val()
                             console.log(sheet_url)
-                           
+
 
 
                             google.charts.load('current', {
@@ -261,12 +261,12 @@
                                 for (var r = 0; r < rows; r++) {
                                     if (data.getFormattedValue(r, 0) === '@') str += '[';
 
-                                    str += `[`+data.getFormattedValue(r, 4) + `,` + data
+                                    str += `[` + data.getFormattedValue(r, 4) + `,` + data
                                         .getFormattedValue(r, 5) + `],`
 
                                     if (data.getFormattedValue(r, 0) === '#')
                                         str = str.substring(0, str.length - 1) + ']'
-                                     
+
 
 
                                 }
@@ -464,7 +464,8 @@
                             //地點簡介  讀取地圖簡介的試算表資料
 
 
-                            firebase.database().ref('Map/' + guide_TourId).once("value", function (snapshot) {
+                            firebase.database().ref('Map/' + guide_TourId).once("value", function (
+                                snapshot) {
 
                                 //景點介紹
                                 var locations = snapshot.val().map_description
@@ -518,11 +519,25 @@
                                                     playback(index);
                                                 },
                                                 5000
-                                                ); // After callback, show the location for 3 seconds.
+                                            ); // After callback, show the location for 3 seconds.
+                                            map.addLayer({
+                                                'id': 'route',
+                                                'type': 'line',
+                                                'source': 'route',
+                                                'layout': {
+                                                    'line-join': 'round',
+                                                    'line-cap': 'round'
+                                                },
+                                                'paint': {
+                                                    'line-color': '#A8FF24',
+                                                    'line-width': 8
+                                                }
+                                            });
 
                                         } else {
                                             clearTimeout(timeout);
                                             console.log("中斷播放");
+                                            map.removeSource('route')
 
                                         }
 
@@ -810,19 +825,7 @@
                                             }
                                         }
                                     });
-                                    map.addLayer({
-                                        'id': 'route',
-                                        'type': 'line',
-                                        'source': 'route',
-                                        'layout': {
-                                            'line-join': 'round',
-                                            'line-cap': 'round'
-                                        },
-                                        'paint': {
-                                            'line-color': '#A8FF24',
-                                            'line-width': 8
-                                        }
-                                    });
+
 
 
 
