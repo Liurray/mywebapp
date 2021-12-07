@@ -537,7 +537,8 @@
                                         } else {
                                             clearTimeout(timeout);
                                             console.log("中斷播放");
-                                            map.removeSource('route')
+                                            map.removeLayer("route");
+                                            map.removeSource("route");
 
                                         }
 
