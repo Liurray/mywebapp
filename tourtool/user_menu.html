@@ -106,7 +106,7 @@
                                             $('#done').click(function () {
                                                 //完成的功能
                                                 firebase.database().ref('User/'+userId).update({
-                                                    guide_Id : ""
+                                                    Tour_ID : ""
                                                 })
                                                 alert("已完成導覽，成功註銷您的導覽資訊")
                                                 liff.closeWindow();
@@ -114,6 +114,13 @@
                                             })
                                             //--小功能按鈕呼叫
 
+                                            $('#opensurvey').click(function () {
+                                                liff.openWindow({
+                                                 url:"https://liff.line.me/1655371574-GLKO837K"
+                                                })
+                                                console.log("開簡報")
+
+                                            })
                                             $('#openslide').click(function () {
                                                 liff.openWindow({
                                                     url: "https://sideprojectslide.netlify.app/googlechart_slidertc_user?tourid=" +
@@ -169,6 +176,16 @@
                 style="text-align:centr ; background-color : #005AB5"><i
                     class="material-icons left">description</i>查看簡報</button>
             <!--#005AB5-->
+        </div>
+    </ul>
+    
+    <ul>
+        <div class="Survey" style="text-align:center">
+
+            <button class="waves-effect waves-light btn-large" id="opensurvey"
+                style="text-align:center; background-color :#0ebe34"><i class="material-icons left">assignment</i>意見問卷</button>
+            <!--#64A600-->
+    
         </div>
     </ul>
     <!--完成導覽-->
