@@ -2,239 +2,527 @@
 <html lang="en">
 
 <head>
-	<title>導覽解說滿意度表單</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>導覽解說滿意度表單</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!--//////init firebase-->
-	<script src="/firebase-app.js"></script>
-	<script src="/firebase-analytics.js"></script>
-	<script src="/firebase-database.js"></script>
-	<script>
-		//firebase init app
-		var firebaseConfig = {
-			apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
-			authDomain: "forchartjs.firebaseapp.com",
-			databaseURL: "https://forchartjs.firebaseio.com"
-		};
-		// Initialize Firebase
-		firebase.initializeApp(firebaseConfig);
-	</script>
+    <!--//////init firebase-->
+    <script src="/firebase-app.js"></script>
+    <script src="/firebase-analytics.js"></script>
+    <script src="/firebase-database.js"></script>
+    <script>
+        //firebase init app
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
 
 
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<!-- LIFF v1只能用到2021年4月 https://developers.line.biz/en/docs/liff/versioning-policy/ -->
-	<!-- LIFF v2從2019年10月啟用 https://developers.line.biz/en/docs/liff/developing-liff-apps/#developing-a-liff-app -->
-	<script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- LIFF v1只能用到2021年4月 https://developers.line.biz/en/docs/liff/versioning-policy/ -->
+    <!-- LIFF v2從2019年10月啟用 https://developers.line.biz/en/docs/liff/developing-liff-apps/#developing-a-liff-app -->
+    <script src="https://static.line-scdn.net/liff/edge/versions/2.3.0/sdk.js"></script>
 	<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
 
-	<div id="dropDownSelect1"></div>
+    <div id="dropDownSelect1"></div>
 
-	<!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/animsition/js/animsition.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/bootstrap/js/popper.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/select2/select2.min.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/daterangepicker/moment.min.js"></script>
-	<script src="vendor/daterangepicker/daterangepicker.js"></script>
-	<!--===============================================================================================-->
-	<script src="vendor/countdowntime/countdowntime.js"></script>
-	<!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
 
 </head>
 
 
 
 <body>
-	<div class="container" id="sign_page" style="display: none;margin: auto; width:50px ;">
-		<div class="header" style="width: 600px;">
-			<h1>使用者資料</h1>
-		</div>
-		<div>
-			<!--姓名-->
-			<div>
-				<span><i class="fa fa-user-circle-o w3l-1" aria-hidden="true"></i></span>
-				<input type="text" id="myName" name="name" placeholder="姓名預設" required="" />
-				<div class="clear"></div>
-			</div>
+    <div class="container" id="sign_page" ;margin: auto; width:50px ;">
+        <div class="header" style="width: 600px;">
+            <span class="login100-title p-b-70" id="username">
+                <!--使用者名稱顯示在這-->
+            </span>
+        </div>
+        <div>
+            <!--參觀次數-->
+            <div>
+                <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>這是你第幾次參觀</span>
+                <select name="goal" id="goal" style="width: 150px;">
+                    <option>首次參觀</option>
+                    <option>2-3次</option>
+                    <option>4-5次</option>
+                    <option>6次以上</option>
+                </select>
+                <div class="clear"></div>
+            </div>
+            <!--如何來-->
+            <div>
+                <!--參觀次數-->
+                <div>
+                    <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>您是如何來到</span>
+                    <select name="goal" id="goal" style="width: 150px;">
+                        <option>走路</option>
+                        <option>騎車</option>
+                        <option>開車</option>
+                        <option>大眾交通工具</option>
+                    </select>
+                    <div class="clear"></div>
+                </div>
+            </div>
 
-			<!--年齡-->
-			<div>
-				<span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i></span>
-				<input type="text" id="myage" name="age" placeholder="年齡預設" required="" />
-				<div class="clear"></div>
-			</div>
+            <!--本次參觀同伴-->
+            <div>
+                <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>本次參觀的同伴</span>
+                <select name="goal" id="goal" style="width: 150px;">
+                    <option>家人、親戚</option>
+                    <option>朋友、同事</option>
+                    <option>學校團體</option>
+                    <option>社區團體</option>
+                    <option>公司團體</option>
+                </select>
+                <div class="clear"></div>
+            </div>
+            <!--那裡得知-->
+            <div>
+                <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>請問你如何得知旅遊資訊</span>
+                <select name="goal" id="goal" style="width: 150px;">
 
-			<!--城市(選)-->
-			<div>
-				<span><i class="fa fa-home w3l-1" aria-hidden="true"></i></span>
-				<select name="city" id="city" style="width: 150px;">
-					<option>請選擇所在城市</option>
-					<option>台北市</option>
-					<option>新北市</option>
-					<option>桃園市</option>
-					<option>台中市</option>
-					<option>台南市</option>
-					<option>高雄市</option>
-					<option>新竹縣</option>
-					<option>苗栗縣</option>
-					<option>彰化縣</option>
-					<option>南投縣</option>
-					<option>雲林縣</option>
-					<option>嘉義縣</option>
-					<option>屏東縣</option>
-					<option>宜蘭縣</option>
-					<option>花蓮縣</option>
-					<option>台東縣</option>
-					<option>澎湖縣</option>
-					<option>金門縣</option>
-					<option>連江縣</option>
-					<option>基隆市</option>
-					<option>新竹市</option>
-					<option>嘉義市</option>
+                    <option>媒體報導與廣告媒體</option>
+                    <option>親朋好友推薦</option>
+                    <option>參與活動得知</option>
+                    <option>網路推廣或介紹</option>
+                </select>
+                <div class="clear"></div>
+            </div>
+            <!--本次參觀時間-->
+            <div>
+                <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>您在此通常預定停留多久</span>
+                <select name="goal" id="goal" style="width: 150px;">
+
+                    <option>一小時</option>
+                    <option>二小時</option>
+                    <option>三小時</option>
+                    <option>半天</option>
+                    <option>一天</option>
+                    <option>一天以上</option>
+                </select>
+                <div class="clear"></div>
+            </div>
 
 
-				</select>
-				<div class="clear"></div>
-			</div>
+            <h2>導覽解說滿意度</h2>
 
-			<!--學歷-->
-			<div>
-				<span><i class="fa fa-graduation-cap w3l-1" aria-hidden="true"></i></span>
-				<select name="study" id="study" style="width: 150px;">
-					<option>請選擇你學歷</option>
-					<option>國小</option>
-					<option>國高中</option>
-					<option>大專學院</option>
-					<option>研究所以上</option>
+            <!--導覽人員解說的滿意度-->
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3"">
+                    <h4>導覽人員解說技巧&nbsp;&nbsp;:</h4>
+                    <input type="radio" name="導覽人員解說技巧" value="非常不滿意">非常不滿意
+                <input type="radio" name="導覽人員解說技巧" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員解說技巧" value="普通">普通
+                    <input type="radio" name="導覽人員解說技巧" value="滿意">滿意
+                    <input type="radio" name="導覽人員解說技巧" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員語調溫和，速度和音量適切&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員語調溫和，速度和音量適切" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員語調溫和，速度和音量適切" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員語調溫和，速度和音量適切" value="普通">普通
+                    <input type="radio" name="導覽人員語調溫和，速度和音量適切" value="滿意">滿意
+                    <input type="radio" name="導覽人員語調溫和，速度和音量適切" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員語意表達順暢&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員語意表達順暢" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員語意表達順暢" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員語意表達順暢" value="普通">普通
+                    <input type="radio" name="導覽人員語意表達順暢" value="滿意">滿意
+                    <input type="radio" name="導覽人員語意表達順暢" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員與遊客互動良好&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員與遊客互動良好" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員與遊客互動良好" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員與遊客互動良好" value="普通">普通
+                    <input type="radio" name="導覽人員與遊客互動良好" value="滿意">滿意
+                    <input type="radio" name="導覽人員與遊客互動良好" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員懂得運用肢體語言來強化解說的內容&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員懂得運用肢體語言來強化解說的內容" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員懂得運用肢體語言來強化解說的內容" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員懂得運用肢體語言來強化解說的內容" value="普通">普通
+                    <input type="radio" name="導覽人員懂得運用肢體語言來強化解說的內容" value="滿意">滿意
+                    <input type="radio" name="導覽人員懂得運用肢體語言來強化解說的內容" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員能察覺遊客的反應來調整解說技巧&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="普通">普通
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="滿意">滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <!-- -->
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員能察覺遊客的反應來調整解說技巧&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="普通">普通
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="滿意">滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員能察覺遊客的反應來調整解說技巧&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="普通">普通
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="滿意">滿意
+                    <input type="radio" name="導覽人員能察覺遊客的反應來調整解說技巧" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員能配合遊客的時間來調配解說內容&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員能配合遊客的時間來調配解說內容" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員能配合遊客的時間來調配解說內容" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員能配合遊客的時間來調配解說內容" value="普通">普通
+                    <input type="radio" name="導覽人員能配合遊客的時間來調配解說內容" value="滿意">滿意
+                    <input type="radio" name="導覽人員能配合遊客的時間來調配解說內容" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員對解說工作具有熱忱&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員對解說工作具有熱忱" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員對解說工作具有熱忱" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員對解說工作具有熱忱" value="普通">普通
+                    <input type="radio" name="導覽人員對解說工作具有熱忱" value="滿意">滿意
+                    <input type="radio" name="導覽人員對解說工作具有熱忱" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員表現出對我們的尊重與耐心解答我們的問題&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員表現出對我們的尊重與耐心解答我們的問題" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員表現出對我們的尊重與耐心解答我們的問題" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員表現出對我們的尊重與耐心解答我們的問題" value="普通">普通
+                    <input type="radio" name="導覽人員表現出對我們的尊重與耐心解答我們的問題" value="滿意">滿意
+                    <input type="radio" name="導覽人員表現出對我們的尊重與耐心解答我們的問題" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員能夠迅速提供遊客所需的服務&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員能夠迅速提供遊客所需的服務" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員能夠迅速提供遊客所需的服務" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員能夠迅速提供遊客所需的服務" value="普通">普通
+                    <input type="radio" name="導覽人員能夠迅速提供遊客所需的服務" value="滿意">滿意
+                    <input type="radio" name="導覽人員能夠迅速提供遊客所需的服務" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽人員的儀容整齊乾淨並且服務態度認真、親切&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽人員的儀容整齊乾淨並且服務態度認真、親切" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽人員的儀容整齊乾淨並且服務態度認真、親切" value="不滿意">不滿意
+                    <input type="radio" name="導覽人員的儀容整齊乾淨並且服務態度認真、親切" value="普通">普通
+                    <input type="radio" name="導覽人員的儀容整齊乾淨並且服務態度認真、親切" value="滿意">滿意
+                    <input type="radio" name="導覽人員的儀容整齊乾淨並且服務態度認真、親切" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>解說能幫助我了解展品的背景資料及原始用途&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="解說能幫助我了解展品的背景資料及原始用途" value="非常不滿意">非常不滿意
+                    <input type="radio" name="解說能幫助我了解展品的背景資料及原始用途" value="不滿意">不滿意
+                    <input type="radio" name="解說能幫助我了解展品的背景資料及原始用途" value="普通">普通
+                    <input type="radio" name="解說能幫助我了解展品的背景資料及原始用途" value="滿意">滿意
+                    <input type="radio" name="解說能幫助我了解展品的背景資料及原始用途" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽解說能讓我們有一個難忘的參觀經驗&nbsp;&nbsp; :</h4>
+                    <input type="radio" name="導覽解說能讓我們有一個難忘的參觀經驗" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽解說能讓我們有一個難忘的參觀經驗" value="不滿意">不滿意
+                    <input type="radio" name="導覽解說能讓我們有一個難忘的參觀經驗" value="普通">普通
+                    <input type="radio" name="導覽解說能讓我們有一個難忘的參觀經驗" value="滿意">滿意
+                    <input type="radio" name="導覽解說能讓我們有一個難忘的參觀經驗" value="非常滿意">非常滿意
+                </div>
+            </div>
+            <div>
+                <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+                <div class="col-sm-3">
+                    <h4>導覽解說整體滿意度&nbsp;&nbsp; :&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; </h4>
+                    <input type="radio" name="導覽解說整體滿意度" value="非常不滿意">非常不滿意
+                    <input type="radio" name="導覽解說整體滿意度" value="不滿意">不滿意
+                    <input type="radio" name="導覽解說整體滿意度" value="普通">普通
+                    <input type="radio" name="導覽解說整體滿意度" value="滿意">滿意
+                    <input type="radio" name="導覽解說整體滿意度" value="非常滿意">非常滿意
+                </div>
+            </div>
 
-				</select>
+        </div>
+        <h2>導覽設施滿意度</h2>
 
-			</div>
+        <!--解說簡報的滿意度-->
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>導覽資料容易閱讀&nbsp;&nbsp; :</h4>
+                <input type="radio" name="導覽資料容易閱讀" value="非常不滿意">非常不滿意
+                <input type="radio" name="導覽資料容易閱讀" value="不滿意">不滿意
+                <input type="radio" name="導覽資料容易閱讀" value="普通">普通
+                <input type="radio" name="導覽資料容易閱讀" value="滿意">滿意
+                <input type="radio" name="導覽資料容易閱讀" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報上的字體大小很容易看清出&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="不滿意">不滿意
+                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="普通">普通
+                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="滿意">滿意
+                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報的文字與背景顏色的搭配恰到好處&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報的文字與背景顏色的搭配恰到好處" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報的文字與背景顏色的搭配恰到好處" value="不滿意">不滿意
+                <input type="radio" name="解說簡報的文字與背景顏色的搭配恰到好處" value="普通">普通
+                <input type="radio" name="解說簡報的文字與背景顏色的搭配恰到好處" value="滿意">滿意
+                <input type="radio" name="解說簡報的文字與背景顏色的搭配恰到好處" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報容易吸引我的注意而前去觀看&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報容易吸引我的注意而前去觀看" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報容易吸引我的注意而前去觀看" value="不滿意">不滿意
+                <input type="radio" name="解說簡報容易吸引我的注意而前去觀看" value="普通">普通
+                <input type="radio" name="解說簡報容易吸引我的注意而前去觀看" value="滿意">滿意
+                <input type="radio" name="解說簡報容易吸引我的注意而前去觀看" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報能清楚表達概念&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報能清楚表達概念" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報能清楚表達概念" value="不滿意">不滿意
+                <input type="radio" name="解說簡報能清楚表達概念" value="普通">普通
+                <input type="radio" name="解說簡報能清楚表達概念" value="滿意">滿意
+                <input type="radio" name="解說簡報能清楚表達概念" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報容能使我更了解&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報容能使我更了解" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報容能使我更了解" value="不滿意">不滿意
+                <input type="radio" name="解說簡報容能使我更了解" value="普通">普通
+                <input type="radio" name="解說簡報容能使我更了解" value="滿意">滿意
+                <input type="radio" name="解說簡報容能使我更了解" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報圖文的解說內容讀來生動有趣&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報圖文的解說內容讀來生動有趣" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報圖文的解說內容讀來生動有趣" value="不滿意">不滿意
+                <input type="radio" name="解說簡報圖文的解說內容讀來生動有趣" value="普通">普通
+                <input type="radio" name="解說簡報圖文的解說內容讀來生動有趣" value="滿意">滿意
+                <input type="radio" name="解說簡報圖文的解說內容讀來生動有趣" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報圖像有輔助文字說明&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報圖像有輔助文字說明" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報圖像有輔助文字說明" value="不滿意">不滿意
+                <input type="radio" name="解說簡報圖像有輔助文字說明" value="普通">普通
+                <input type="radio" name="解說簡報圖像有輔助文字說明" value="滿意">滿意
+                <input type="radio" name="解說簡報圖像有輔助文字說明" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報內容符合我的理解程度&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報內容符合我的理解程度" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報內容符合我的理解程度" value="不滿意">不滿意
+                <input type="radio" name="解說簡報內容符合我的理解程度" value="普通">普通
+                <input type="radio" name="解說簡報內容符合我的理解程度" value="滿意">滿意
+                <input type="radio" name="解說簡報內容符合我的理解程度" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
+            <div class="col-sm-3">
+                <h4>解說簡報整體滿意度&nbsp;&nbsp; :</h4>
+                <input type="radio" name="解說簡報整體滿意度" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報整體滿意度" value="不滿意">不滿意
+                <input type="radio" name="解說簡報整體滿意度" value="普通">普通
+                <input type="radio" name="解說簡報整體滿意度" value="滿意">滿意
+                <input type="radio" name="解說簡報整體滿意度" value="非常滿意">非常滿意
+            </div>
+        </div>
+        <div>
+            <input type="submit" id="sign_done" onclick="sign_done()" name="button" value="確任送出" />
+        </div>
+    </div>
+    </div>
 
-			<!--旅行目標(選)-->
-			<div>
-				<span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i></span>
-				<select name="goal" id="goal" style="width: 150px;">
-					<option>請選擇你旅行目的</option>
-					<option>休閒觀光</option>
-					<option>學習</option>
-
-				</select>
-				<div class="clear"></div>
-			</div>
-
-			<!--語言-->
-			<div>
-				<span><i class="fa fa-language w3l-1" aria-hidden="true"></i></span>
-				<select name="lan" id="lan" style="width: 150px;">
-					<option>請選擇你語言</option>
-					<option>英文</option>
-					<option>中文</option>
-
-				</select>
-
-			</div>
-
-			<!--職業-->
-			<div>
-				<span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
-				<select name="occ" id="occ" style="width: 150px;">
-					<option>請選擇你職業</option>
-					<option>學生</option>
-					<option>軍警</option>
-					<option>公務人員</option>
-					<option>教育</option>
-					<option>商</option>
-					<option>工</option>
-					<option>農</option>
-					<option>醫療</option>
-					<option>服務業</option>
-					<option>家管</option>
-					<option>退休</option>
-				</select>
-
-			</div>
-			<!--是否有身心障礙-->
-			<div>
-				<span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
-				<select name="ICD" id="ICD" style="width: 150px;">
-					<option>是否有身心障礙疾病</option>
-					<option>是</option>
-					<option>否</option>
-
-				</select>
-
-			</div>
-			<div>
-				<input type="submit" id="survey_done" onclick="survey_done()" name="button" value="確任送出" />
-			</div>
-
-		</div>
-	</div>
-
-	<!--主程式-->
+    <!--主程式-->
     <script>
-		var userId = "";
-		var liffID = '1655371574-GLKO837K';
-		async function main() {
-			await liff.init({
-				liffId: liffID
-			})
+        var userId = "";
+        var liffID = '1655371574-GLKO837K';
+        async function main() {
+            await liff.init({
+                liffId: liffID
+            })
 
-			if (liff.isLoggedIn()) {
-				liff.getProfile()
-					.then(profile => {
-						
-						userId = profile.userId; //取得使用者UID
-					
+            if (liff.isLoggedIn()) {
+                liff.getProfile()
+                    .then(profile => {
+
+                        userId = profile.userId; //取得使用者UID
+                        var user_dict = {}
+                        user_dict[userId] = ""
+                        firebase.database().ref('User/' + userId).once("value",
+                                function (snapshot) {
+                                    user_dict[userId] = snapshot.val().Tour_ID //取得usertourid
+                                }).then(function () {
+
+                                    console.log(user_dict)
+                                })
+                        sign_done = function () {
+
+                            firebase.database().ref('Survey/' + user_dict[userId]+'/'+userId).update({
+                                導覽人員解說技巧: document.querySelector('[name=導覽人員解說技巧]:checked').val(),
+                                導覽人員語調溫速度和音量適切: document.querySelector('[name=導覽人員語調溫速度和音量適切]:checked').val(),
+                                導覽人員口語表達流暢: document.querySelector('[name=導覽人員口語表達流暢]:checked').val(),
+                                導覽人員與遊客互動良好: document.querySelector('[name=導覽人員與遊客互動良好]:checked').val(),
+                                導覽人員懂得運用肢體語言來強化解說內容: document.querySelector('[name=導覽人員懂得運用肢體語言來強化解說內容]:checked').val(),
+                                導覽人員對解說工作具有熱忱: document.querySelector('[name=導覽人員對解說工作具有熱忱]:checked').val(),
+                                導覽人員表現出對我們的尊重與耐心解答我們的問題: document.querySelector('[name=導覽人員表現出對我們的尊重與耐心解答我們的問題]:checked').val(),
+                                導覽人員能夠迅速提供遊客所需的服務: document.querySelector('[name=導覽人員能夠迅速提供遊客所需的服務]:checked').val(),
+                                導覽人員的儀容整齊乾淨並且服務態度認真親切: document.querySelector('[name=導覽人員的儀容整齊乾淨並且服務態度認真親切]:checked').val(),
+                                解說能幫助我了解展品的背景資料及原始用途: document.querySelector('[name=解說能幫助我了解展品的背景資料及原始用途]:checked').val(),
+                                導覽解說能讓我們有一個難忘的參觀經驗:document.querySelector('[name=導覽解說能讓我們有一個難忘的參觀經驗]:checked').val(),
+                                導覽解說整體滿意度:document.querySelector('[name=導覽解說整體滿意度]:checked').val(),
+                                導覽資料容易閱讀:document.querySelector('[name=導覽資料容易閱讀]:checked').val(),
+                                解說簡報上的字體大小很容易看清楚:document.querySelector('[name=解說簡報上的字體大小很容易看清楚]:checked').val(),
+                                解說簡報的文字與背景顏色的搭配恰到好處:document.querySelector('[name=解說簡報的文字與背景顏色的搭配恰到好處]:checked').val(),
+                                解說簡報容易吸引我的注意而前去觀看:document.querySelector('[name=解說簡報容易吸引我的注意而前去觀看]:checked').val(),
+                                解說簡報能清楚表達概念:document.querySelector('[name=解說簡報能清楚表達概念]:checked').val(),
+                                解說簡報容能使我更了解:document.querySelector('[name=解說簡報容能使我更了解]:checked').val(),
+                                解說簡報圖文的解說內容讀來生動有趣:document.querySelector('[name=解說簡報圖文的解說內容讀來生動有趣]:checked').val(),
+                                解說簡報圖像有輔助文字說明:document.querySelector('[name=解說簡報圖像有輔助文字說明]:checked').val(),
+                                解說簡報內容符合我的理解程度:document.querySelector('[name=解說簡報內容符合我的理解程度]:checked').val(),
+                                解說簡報整體滿意度:document.querySelector('[name=解說簡報整體滿意度]:checked').val()
+                                
+                            }).then(function () {
+                                alert("你已經成功完成表單 !")
+                                liff.closeWindow();
+                            })
 
 
-					})
+                        }
 
 
-			
+                    })
 
-				
-			
-				
 
-				
-			
-			} else {
-				liff.login()
 
-			}
-		}
-		main()
-	</script>
+
+
+
+
+
+
+
+            } else {
+                liff.login()
+
+            }
+        }
+        main()
+    </script>
 
 
 
