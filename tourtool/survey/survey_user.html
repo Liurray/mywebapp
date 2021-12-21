@@ -324,11 +324,11 @@
             <span><i class="fa fa-briefcase w3l-1" aria-hidden="true"></i></span>
             <div class="col-sm-3">
                 <h4>解說簡報上的字體大小很容易看清出&nbsp;&nbsp; :</h4>
-                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="非常不滿意">非常不滿意
-                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="不滿意">不滿意
-                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="普通">普通
-                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="滿意">滿意
-                <input type="radio" name="解說簡報上的字體大小很容易看清出" value="非常滿意">非常滿意
+                <input type="radio" name="解說簡報上的字體大小很容易看清楚" value="非常不滿意">非常不滿意
+                <input type="radio" name="解說簡報上的字體大小很容易看清楚" value="不滿意">不滿意
+                <input type="radio" name="解說簡報上的字體大小很容易看清楚" value="普通">普通
+                <input type="radio" name="解說簡報上的字體大小很容易看清楚" value="滿意">滿意
+                <input type="radio" name="解說簡報上的字體大小很容易看清楚" value="非常滿意">非常滿意
             </div>
         </div>
         <div>
@@ -453,15 +453,12 @@
                             firebase.database().ref('Survey/' + user_dict[userId] + '/' + userId).update({
                              
                                 導覽人員解說技巧: $('input[name="導覽人員解說技巧"]:checked').val(),
-                                
-                                導覽人員語調速度和音量適切: $('input[name="導覽人員語調速度和音量適切"]:checked').val(),
-                                導覽人員口語表達流暢: $('input[name="導覽人員口語表達流暢"]:checked').val(),
+                                導覽人員語調速度和音量適切: $('input[name="導覽人員語調溫和速度和音量適切"]:checked').val(),
+                                導覽人員口語表達流暢: $('input[name="導覽人員語意表達順暢"]:checked').val(),
                                 導覽人員與遊客互動良好: $('input[name="導覽人員與遊客互動良好"]:checked').val(),
-                                導覽人員懂得運用肢體語言來強化解說內容: $('input[name="導覽人員懂得運用肢體語言來強化解說內容"]:checked')
-                                    .val(),
+                                導覽人員懂得運用肢體語言來強化解說內容: $('input[name="導覽人員懂得運用肢體語言來強化解說的內容"]:checked').val(),
                                 導覽人員對解說工作具有熱忱: $('input[name="導覽人員對解說工作具有熱忱"]:checked').val(),
-                                導覽人員表現出對我們的尊重與耐心解答我們的問題: $(
-                                    'input[name="導覽人員表現出對我們的尊重與耐心解答我們的問題"]:checked').val(),
+                                導覽人員表現出對我們的尊重與耐心解答我們的問題: $('input[name="導覽人員表現出對我們的尊重與耐心解答我們的問題"]:checked').val(),
                                 導覽人員能夠迅速提供遊客所需的服務: $('input[name="導覽人員能夠迅速提供遊客所需的服務"]:checked')
                                 .val(),
                                 導覽人員的儀容整齊乾淨並且服務態度認真親切: $(
