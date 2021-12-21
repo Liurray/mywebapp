@@ -83,7 +83,7 @@
             <!--參觀次數-->
             <div>
                 <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>這是你第幾次參觀</span>
-                <select name="goal" id="goal" style="width: 150px;">
+                <select name="goal" id="參觀次數" style="width: 150px;">
                     <option>首次參觀</option>
                     <option>2-3次</option>
                     <option>4-5次</option>
@@ -96,7 +96,7 @@
                 <!--參觀次數-->
                 <div>
                     <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>您是如何來到</span>
-                    <select name="goal" id="goal" style="width: 150px;">
+                    <select name="goal" id="交通工具" style="width: 150px;">
                         <option>走路</option>
                         <option>騎車</option>
                         <option>開車</option>
@@ -109,7 +109,7 @@
             <!--本次參觀同伴-->
             <div>
                 <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>本次參觀的同伴</span>
-                <select name="goal" id="goal" style="width: 150px;">
+                <select name="goal" id="同伴" style="width: 150px;">
                     <option>家人、親戚</option>
                     <option>朋友、同事</option>
                     <option>學校團體</option>
@@ -121,7 +121,7 @@
             <!--那裡得知-->
             <div>
                 <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>請問你如何得知旅遊資訊</span>
-                <select name="goal" id="goal" style="width: 150px;">
+                <select name="goal" id="如何得知" style="width: 150px;">
 
                     <option>媒體報導與廣告媒體</option>
                     <option>親朋好友推薦</option>
@@ -133,7 +133,7 @@
             <!--本次參觀時間-->
             <div>
                 <span><i class="fa fa-address-card-o w3l-1" aria-hidden="true"></i>您在此通常預定停留多久</span>
-                <select name="goal" id="goal" style="width: 150px;">
+                <select name="goal" id="停留時間" style="width: 150px;">
 
                     <option>一小時</option>
                     <option>二小時</option>
@@ -451,7 +451,11 @@
                         sign_done = function () {
 
                             firebase.database().ref('Survey/' + user_dict[userId] + '/' + userId).update({
-                             
+                                參觀次數: document.getElementById('參觀次數').value,
+                                同行同伴: document.getElementById('同伴').value,
+                                如何得知旅團: document.getElementById('如何得知').value,
+                                停留時間: document.getElementById('停留時間').value,
+                                交通工具: document.getElementById('交通工具').value,
                                 導覽人員解說技巧: $('input[name="導覽人員解說技巧"]:checked').val(),
                                 導覽人員語調速度和音量適切: $('input[name="導覽人員語調溫和速度和音量適切"]:checked').val(),
                                 導覽人員口語表達流暢: $('input[name="導覽人員語意表達順暢"]:checked').val(),
