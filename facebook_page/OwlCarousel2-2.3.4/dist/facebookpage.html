@@ -178,6 +178,7 @@
                 })
             }
 
+            var activityJson = [];
             var settings = {
                 "url": "https://testcros123.herokuapp.com/getData",
                 "method": "GET",
@@ -185,7 +186,9 @@
             };
 
             $.ajax(settings).done(function (response) {
-                console.log(response);
+                var data = JSON.parse(response);
+                activityJson.push(data);
+                console.log(activityJson);
             });
 
 
