@@ -213,6 +213,18 @@
                     }
 
                 }
+                appendHtml += `</div>`
+                $('#ac_content').html(appendHtml)
+                $('.owl-carousel ').owlCarousel({
+                    loop: false,
+                    margin: 5,
+                    nav: true,
+                    responsive: {
+                        0: {
+                            items: 3
+                        }
+                    }
+                })
 
 
                 console.log(appendHtml);
