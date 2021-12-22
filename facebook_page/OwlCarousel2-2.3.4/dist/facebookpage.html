@@ -156,14 +156,12 @@
                     }
                 })
             }
-            var settings = {
-                "url": "https://gis.taiwan.net.tw/XMLReleaseALL_public/activity_C_f.json",
-                "method": "GET",
-                "timeout": 0,
-            };
 
-            $.ajax(settings).done(function (response) {
-                console.log(response);
+            $.getJSON('opendatacurl.php').done(function (re) { //自己做一個後端，再去跟同網域的後端取得
+                console.log(re);
+            }).fail(function (w) {
+                alert("faill openapi")
+                console.log(w);
             });
 
 
