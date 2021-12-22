@@ -60,8 +60,8 @@
         }).then(function () {
 
             var Today = Date();
-            var user_x;
-            var user_y;
+            var x;
+            var y;
 
             console.log(Today);
 
@@ -72,9 +72,9 @@
             }
 
             function showPosition(position) {
-                user_x = position.coords.latitude;
-                user_y = position.coords.longitude;
-                console.log(user_x, user_y)
+                x = position.coords.latitude;
+                y = position.coords.longitude;
+                console.log(x, y)
             }
 
 
@@ -189,6 +189,10 @@
                 "method": "GET",
                 "timeout": 0,
             };
+            min_x = parseFloat(x)-0.005;
+            min_y = parseFloat(y)-0.005;
+            max_x = parseFloat(x)+0.005;
+            max_y = parseFloat(y)+0.005;
             console.log(min_x)
             console.log(min_y)
             console.log(max_x)
