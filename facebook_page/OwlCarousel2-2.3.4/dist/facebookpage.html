@@ -43,9 +43,9 @@
         <div class="textcontent" id="fb_content"></div>
 
     </div>
-   
-       
-    
+
+
+
 
     <script>
         //liff init 
@@ -53,10 +53,24 @@
         liff.init({
             liffId: liffID
         }).then(function () {
-            
+
             var Today = Date();
+            var user_x;  
+            var user_y;
 
             console.log(Today);
+
+            if (navigator.geolocation) {
+                console.log(navigator.geolocation.getCurrentPosition(showPosition));
+            } else {
+                alert("你的裝置或瀏覽器不支援定位功能");
+            }
+
+            function showPosition(position) {
+                 user_x = position.coords.latitude;
+                 user_y = position.coords.longitude;
+                 console.log(user_x,user_y)
+            }
 
 
             var FB_group = [];
