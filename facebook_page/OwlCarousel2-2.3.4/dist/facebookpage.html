@@ -78,11 +78,7 @@
                 alert("你的裝置或瀏覽器不支援定位功能");
             }
 
-            function showPosition(position) {
-                x = position.coords.latitude;
-                y = position.coords.longitude;
-                console.log(x, y)
-            }
+    
 
 
             var FB_group = [];
@@ -188,7 +184,11 @@
                     }
                 })
             }
-
+            function showPosition(position) {
+                x = position.coords.latitude;
+                y = position.coords.longitude;
+                console.log(x, y)
+       
             var activityJson = [];
             var settings = {
                 "url": "https://testcros123.herokuapp.com/getData",
@@ -244,6 +244,7 @@
                 console.log(appendHtml);
                 console.log(data["XML_Head"]["Infos"].Info[0]);
             });
+        }
 
 
 
