@@ -218,11 +218,9 @@
                             if(data["XML_Head"]["Infos"].Info[i].Picture1 != null) {
                                 appendHtml += data["XML_Head"]["Infos"].Info[i].Picture1
                             }
-                            else{
-                                appendHtml += `https://images.pexels.com/photos/6152103/pexels-photo-6152103.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260`
-                            }
+                            appendHtml += `"https://images.pexels.com/photos/6152103/pexels-photo-6152103.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"`
                             appendHtml += '><p>' + data["XML_Head"]["Infos"].Info[i].Name + '</p></div>'
-                        console.log("find")
+                            console.log("find")
                     }
 
                 }
