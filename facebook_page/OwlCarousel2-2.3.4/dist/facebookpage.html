@@ -214,14 +214,14 @@
                         parseFloat(data["XML_Head"]["Infos"].Info[i].Px) <= max_x && 
                         parseFloat(data["XML_Head"]["Infos"].Info[i].Py) <=max_y) {
 
-                        appendHtml += '<div class="item"><img src=';
+                        
                             if(data["XML_Head"]["Infos"].Info[i].Picture1 == null) {
-                                appendHtml += `"https://images.pexels.com/photos/6152103/pexels-photo-6152103.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"`
+                                appendHtml += `<div class="item"><img src=https://images.pexels.com/photos/6152103/pexels-photo-6152103.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"`
                                
                             }
                             else{
                                 console.log("發現不是null")
-                                appendHtml += data["XML_Head"]["Infos"].Info[i].Picture1     
+                                appendHtml += '<div class="item"><img src=' +data["XML_Head"]["Infos"].Info[i].Picture1;
                             }
                             appendHtml += '><p>' + data["XML_Head"]["Infos"].Info[i].Name + '</p></div>'
                             
