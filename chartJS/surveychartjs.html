@@ -102,26 +102,26 @@
             //--改標題--
             $.ajax(survey_setting).done(function (response) {
                 var Q1_verygood = 0,
-                    Q1_good = 0,
+                    Q1_good = 2,
                     Q1_normal = 0,
                     Q1_bad = 0,
-                    Q1_verybad = 0,
+                    Q1_verybad = 3,
                     Q2_verygood = 0,
                     Q2_good = 0,
-                    Q2_normal = 0,
+                    Q2_normal = 4,
                     Q2_bad = 0,
-                    Q2_verybad = 0,
+                    Q2_verybad = 5,
                     Q3_verygood = 0,
                     Q3_good = 0,
-                    Q3_normal = 0,
+                    Q3_normal = 2,
                     Q3_bad = 0,
-                    Q3_verybad = 0,
+                    Q3_verybad = 2,
                     Q4_verygood = 0,
                     Q4_good = 0,
-                    Q4_normal = 0,
+                    Q4_normal = 2,
                     Q4_bad = 0,
                     Q4_verybad = 0,
-                    total_people = 0;
+                    total_people = 10;
                 //console.log(response);
                 Object.keys(response).forEach(function (i) {
                     total_people += 1;
