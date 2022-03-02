@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--liff console api
+     <!-- including FusionCharts core package JS files -->
+    <script src="https://cdn.jsdelivr.net/npm/vconsole@3.2.0/dist/vconsole.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        var vConsole = new VConsole();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>滿意度問卷調查</title>
+    <link rel="stylesheet" href="style.css">
+    <!--LIFF SDK引用-->
+    <script charset="utf-8" src="sdk.js"></script>
+
+
+
+
+
+    <script src="chartjs.js"></script>
+    <script src="firebase-app.js"></script>
+    <script src="firebase-analytics.js"></script>
+
+    <script src="firebase-database.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional 
+    </script>
+
+    <script>
+        //firebase init app
+        var firebaseConfig = {
+            apiKey: "AIzaSyBXd4P9GdCXeiWD5n-VZlpVMsDCFoOUDYM",
+            authDomain: "forchartjs.firebaseapp.com",
+            databaseURL: "https://forchartjs.firebaseio.com"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+</head>
+
+
+<body>
+    <script>
+        var liffID = "1655371574-L1djaMVd";
+        liff.init({
+                liffId: liffID
+            }).then(function () {
+                    console.log('LIFF 程式初始化....');
+
+                    //這邊開始liff的app程式
+                    let location_url = new URL(location
+                        .href); //https://sideprojectslide.netlify.app/chartjs?liff.state=%3Ftouri......
+                    //驗證
+                    console.log(location_url.toString());
+                    let tourid_params = location_url.searchParams;
+                    console.log(tourid_params.toString());
+                    let Tour_ID = tourid_params.toString().substr(7);
+                    console.log(Tour_ID);
+                    var TourID_setting = {
+                        "url": "https://forchartjs.firebaseio.com/Guide/G123/Tour.json",
+                        "method": "GET",
+                        "timeout": 0,
+                    };
+                    //--改標題--
+                    $.ajax(TourID_setting).done(function (response) {
+                        //console.log(response);
+                        document.title = response[Tour_ID].Tour_Title + '滿意度調查';
+                        console.log(`已完成標題更新:` + response[Tour_ID].Tour_Title);
+                    })
+
+
+
+
+
+
+                    //**google chartJS處理開始*/
+
+                    
+                    //city分布
+
+                    var survey_setting = {
+                        "url": "https://forchartjs.firebaseio.com/Survey/Ufd5cb3fda562012352eff577e4f40185_0.json",
+                        "method": "GET",
+                        "timeout": 0,
+                    };
+                    //--改標題--
+                    $.ajax(survey_setting).done(function (response) {
+                        var Q1_verygood = 0,
+                        Q1_good = 0,
+                        Q1_normal = 0,
+                        Q1_bad = 0,
+                        Q1_verybad = 0,
+                        Q2_verygood = 0,
+                        Q2_good = 0,
+                        Q2_normal = 0,
+                        Q2_bad = 0,
+                        Q2_verybad = 0,
+                        Q3_verygood = 0,
+                        Q3_good = 0,
+                        Q3_normal = 0,
+                        Q3_bad = 0,
+                        Q3_verybad = 0,
+                        Q4_verygood = 0,
+                        Q4_good = 0,
+                        Q4_normal = 0,
+                        Q4_bad = 0,
+                        Q4_verybad = 0,
+                        total_people = 0;
+                        //console.log(response);
+                        Object.keys(response).forEach(function (i) {
+                            total_people +=1;
+                            switch (response[i].導覽人員口語表達流暢) {
+                                case "非常滿意":
+                                    Q1_verygood += 1;
+                                    break;
+                                case "滿意":
+                                    Q1_good += 1;
+                                    break;
+                                case "普通":
+                                    Q1_normal += 1;
+                                    break;
+                                case "不滿意":
+                                    Q1_bad += 1;
+                                    break;
+                                case "非常不滿意":
+                                    Q1_verybad += 1;
+                                    break;
+                                default:
+                                    break;
+
+                            }
+                            switch (response[i].導覽人員對解說工作具有熱忱) {
+                                case "非常滿意":
+                                    Q2_verygood += 1;
+                                    break;
+                                case "滿意":
+                                    Q2_good += 1;
+                                    break;
+                                case "普通":
+                                    Q2_normal += 1;
+                                    break;
+                                case "不滿意":
+                                    Q2_bad += 1;
+                                    break;
+                                case "非常不滿意":
+                                    Q2_verybad += 1;
+                                    break;
+                                default:
+                                    break;
+
+                            }
+                            switch (response[i].導覽人員懂得運用肢體語言來強化解說內容) {
+                                case "非常滿意":
+                                    Q3_verygood += 1;
+                                    break;
+                                case "滿意":
+                                    Q3_good += 1;
+                                    break;
+                                case "普通":
+                                    Q3_normal += 1;
+                                    break;
+                                case "不滿意":
+                                    Q3_bad += 1;
+                                    break;
+                                case "非常不滿意":
+                                    Q3_verybad += 1;
+                                    break;
+                                default:
+                                    break;
+
+                            }
+                            switch (response[i].導覽人員的儀容整齊乾淨並且服務態度認真親切) {
+                                case "非常滿意":
+                                    Q4_verygood += 1;
+                                    break;
+                                case "滿意":
+                                    Q4_good += 1;
+                                    break;
+                                case "普通":
+                                    Q4_normal += 1;
+                                    break;
+                                case "不滿意":
+                                    Q4_bad += 1;
+                                    break;
+                                case "非常不滿意":
+                                    Q4_verybad += 1;
+                                    break;
+                                default:
+                                    break;
+
+                            }
+                        })
+                            var ctx = document.getElementById('Goalchart');
+                            var Goalchart = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['非常滿意', '滿意','普通','不滿意','非常不滿意'],
+                                    datasets: [{
+                                        label: '百分比',
+                                        data: [(Q1_verygood/total_people)*100, (Q1_good/total_people)*100,(Q1_normal/total_people)*100,(Q1_bad/total_people)*100,(Q1_verybad/total_people)*100],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(0, 255, 0, 0.2)',
+                                            'rgba(0, 255, 255, 0.2)',
+                                            'rgba(0, 0, 0, 0.2)'
+
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                max: 10,
+                                                min: 0,
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                            var ctx = document.getElementById('Goal2chart');
+                            var Goalchart = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['非常滿意', '滿意','普通','不滿意','非常不滿意'],
+                                    datasets: [{
+                                        label: '百分比',
+                                        data: [(Q2_verygood/total_people)*100, (Q2_good/total_people)*100,(Q2_normal/total_people)*100,(Q2_bad/total_people)*100,(Q2_verybad/total_people)*100],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(0, 255, 0, 0.2)',
+                                            'rgba(0, 255, 255, 0.2)',
+                                            'rgba(0, 0, 0, 0.2)'
+
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                max: 10,
+                                                min: 0,
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                            var ctx = document.getElementById('Goal3chart');
+                            var Goalchart = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['非常滿意', '滿意','普通','不滿意','非常不滿意'],
+                                    datasets: [{
+                                        label: '百分比',
+                                        data: [(Q3_verygood/total_people)*100, (Q3_good/total_people)*100,(Q3_normal/total_people)*100,(Q3_bad/total_people)*100,(Q3_verybad/total_people)*100],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(0, 255, 0, 0.2)',
+                                            'rgba(0, 255, 255, 0.2)',
+                                            'rgba(0, 0, 0, 0.2)'
+
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                max: 10,
+                                                min: 0,
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                            var ctx = document.getElementById('Goal4chart');
+                            var Goalchart = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: ['非常滿意', '滿意','普通','不滿意','非常不滿意'],
+                                    datasets: [{
+                                        label: '百分比',
+                                        data: [(Q4_verygood/total_people)*100, (Q4_good/total_people)*100,(Q4_normal/total_people)*100,(Q4_bad/total_people)*100,(Q4_verybad/total_people)*100],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(0, 255, 0, 0.2)',
+                                            'rgba(0, 255, 255, 0.2)',
+                                            'rgba(0, 0, 0, 0.2)'
+
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                max: 10,
+                                                min: 0,
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+
+                        
+
+
+
+
+
+                        })//db close  */
+
+
+
+
+
+
+
+
+
+                    }).catch(function (error) {
+                        console.log(error);
+                    }); //liff 結尾
+    </script>
+    <div class="chart-container" style="position: relative">
+
+        
+       
+        <p>導覽人員口語表達流暢</p>
+        <canvas id="Goalchart"></canvas>
+        <p>導覽人員對解說工作具有熱忱</p>
+        <canvas id="Goal2chart"></canvas>
+        <p>導覽人員懂得運用肢體語言來強化解說內容</p>
+        <canvas id="Goal3chart"></canvas>
+        <p>導覽人員的儀容整齊乾淨並且服務態度認真親切</p>
+        <canvas id="Goal4chart"></canvas>
+       
+     
+
+      
+    </div>
+   
+
+
+</body>
+
+</html>
